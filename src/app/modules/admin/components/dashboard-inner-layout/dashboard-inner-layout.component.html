@@ -1,0 +1,102 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-bg-cstm fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/admin/dashboard"><img src="./assets/img/pos.png" height="55"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/product.png" width="30">
+            Products
+          </a>
+          <ul class="sub-list">
+            <li><a routerLink="/admin/inventory/products">All products</a></li>
+            <li><a routerLink="/admin/inventory/products/add">New Product</a></li>
+            <li><a href="damaged-product.php">Add Damaged Product</a></li>
+            <li><a routerLink="/admin/inventory/products/purchase">Purchase New Product</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/employee.png" width="30">
+            Employee
+          </a>
+          <ul class="sub-list">
+            <li><a routerLink="/admin/employee/list">Employee List</a></li>
+            <li><a routerLink="/admin/employee/add">New Employee</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/supplier.png" width="30">
+            Supplier
+          </a>
+          <ul class="sub-list">
+            <li><a href="supplier-info.php">Supplier Info</a></li>
+            <li><a href="supplier.php">New Supplier</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/sale.png" width="30">
+            Sell
+          </a>
+          <ul class="sub-list">
+            <li><a href="sale.php">Sell to wholeseller</a></li>
+            <li><a href="consumer-sale.php">Sell to Consumer</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/reports.png" width="30">
+            Reports
+          </a>
+          <ul class="sub-list">
+            <li><a href="reports.php">Daily report</a></li>
+            <li><a href="datatable.php">Datatable</a></li>
+            <li><a href="general-table.php">General Table</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="accounts.php">
+            <img src="assets/img/icon/accounts.png" width="30">
+            Accounts
+          </a>
+          <ul class="sub-list">
+            <li><a href="accounts.php">Accounts</a></li>
+            <li><a href="invoice.php">Invoice</a></li>
+            <li><a href="new-ledger.php">New Ledger</a></li>
+            <li><a href="new-payment.php">New Payment</a></li>
+            <li><a href="payment.php">Payment</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/wholesale.png" width="30">
+            Wholesale
+          </a>
+          <ul class="sub-list">
+            <li><a href="wholesale-info.php">Wholeseller Info</a></li>
+            <li><a href="new-wholesale.php">New Wholeseller</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <img src="assets/img/icon/user.png" width="30">
+            Admin
+          </a>
+          <ul class="sub-list">
+            <li><a href="company-info.php">Company Info</a></li>
+            <li><a href="login.php">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>
