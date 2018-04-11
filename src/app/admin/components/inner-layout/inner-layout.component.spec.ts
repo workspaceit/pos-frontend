@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {InnerLayoutComponent} from './inner-layout.component';
 
-import { DashboardInnerLayoutComponent } from './dashboard-inner-layout.component';
+
 
 describe('DashboardInnerLayoutComponent', () => {
-  let component: DashboardInnerLayoutComponent;
-  let fixture: ComponentFixture<DashboardInnerLayoutComponent>;
+  let component: InnerLayoutComponent;
+  let fixture: ComponentFixture<InnerLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardInnerLayoutComponent ]
+      declarations: [ InnerLayoutComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardInnerLayoutComponent);
+    fixture = TestBed.createComponent(InnerLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
