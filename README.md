@@ -25,3 +25,17 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+##   Commands to serve and build
+
+`ng serve --open`
+
+`ng serve --live-reload false --open`
+
+`ng serve --live-reload false --port 4201 --open`
+
+`ng serve --aot --live-reload false --host 0.0.0.0  --open`
+
+`ng build`
+
+`ng build --prod --aot --vc -cc -dop --buildOptimizer`
