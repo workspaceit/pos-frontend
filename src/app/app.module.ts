@@ -26,11 +26,11 @@ import {CommonModule} from '@angular/common';
     CommonModule
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: GeneralInterceptor,
-    //   multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GeneralInterceptor,
+      multi: true
+    },
     AuthGuard,
     AuthService
   ],
