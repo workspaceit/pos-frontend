@@ -7,14 +7,16 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { FooterComponent } from './components/footer/footer.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PublicRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  declarations: [HeaderComponent, LayoutComponent, LoginComponent, SignupComponent, FooterComponent]
+  declarations: [HeaderComponent, LayoutComponent, LoginComponent, SignupComponent, FooterComponent, ForgotPasswordComponent]
 })
 export class PublicModule { }

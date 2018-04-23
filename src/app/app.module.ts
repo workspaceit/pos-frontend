@@ -8,8 +8,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './guard/auth.guard';
 import {AuthService} from './services/auth.service';
 import {GeneralInterceptor} from './interceptors/general-interceptor';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import * as $ from 'jquery';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
@@ -20,14 +21,16 @@ import * as $ from 'jquery';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GeneralInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: GeneralInterceptor,
+    //   multi: true
+    // },
     AuthGuard,
     AuthService
   ],

@@ -22,7 +22,7 @@ export class LoginService extends BaseService {
     params = params.set('client_id',this.clientId);
     params = params.set('client_secret',this.clientSecret);
     params = params.set('grant_type','password');
-    return this.httpClient.post<OAuthCredential>(this.apiUrl + '/oauth/token', params).pipe(tap(
+    return this.httpClient.post<OAuthCredential>(this.oAuthpiUrl + '/token', params).pipe(tap(
         oAuthCredential => {
           console.log(oAuthCredential);
           this.authService.setLocalOAuthCredential(oAuthCredential);

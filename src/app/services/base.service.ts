@@ -7,6 +7,8 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class BaseService {
   apiUrl = environment.apiUrl;
+  authApiUrl = environment.authApiUrl;
+  oAuthpiUrl = environment.oAuthApiUrl;
 
   constructor() { }
 
