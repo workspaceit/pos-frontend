@@ -34,10 +34,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let em of employees">
-          <th scope="row">1</th>
+          <th scope="row">{{em.id}}</th>
           <td>{{em.personalInformation.fullName}}</td>
           <td>{{em.personalInformation.createdAt | date: 'd/M/y'}}</td>
-          <td>@{{em.personalInformation.companyRoles[0].COMPANY_ROLE}}</td>
+          <td>{{em.personalInformation.companyRoles[0].companyRole}}</td>
         </tr>
         </tbody>
       </table>
