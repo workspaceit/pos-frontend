@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PasswordResetService} from '../../../services/password-reset.service';
+import {ValidatorUtil} from '../../../util/validator-util';
 
 @Component({
   selector: 'app-reset-password',
@@ -43,14 +44,8 @@ export class ResetPasswordComponent implements OnInit {
       },
       error => {
         let errors = error.error;
-        console.log(errors);
-        for(let er of errors){
-          const param = er.params;
-          const msg = er.msg;
-          if(this.resetPasswordForm.controls[param]){
-            thisComponent.resetPasswordForm.controls[param].setErrors({[param]: msg});
-          }
-        }
+        // console.log(errors);
+        ValidatorUtil.bindValidationError(errors, thisComponent.resetPasswordForm);
         console.log(this.resetPasswordForm.controls);
       }
     );

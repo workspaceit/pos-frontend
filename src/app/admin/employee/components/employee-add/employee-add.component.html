@@ -3,50 +3,102 @@
     <div class="col-lg-12 uni-head">
       <h4>New Employee</h4>
     </div>
+    <div class="col-lg-12">
+    <form [formGroup]="employeeForm">
     <div class="col-lg-6">
       <div class="form-group">
+        <label>Login Email</label>
+        <input type="email" formControlName="authCredential.email" class="form-control"  placeholder="">
+        <small *ngIf="employeeForm.controls['authCredential.email'].hasError('required')
+        && (employeeForm.controls['authCredential.email'].dirty || employeeForm.controls['authCredential.email'].touched)"
+               class="form-text text-alert">Email required
+        </small>
+        <small *ngIf="employeeForm.controls['authCredential.email'].hasError('authCredential.email')" class="form-text text-alert">
+          {{ employeeForm.controls['authCredential.email'].getError('authCredential.email') }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Login Password</label>
+        <input type="password"  class="form-control" formControlName="authCredential.password"  placeholder="">
+        <small *ngIf="employeeForm.controls['authCredential.password'].hasError('required')
+        && (employeeForm.controls['authCredential.password'].dirty || employeeForm.controls['authCredential.password'].touched)"
+               class="form-text text-alert">Password required
+        </small>
+        <small *ngIf="employeeForm.controls['authCredential.password'].hasError('authCredential.password')" class="form-text text-alert">
+          {{ employeeForm.controls['authCredential.password'].getError('authCredential.password') }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control"  placeholder="" formControlName="authCredential.confirmPassword">
+        <small *ngIf="employeeForm.controls['authCredential.confirmPassword'].hasError('required')
+        && (employeeForm.controls['authCredential.confirmPassword'].dirty || employeeForm.controls['authCredential.confirmPassword'].touched)"
+               class="form-text text-alert">Confirm Password required
+        </small>
+        <small *ngIf="employeeForm.controls['authCredential.confirmPassword'].hasError('authCredential.confirmPassword')" class="form-text text-alert">
+          {{ employeeForm.controls['authCredential.confirmPassword'].getError('authCredential.confirmPassword') }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select  class="form-control" formControlName="authCredential.accessRole">
+          <option value="ADMIN">Admin</option>
+          <option value="POST_OPERATOR" selected>Operator</option>
+        </select>
+        <small *ngIf="employeeForm.controls['authCredential.accessRole'].hasError('required')
+        && (employeeForm.controls['authCredential.accessRole'].dirty || employeeForm.controls['authCredential.accessRole'].touched)"
+               class="form-text text-alert">Role required
+        </small>
+        <small *ngIf="employeeForm.controls['authCredential.accessRole'].hasError('authCredential.accessRole')" class="form-text text-alert">
+          {{ employeeForm.controls['authCredential.accessRole'].getError('authCredential.accessRole') }}
+        </small>
+      </div>
+      <div class="form-group">
         <label>Employee name</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small id="emailHelp" class="form-text text-alert">We'll never share your email with anyone else.</small>
+        <input type="text" class="form-control" formControlName="personalInfo.fullName" name="name"  placeholder="">
+        <small *ngIf="employeeForm.controls['personalInfo.fullName'].hasError('required')
+        && (employeeForm.controls['personalInfo.fullName'].dirty || employeeForm.controls['personalInfo.fullName'].touched)"
+               class="form-text text-alert">Name required
+        </small>
+        <small *ngIf="employeeForm.controls['personalInfo.fullName'].hasError('personalInfo.fullName')" class="form-text text-alert">
+          {{ employeeForm.controls['personalInfo.fullName'].getError('personalInfo.fullName') }}
+        </small>
       </div>
       <div class="form-group">
         <label>Employee ID</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label>Contact No</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
+        <input type="text" formControlName="employeeId" class="form-control"  placeholder="" name="id">
+        <!--<small class="form-text text-alert">We'll never share your email with anyone else.</small>-->
       </div>
     </div>
     <div class="col-lg-6">
       <div class="form-group">
-        <label>Address</label>
-        <textarea class="form-control"></textarea>
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
+        <label>Contact Email</label>
+        <input type="email" formControlName="personalInfo.email" class="form-control"  placeholder="">
+        <small *ngIf="employeeForm.controls['personalInfo.email'].hasError('personalInfo.email')" class="form-text text-alert">
+          {{ employeeForm.controls['personalInfo.email'].getError('personalInfo.email') }}
+        </small>
       </div>
       <div class="form-group">
-        <label for="inputEmail4">Role</label>
-        <select  class="form-control">
-          <option selected>Admin</option>
-          <option>...</option>
-        </select>
+        <label>Address</label>
+        <textarea formControlName="personalInfo.address" name="address" class="form-control"></textarea>
+        <small *ngIf="employeeForm.controls['personalInfo.address'].hasError('personalInfo.address')"
+               class="form-text text-alert">
+          {{ employeeForm.controls['personalInfo.address'].getError('personalInfo.address') }}
+        </small>
       </div>
       <div class="form-group">
         <label>Salary</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
+        <input type="number" formControlName="salary" class="form-control" placeholder="" name="salary">
+        <small *ngIf="employeeForm.get('salary').hasError('salary')"
+               class="form-text text-alert">Salary not valid</small>
       </div>
     </div>
     <div class="col-lg-12">
       <hr>
-      <button type="submit" class="btn btn-primary">Add Employee</button>
+      <button type="submit" (click)="addEmployee()" class="btn btn-primary">Add Employee</button>
+    </div>
+    </form>
+    </div>
     </div>
   </div>
-</div>
+
