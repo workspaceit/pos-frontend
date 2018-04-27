@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Supplier list</h4>
+    </div>
+    <div class="col-lg-12">
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Supplier name</th>
+          <th scope="col">ID</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let supplier of suppliers">
+          <td>{{supplier.id}}</td>
+          <td>{{supplier.company.title}}</td>
+          <td>{{supplier.supplierId}}</td>
+          <td>{{supplier.company.email}}</td>
+          <td>{{supplier.company.phone}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

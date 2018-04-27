@@ -17,7 +17,14 @@ export class EmployeeAddComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService) { }
 
   ngOnInit() {
+    const thisComponent = this;
     this.createEmployeeForm();
+    (<any>$('#dob')).datepicker({
+      dateFormat: 'dd-mm-yy'
+    }).on('change', function () {
+      console.log('changed');
+      thisComponent.employeeForm.controls['personalInfo.dob'].setValue((<any>$)(this).val());
+    });
   }
 
   createEmployeeForm() {

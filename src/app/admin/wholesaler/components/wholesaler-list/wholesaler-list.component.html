@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Wholesaler list</h4>
+    </div>
+    <div class="col-lg-12">
+      <table class="table">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Wholesaler name</th>
+          <th scope="col">ID</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let wholesaler of wholesalers">
+          <td>{{wholesaler.id}}</td>
+          <td>{{wholesaler.company.title}}</td>
+          <td>{{wholesaler.wholesalerId}}</td>
+          <td>{{wholesaler.company.email}}</td>
+          <td>{{wholesaler.company.phone}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

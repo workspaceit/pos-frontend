@@ -3,6 +3,7 @@ import {BaseService} from './base.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Employee} from '../models/data/employee';
+import * as moment from 'moment';
 
 @Injectable()
 export class EmployeeService extends BaseService{
@@ -19,7 +20,7 @@ export class EmployeeService extends BaseService{
       .set('authCredential.accessRole', employeeValues['authCredential.accessRole'])
 
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
-      .set('personalInfo.dob', employeeValues['personalInfo.dob'])
+      .set('personalInfo.dob', moment(employeeValues['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'))
       .set('personalInfo.email', employeeValues['personalInfo.email'])
       .set('personalInfo.address', employeeValues['personalInfo.address'])
 

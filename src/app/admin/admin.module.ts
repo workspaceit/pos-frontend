@@ -13,6 +13,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from '../interceptors/auth-interceptor';
 import {AuthService} from '../services/auth.service';
+import { SupplierListComponent } from './supplier/components/supplier-list/supplier-list.component';
 
 @NgModule({
   imports: [

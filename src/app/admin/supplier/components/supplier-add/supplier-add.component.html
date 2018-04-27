@@ -1,40 +1,58 @@
 <div class="container">
   <div class="row clearfix">
-    <div class="col-lg-12 uni-head">
-      <h4>New Supplier</h4>
-    </div>
-    <div class="col-lg-6">
-      <div class="form-group">
-        <label>Supplier Name</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small id="emailHelp" class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label>Supplier ID</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <div class="form-group">
-        <label>Contact</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label>Address</label>
-        <textarea class="form-control"></textarea>
-        <small class="form-text text-alert">We'll never share your email with anyone else.</small>
-      </div>
-    </div>
     <div class="col-lg-12">
-      <hr>
-      <button type="submit" class="btn btn-primary">Add Supplier</button>
+    <form [formGroup]="supplierForm">
+      <div class="col-lg-12 uni-head">
+        <h4>New Supplier</h4>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Supplier Name</label>
+          <input type="text" class="form-control" formControlName="company.title" placeholder="" name="company">
+          <small *ngIf="supplierForm.controls['company.title'].hasError('required')
+            && (supplierForm.controls['company.title'].dirty || supplierForm.controls['company.title'].touched)"
+                 class="form-text text-alert">Supplier name required
+          </small>
+          <small *ngIf="supplierForm.controls['company.title'].hasError('company.title')"
+                 class="form-text text-alert"> {{ supplierForm.controls['company.title'].getError('company.title') }}
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Supplier ID</label>
+            <input type="text" class="form-control" formControlName="supplierId"  placeholder="" name="sid">
+          <small *ngIf="supplierForm.controls['supplierId'].hasError('supplierId')"
+                 class="form-text text-alert"> {{ supplierForm.controls['supplierId'].getError('supplierId') }}
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="company.email"  placeholder="" name="email">
+          <small *ngIf="supplierForm.controls['company.email'].hasError('company.email')"
+                 class="form-text text-alert"> {{ supplierForm.controls['company.email'].getError('company.email') }}
+          </small>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label>Contact</label>
+          <input type="text" class="form-control" formControlName="company.phone"  placeholder="" name="phone">
+          <small *ngIf="supplierForm.controls['company.phone'].hasError('company.phone')"
+                 class="form-text text-alert"> {{ supplierForm.controls['company.phone'].getError('company.phone') }}
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea class="form-control" formControlName="company.address" name="address"></textarea>
+          <small *ngIf="supplierForm.controls['company.address'].hasError('company.address')"
+                 class="form-text text-alert"> {{ supplierForm.controls['company.address'].getError('company.address') }}
+          </small>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <hr>
+        <button (click)="createSupplier()" type="submit" class="btn btn-primary">Add Supplier</button>
+      </div>
+    </form>
     </div>
   </div>
 </div>
