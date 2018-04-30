@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let wholesaler of wholesalers">
+        <tr *ngFor="let wholesaler of wholesalers" routerLink="/admin/wholesaler/update/{{wholesaler.id}}">
           <td>{{wholesaler.id}}</td>
           <td>{{wholesaler.company.title}}</td>
           <td>{{wholesaler.wholesalerId}}</td>

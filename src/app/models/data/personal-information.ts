@@ -9,7 +9,11 @@ export class PersonalInformation {
   email: string;
   phone: string;
   companyRoles: COMPANY_ROLE[];
-  address: Address;
+  address: Address = new Address();
   createdAt: Date;
+
+  constructor(values: Object = {}) {
+    Object.assign(this, values);
+  }
 
 }

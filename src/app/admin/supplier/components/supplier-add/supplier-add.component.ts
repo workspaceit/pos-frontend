@@ -35,8 +35,8 @@ export class SupplierAddComponent implements OnInit {
   createSupplier(){
     console.log(this.supplierForm.value);
     this.supplierService.createSupplier(this.supplierForm.value).subscribe(
-      suuplier => {
-        GrowlUtil.notify('notice', 'Success', 'Supplier Created');
+      supplier => {
+        GrowlUtil.notify({type:'notice', title: 'Success', message: 'Supplier created'});
       }, error => {
         ValidatorUtil.bindValidationError(error.error, this.supplierForm);
       }

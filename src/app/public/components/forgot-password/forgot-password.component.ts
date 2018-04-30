@@ -25,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
   getPasswordResetLink(){
     this.passwordResetService.passwordResetRequest(this.forgotPasswordForm.value.email).subscribe(
       (data) =>  {
-        GrowlUtil.notify('notice', 'Success', data.msg);
+        GrowlUtil.notify({type: 'notice', title: 'Success', message: data.msg});
       },
       (error) =>  {
         this.forgotPasswordForm.controls.email.setErrors({'errorMsg': error.error[0].msg});

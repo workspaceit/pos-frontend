@@ -6,6 +6,7 @@ import { SupplierInfoComponent } from './components/supplier-info/supplier-info.
 import { SupplierAddComponent } from './components/supplier-add/supplier-add.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SupplierListComponent} from './components/supplier-list/supplier-list.component';
+import { SupplierUpdateComponent } from './components/supplier-update/supplier-update.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import {SupplierListComponent} from './components/supplier-list/supplier-list.co
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [SupplierInfoComponent, SupplierAddComponent, SupplierListComponent]
+  declarations: [SupplierInfoComponent, SupplierAddComponent, SupplierListComponent, SupplierUpdateComponent]
 })
 export class SupplierModule { }

@@ -17,7 +17,6 @@ export class EmployeeService extends BaseService{
       .set('authCredential.email',employeeValues['authCredential.email'])
       .set('authCredential.password', employeeValues['authCredential.password'])
       .set('authCredential.confirmPassword', employeeValues['authCredential.confirmPassword'])
-      .set('authCredential.accessRole', employeeValues['authCredential.accessRole'])
 
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
       .set('personalInfo.dob', moment(employeeValues['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'))
@@ -25,6 +24,7 @@ export class EmployeeService extends BaseService{
       .set('personalInfo.address', employeeValues['personalInfo.address'])
 
       .set('employeeId', employeeValues.employeeId)
+      .set('type', employeeValues.type)
       .set('salary', employeeValues.salary);
 
     return this.httpClient.post<Employee>(this.authApiUrl + '/api/employee/create', params);
@@ -32,6 +32,24 @@ export class EmployeeService extends BaseService{
 
   public getEmployees(): Observable<Employee[]>{
       return this.httpClient.get<Employee[]>(this.authApiUrl + '	/api/employee/get-all');
+  }
+
+  public getEmployeeById(employeeId: number): Observable<Employee>{
+    return this.httpClient.get<Employee>(this.authApiUrl + '	/api/employee/get-by-id/' + employeeId);
+  }
+
+  public updateEmployee(employeeValues, employeeId): Observable<Employee> {
+    let params = new HttpParams()
+      .set('type', employeeValues['type'])
+
+      .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
+      .set('personalInfo.dob', employeeValues['personalInfo.dob'])
+      .set('personalInfo.address', employeeValues['personalInfo.address'])
+
+      .set('employeeId', employeeValues.employeeId)
+      .set('salary', employeeValues.salary);
+
+    return this.httpClient.post<Employee>(this.authApiUrl + '/api/employee/update/' + employeeId, params);
   }
 
 }

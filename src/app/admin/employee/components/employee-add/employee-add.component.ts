@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {EmployeeService} from '../../../../services/employee.service';
 import {ValidatorUtil} from '../../../../util/validator-util';
 import {GrowlUtil} from '../../../../util/growl-util';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-employee-add',
@@ -14,7 +15,7 @@ export class EmployeeAddComponent implements OnInit {
 
   employeeForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService) { }
+  constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit() {
     const thisComponent = this;
@@ -31,6 +32,7 @@ export class EmployeeAddComponent implements OnInit {
     this.employeeForm = this.formBuilder.group({
       'employeeId': [''],
       'salary': [''],
+      'type': ['ADMIN', Validators.required],
 
       'personalInfo.fullName': ['', Validators.required],
       'personalInfo.address': [''],
@@ -39,8 +41,7 @@ export class EmployeeAddComponent implements OnInit {
 
       'authCredential.email': ['', Validators.required],
       'authCredential.password': ['', Validators.required],
-      'authCredential.confirmPassword': ['', Validators.required],
-      'authCredential.accessRole': ['ADMIN', Validators.required]
+      'authCredential.confirmPassword': ['', Validators.required]
     });
 
     console.log(this.employeeForm.controls);
@@ -50,8 +51,7 @@ export class EmployeeAddComponent implements OnInit {
     console.log(this.employeeForm.value);
     this.employeeService.createEmployee(this.employeeForm.value).subscribe(
       employee => {
-        console.log('hi there');
-        GrowlUtil.notify('notice', 'Success', 'Employee Created');
+        GrowlUtil.notify({type:'notice', title: 'Success', message: 'Employee created'});
       },
       error => {
         console.log(error);

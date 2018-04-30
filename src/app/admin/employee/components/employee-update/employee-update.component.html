@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Update Employee</h4>
+    </div>
+    <div class="col-lg-12">
+      <form [formGroup]="employeeForm">
+        <div class="col-lg-6">
+
+          <div class="form-group">
+            <label>Employee name</label>
+            <input type="text" class="form-control" formControlName="personalInfo.fullName" name="name"  placeholder="">
+            <small *ngIf="employeeForm.controls['personalInfo.fullName'].hasError('required')
+              && (employeeForm.controls['personalInfo.fullName'].dirty || employeeForm.controls['personalInfo.fullName'].touched)"
+                   class="form-text text-alert">Name required
+            </small>
+            <small *ngIf="employeeForm.controls['personalInfo.fullName'].hasError('personalInfo.fullName')" class="form-text text-alert">
+              {{ employeeForm.controls['personalInfo.fullName'].getError('personalInfo.fullName') }}
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Role</label>
+            <select  class="form-control" formControlName="type">
+              <option value="ADMIN">Admin</option>
+              <option value="OFFICER">Officer</option>
+            </select>
+            <small *ngIf="employeeForm.controls['type'].hasError('required')
+              && (employeeForm.controls['type'].dirty || employeeForm.controls['type'].touched)"
+                   class="form-text text-alert">Role required
+            </small>
+            <small *ngIf="employeeForm.controls['type'].hasError('type')" class="form-text text-alert">
+              {{ employeeForm.controls['type'].getError('type') }}
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="text" class="form-control" formControlName="personalInfo.dob" name="dob" id="dob" placeholder="">
+            <small *ngIf="employeeForm.controls['personalInfo.dob'].hasError('required')
+        && (employeeForm.controls['personalInfo.dob'].dirty || employeeForm.controls['personalInfo.dob'].touched)"
+                   class="form-text text-alert">Date of birth required
+            </small>
+            <small *ngIf="employeeForm.controls['personalInfo.dob'].hasError('required')
+        && (employeeForm.controls['personalInfo.dob'].dirty || employeeForm.controls['personalInfo.dob'].touched)"
+                   class="form-text text-alert">{{ employeeForm.controls['personalInfo.dob'].getError('personalInfo.dob') }}
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Employee ID</label>
+            <input type="text" formControlName="employeeId" class="form-control"  placeholder="" name="id">
+            <!--<small class="form-text text-alert">We'll never share your email with anyone else.</small>-->
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Address</label>
+            <textarea formControlName="personalInfo.address" name="address" class="form-control"></textarea>
+            <small *ngIf="employeeForm.controls['personalInfo.address'].hasError('personalInfo.address')"
+                   class="form-text text-alert">
+              {{ employeeForm.controls['personalInfo.address'].getError('personalInfo.address') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Salary</label>
+            <input type="number" formControlName="salary" class="form-control" placeholder="" name="salary">
+            <small *ngIf="employeeForm.get('salary').hasError('salary')"
+                   class="form-text text-alert">Salary not valid</small>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <hr>
+          <button type="submit" (click)="updateEmployee()" class="btn btn-primary">Update Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -38,7 +38,7 @@ export class WholesalerAddComponent implements OnInit {
     console.log(this.wholesalerForm.value);
     this.wholesalerService.createWholesaler(this.wholesalerForm.value).subscribe(
       wholesaler => {
-        GrowlUtil.notify('notice', 'Success', 'Wholesaler Created');
+        GrowlUtil.notify({type:'notice', title: 'Success', message: 'Wholesaler created'});
       }, error => {
         ValidatorUtil.bindValidationError(error.error, this.wholesalerForm);
       }

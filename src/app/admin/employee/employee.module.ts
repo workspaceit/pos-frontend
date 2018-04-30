@@ -5,6 +5,8 @@ import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
 import { EmployeeAddComponent } from './components/employee-add/employee-add.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { EmployeeUpdateComponent } from './components/employee-update/employee-update.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [EmployeeListComponent, EmployeeAddComponent]
+  declarations: [EmployeeListComponent, EmployeeAddComponent, EmployeeUpdateComponent]
 })
 export class EmployeeModule { }

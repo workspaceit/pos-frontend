@@ -23,5 +23,20 @@ export class WholesalerService extends BaseService {
   public getWholesalers(): Observable<Wholesaler[]>{
     return this.httpClient.get<Wholesaler[]>(this.authApiUrl + '	/api/wholesaler/get-all');
   }
+  public getWholesalerById(wholesalerId: number): Observable<Wholesaler>{
+    return this.httpClient.get<Wholesaler>(this.authApiUrl + '	/api/wholesaler/get-by-id/' + wholesalerId);
+  }
+
+  public updateWholesaler(wholesalerValues, wholesalerId): Observable<Wholesaler> {
+    let params = new HttpParams()
+      .set('wholesalerId',wholesalerValues['wholesalerId'])
+      .set('company.title', wholesalerValues['company.title'])
+      .set('company.address', wholesalerValues['company.address'])
+      .set('company.phone', wholesalerValues['company.phone'])
+      .set('company.email', wholesalerValues['company.email']);
+
+    return this.httpClient.post<Wholesaler>(this.authApiUrl + '/api/wholesaler/update/' + wholesalerId, params);
+  }
+
 
 }

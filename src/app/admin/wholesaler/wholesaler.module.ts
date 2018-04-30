@@ -6,6 +6,7 @@ import { WholesalerInfoComponent } from './components/wholesaler-info/wholesaler
 import { WholesalerAddComponent } from './components/wholesaler-add/wholesaler-add.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { WholesalerListComponent } from './components/wholesaler-list/wholesaler-list.component';
+import { WholesalerUpdateComponent } from './components/wholesaler-update/wholesaler-update.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { WholesalerListComponent } from './components/wholesaler-list/wholesaler
     WholesalerRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [WholesalerInfoComponent, WholesalerAddComponent, WholesalerListComponent]
+  declarations: [WholesalerInfoComponent, WholesalerAddComponent, WholesalerListComponent, WholesalerUpdateComponent]
 })
 export class WholesalerModule { }

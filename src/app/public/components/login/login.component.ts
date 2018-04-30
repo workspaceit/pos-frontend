@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['admin/dashboard']);
       },
       error => {
-        GrowlUtil.notify('error', 'Error!' , error.error.error_description);
+        GrowlUtil.notify({type:'error', title:'Error!' , message: error.error.error_description});
         console.log(error.error.error_description);
       });
   }
