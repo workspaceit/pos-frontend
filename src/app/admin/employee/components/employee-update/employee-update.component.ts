@@ -57,7 +57,6 @@ export class EmployeeUpdateComponent implements OnInit {
     this.employeeService.getEmployeeById(this.employeeId).subscribe(
       employee => {
         this.employee = employee;
-        console.log(employee);
         this.createEmployeeForm();
         (<any>$('#dob')).datepicker({
           dateFormat: 'dd-mm-yy'
@@ -76,9 +75,7 @@ export class EmployeeUpdateComponent implements OnInit {
     console.log(this.employeeForm.value);
     dob = this.employeeForm.value['personalInfo.dob'] !== ''?
       moment(this.employeeForm.value['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'): '';
-    console.log(dob);
     this.employeeForm.value['personalInfo.dob'] = dob;
-    console.log(this.employeeForm.value);
     this.employeeService.updateEmployee(this.employeeForm.value, this.employeeId).subscribe(
       data => {
         GrowlUtil.notifyAndNavigate({type:'notice', title: 'Success', message: 'Employee updated'}, '/admin/employee/list',

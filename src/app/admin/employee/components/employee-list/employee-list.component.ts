@@ -10,6 +10,7 @@ import {Employee} from '../../../../models/data/employee';
 })
 export class EmployeeListComponent implements OnInit {
 
+  type = 'all';
   employees: Employee[];
 
   constructor(private employeeService: EmployeeService) { }
@@ -19,14 +20,30 @@ export class EmployeeListComponent implements OnInit {
   }
 
   getEmployees() {
-    this.employeeService.getEmployees().subscribe(
-      data => {
-        this.employees = data;
-      },
-      error => {
+    if(this.type === 'all') {
+      this.employeeService.getEmployees().subscribe(
+        data => {
+          this.employees = data;
+        },
+        error => {
 
-      }
-    );
+        }
+      );
+    }
+    else {
+      this.employeeService.getEmployeesByType(this.type).subscribe(
+        data => {
+          this.employees = data;
+        },
+        error => {
+
+        }
+      );
+    }
+  }
+
+  typeChanged(event) {
+    this.getEmployees();
   }
 
 }

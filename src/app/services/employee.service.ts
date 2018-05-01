@@ -34,6 +34,10 @@ export class EmployeeService extends BaseService{
       return this.httpClient.get<Employee[]>(this.authApiUrl + '	/api/employee/get-all');
   }
 
+  public getEmployeesByType(type: string): Observable<Employee[]>{
+    return this.httpClient.get<Employee[]>(this.authApiUrl + '	/api/employee/get-by-type/' + type);
+  }
+
   public getEmployeeById(employeeId: number): Observable<Employee>{
     return this.httpClient.get<Employee>(this.authApiUrl + '	/api/employee/get-by-id/' + employeeId);
   }

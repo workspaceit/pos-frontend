@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('auth interceptor');
-    console.log(this.authService.getLocalOAuthCredential().access_token);
+    // console.log(this.authService.getLocalOAuthCredential().access_token);
     const authReq = req.clone({
       headers: req.headers.set('Authorization', 'Bearer ' + this.authService.getLocalOAuthCredential().access_token )
     });

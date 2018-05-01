@@ -25,7 +25,6 @@ export class SupplierUpdateComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       params => {
         this.supplierId = params['supplierId'];
-        console.log(this.supplierId);
         this.getSupplier();
       }
     );
@@ -46,10 +45,9 @@ export class SupplierUpdateComponent implements OnInit {
   getSupplier() {
     this.supplierService.getSupplierById(this.supplierId).subscribe(
       supplier => {
-        console.log(supplier);
           this.supplier = supplier;
           this.createForm();
-          console.log(this.supplier);
+          // console.log(this.supplier);
         },
         error => {
         }
