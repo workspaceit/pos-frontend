@@ -13,18 +13,22 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('auth interceptor');
-    // console.log(this.authService.getLocalOAuthCredential().access_token);
-    const authReq = req.clone({
-      headers: req.headers.set('Authorization', 'Bearer ' + this.authService.getLocalOAuthCredential().access_token )
-    });
+    let authReq: HttpRequest<any>;
+    if(req.url.includes('auth')){
+      authReq = req.clone({
+        headers: req.headers.set('Authorization', 'Bearer ' + this.authService.getLocalOAuthCredential().access_token)
+      });
+    }
+    else {
+      authReq = req.clone();
+    }
     return next.handle(authReq).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-        // console.log(1);
         // do stuff with response if you want
       }
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
-        // console.log(err.status);
+        console.log(err);
         if (err.status === 401) {
           this.authService.removeLocalData();
           this.router.navigate(['/login']);

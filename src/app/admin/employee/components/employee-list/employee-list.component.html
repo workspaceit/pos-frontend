@@ -29,16 +29,16 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Employee name</th>
-          <th scope="col">Joining date</th>
           <th scope="col">Role</th>
+          <th scope="col">Created At</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let em of employees" routerLink="/admin/employee/update/{{em.id}}">
           <th scope="row">{{em.id}}</th>
           <td>{{em.personalInformation.fullName}}</td>
-          <td>{{em.personalInformation.createdAt | date: 'd/M/y'}}</td>
           <td>{{em.type}}</td>
+          <td>{{em.personalInformation.createdAt | date: 'd/M/y'}}</td>
         </tr>
         </tbody>
       </table>

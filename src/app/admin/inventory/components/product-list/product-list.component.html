@@ -36,98 +36,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr *ngFor="let product of products">
               <th scope="row">1</th>
               <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.category.name }}</td>
               <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
+              <td>{{ product.totalAvailableQuantity }}</td>
               <td>235/=</td>
               <td>
                 <button class="btn btn-success btn-sm">Sell</button>
                 <button class="btn btn-danger btn-sm">Damaged</button>
               </td>
             </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
-              <td>BLEU de CHANEL</td>
-              <td>Perfume</td>
-              <td><span class="badge badge-success">Ready to sell</span></td>
-              <td>85</td>
-              <td>235/=</td>
-              <td>
-                <button class="btn btn-success btn-sm">Sell</button>
-                <button class="btn btn-danger btn-sm">Damaged</button>
-              </td>
-            </tr>
-
             </tbody>
           </table>
           <div class="row">

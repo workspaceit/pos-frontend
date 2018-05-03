@@ -14,12 +14,14 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from '../interceptors/auth-interceptor';
 import {AuthService} from '../services/auth.service';
 import { SupplierListComponent } from './supplier/components/supplier-list/supplier-list.component';
+import {DropzoneModule} from 'ngx-dropzone-wrapper';
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    DropzoneModule
   ],
   providers: [
     {

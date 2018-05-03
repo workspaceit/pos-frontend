@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from './base.service';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Employee} from '../models/data/employee';
 import * as moment from 'moment';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class EmployeeService extends BaseService{
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
     super();
   }
 
@@ -31,7 +32,7 @@ export class EmployeeService extends BaseService{
   }
 
   public getEmployees(): Observable<Employee[]>{
-      return this.httpClient.get<Employee[]>(this.authApiUrl + '	/api/employee/get-all');
+    return this.httpClient.get<Employee[]>(this.authApiUrl + '	/api/employee/get-all');
   }
 
   public getEmployeesByType(type: string): Observable<Employee[]>{

@@ -3,40 +3,73 @@
     <div class="col-lg-12 uni-head">
       <h4>New product</h4>
     </div>
-    <div class="col-lg-6">
-      <div class="form-group">
-        <label>Product Name</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small id="emailHelp" class="form-text text-alert">For alert use text-muted/text-alert/text-success</small>
-      </div>
-      <div class="form-group">
-        <label>Category</label>
-        <select class="form-control select-cstm">
-          <option selected="selected">orange</option>
-          <option>white</option>
-          <option>purple</option>
-        </select>
-        <small class="form-text text-alert">For alert use text-muted/text-alert/text-success</small>
-      </div>
-      <div class="form-group">
-        <label>Image</label>
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile">
-          <label class="custom-file-label" for="customFile">Choose Image</label>
-          <small class="form-text text-alert">For alert use text-muted/text-alert/text-success</small>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Barcode</label>
-        <input type="text" class="form-control"  placeholder="">
-        <small class="form-text text-alert">For alert use text-muted/text-alert/text-success</small>
-      </div>
-    </div>
-
     <div class="col-lg-12">
-      <hr>
-      <button type="submit" class="btn btn-primary">Add new product</button>
+      <form [formGroup]="productAddForm">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" class="form-control" placeholder="" formControlName="name" name="producttitle">
+            <small *ngIf="productAddForm.get('name').hasError('required')
+            && (productAddForm.get('name').dirty || productAddForm.get('name').touched)"
+                   class="form-text text-alert">Product name required
+            </small>
+            <small *ngIf="productAddForm.get('name').hasError('name')" class="form-text text-alert">
+              {{ productAddForm.get('name').getError('name') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select class="form-control select-cstm" formControlName="categoryId">
+              <option selected="0">--Select Category--</option>
+              <option *ngFor="let category of categories" value="{{category.id}}">{{ category.name }}</option>
+            </select>
+            <small *ngIf="productAddForm.get('categoryId').hasError('categoryId')" class="form-text text-alert">
+              {{ productAddForm.get('categoryId').getError('categoryId') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Image</label>
+            <div class="custom-file">
+              <dropzone #dz [config]="dropzoneConfig" (complete)="onUploadComplete($event,dz)"
+                        [message]="'Click or drag images here to upload'" (error)="onUploadError($event)"
+                        (success)="onUploadSuccess($event)">
+              </dropzone>
+              <div id="dropzone-preview"></div>
+              <small *ngIf="productAddForm.get('imageToken').hasError('imageToken')" class="form-text text-alert">
+                {{ productAddForm.get('imageToken').getError('imageToken') }}
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Weight</label>
+            <input type="number" class="form-control"  placeholder="" formControlName="weight">
+            <small *ngIf="productAddForm.get('weight').hasError('weight')" class="form-text text-alert">
+              Please provide a valid input
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Weight Unit</label>
+            <select class="form-control select-cstm" formControlName="weightUnit">
+              <option value="KG" selected>KiloGram</option>
+              <option value="GM">Gram</option>
+            </select>
+            <small *ngIf="productAddForm.get('weightUnit').hasError('weightUnit')" class="form-text text-alert">
+              {{ productAddForm.get('weightUnit').getError('weightUnit') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Barcode</label>
+            <input type="text" class="form-control"  placeholder="" formControlName="barcode" name="barcode">
+            <small *ngIf="productAddForm.get('barcode').hasError('barcode')" class="form-text text-alert">
+              {{ productAddForm.get('barcode').getError('barcode') }}
+            </small>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <hr>
+          <button (click)="addProduct()" type="button" class="btn btn-primary">Add new product</button>
+        </div>
+      </form>
     </div>
-
   </div>
 </div>
