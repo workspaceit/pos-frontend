@@ -23,7 +23,7 @@ export class GeneralInterceptor implements HttpInterceptor{
         if (err.status === 401) {
           // not logged in
           this.authService.removeLocalData();
-          this.router.navigate(['/login']);
+          this.router.navigate(['login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
         }
       }
     });

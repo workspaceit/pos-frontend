@@ -11,11 +11,18 @@ import {GeneralInterceptor} from './interceptors/general-interceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import * as $ from 'jquery';
 import {CommonModule} from '@angular/common';
+import { InvalidMessageDirective } from './directives/invalid-message.directive';
+import { InvalidTypeDirective } from './directives/invalid-type.directive';
+import { FourZeroFourComponent } from './components/four-zero-four/four-zero-four.component';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InvalidMessageDirective,
+    InvalidTypeDirective,
+    FourZeroFourComponent
   ],
   imports: [
     BrowserModule,

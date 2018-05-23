@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
         console.log(err);
         if (err.status === 401) {
           this.authService.removeLocalData();
-          this.router.navigate(['/login']);
+          this.router.navigate(['login'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
         }
       }
     });
