@@ -27,18 +27,27 @@
       <table class="table">
         <thead class="thead-dark">
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Employee name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
           <th scope="col">Role</th>
-          <th scope="col">Created At</th>
+          <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let em of employees" routerLink="/admin/employee/update/{{em.id}}">
-          <th scope="row">{{em.id}}</th>
-          <td>{{em.personalInformation.fullName}}</td>
-          <td>{{em.type}}</td>
-          <td>{{em.personalInformation.createdAt | date: 'd/M/y'}}</td>
+        <tr *ngFor="let employee of employees" >
+          <td>{{employee.personalInformation.fullName}}</td>
+          <td>{{employee.personalInformation.email}}</td>
+          <td>{{employee.personalInformation.phone}}</td>
+          <td>{{employee.type}}</td>
+          <td>
+           <!-- <button  class="btn btn-success btn-sm"  >
+              <i class="fa fa-id-card"></i>
+            </button>-->
+            <button  class="btn btn-success btn-sm" routerLink="/admin/employee/update/{{employee.id}}" >
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
