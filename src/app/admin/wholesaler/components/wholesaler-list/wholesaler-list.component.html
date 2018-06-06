@@ -12,15 +12,24 @@
           <th scope="col">ID</th>
           <th scope="col">Email</th>
           <th scope="col">Phone</th>
+          <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let wholesaler of wholesalers" routerLink="/admin/wholesaler/update/{{wholesaler.id}}">
+        <tr *ngFor="let wholesaler of wholesalers">
           <td>{{wholesaler.id}}</td>
           <td>{{wholesaler.company.title}}</td>
           <td>{{wholesaler.wholesalerId}}</td>
           <td>{{wholesaler.company.email}}</td>
           <td>{{wholesaler.company.phone}}</td>
+          <td>
+            <button  class="btn btn-success btn-sm" routerLink="/admin/wholesaler/details/{{wholesaler.id}}" >
+              <i class="fa fa-id-card"></i>
+            </button>
+            <button  class="btn btn-success btn-sm" routerLink="/admin/wholesaler/update/{{wholesaler.id}}" >
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
