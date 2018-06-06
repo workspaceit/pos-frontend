@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Company Information</h4>
+    </div>
+    <div class="col-lg-12">
+    <form [formGroup]="shopInfoForm">
+
+
+      <div class="form-group">
+        <label>Company name</label>
+        <input type="text"  class="form-control" formControlName="name"  placeholder="">
+        <small *ngIf="shopInfoForm.controls['name'].hasError('required')
+        && (shopInfoForm.controls['name'].dirty || shopInfoForm.controls['name'].touched)" class="form-text text-alert">Name is Required.
+        </small>
+        <small *ngIf="shopInfoForm.controls['name'].hasError('name')" class="form-text text-alert">
+          {{ shopInfoForm.controls['name'].getError('name') }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea class="form-control" formControlName="address"></textarea>
+        <small *ngIf="shopInfoForm.controls['address'].hasError('required')
+        && (shopInfoForm.controls['address'].dirty || shopInfoForm.controls['address'].touched)" class="form-text text-alert">Address is Required.
+        </small>
+        <small *ngIf="shopInfoForm.controls['address'].hasError('address')" class="form-text text-alert">
+          {{ shopInfoForm.controls['address'].getError('address') }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" class="form-control"  placeholder="">
+        <small *ngIf="shopInfoForm.controls['email'].hasError('required')
+        && (shopInfoForm.controls['email'].dirty || shopInfoForm.controls['email'].touched)" class="form-text text-alert">Email is Required.
+        </small>
+        <small *ngIf="shopInfoForm.controls['email'].hasError('email')" class="form-text text-alert">
+          {{ shopInfoForm.controls['email'].getError('email') }}
+        </small>
+      </div>
+
+
+      <div class="form-group">
+        <label>Image</label>
+        <div class="custom-file">
+          <dropzone #dz [config]="dropzoneConfig" (complete)="onUploadComplete($event,dz)"
+                    [message]="'Click or drag images here to upload'" (error)="onUploadError($event)"
+                    (success)="onUploadSuccess($event)">
+          </dropzone>
+
+          <div id="dropzone-preview"></div>
+            <small *ngIf="shopInfoForm.get('imageToken').hasError('imageToken')" class="form-text text-alert">
+              {{ shopInfoForm.get('imageToken').getError('imageToken') }}
+            </small>
+          <div *ngIf="shopInfoForm.get('logo').value!=''" >
+            <img src="{{imgUrl + shopInfoForm.get('logo').value}}">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="text" formControlName="phone" class="form-control"  placeholder="">
+        <small *ngIf="shopInfoForm.controls['phone'].hasError('required')
+        && (shopInfoForm.controls['phone'].dirty || shopInfoForm.controls['phone'].touched)" class="form-text text-alert">phone is Required.
+      </small>
+        <small *ngIf="shopInfoForm.controls['phone'].hasError('phone')" class="form-text text-alert">
+          {{ shopInfoForm.controls['phone'].getError('phone') }}
+        </small>
+      </div>
+
+    <div class="col-lg-12">
+      <hr>
+      <button type="submit" (click)="addShopInfo()" class="btn btn-primary">Update Shop Information</button>
+    </div>
+    </form>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from '../../../../models/data/product';
 import {ProductService} from '../../../../services/product.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -11,6 +12,7 @@ import {ProductService} from '../../../../services/product.service';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
+  imgUrl= environment.imgUrl;
 
   limit = 10;
   offset = 1;
@@ -25,6 +27,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getPaginatedProducts(this.limit, this.offset).subscribe(
       data => {
         this.products = data.result;
+        console.log(data.result);
       },
       error => {
 

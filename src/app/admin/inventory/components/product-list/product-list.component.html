@@ -4,7 +4,7 @@
       <h4>Products</h4>
     </div>
     <div class="col-lg-12">
-      <div class="row justify-content-start">
+      <!--<div class="row justify-content-start">
         <div class="col-4">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Search Products" aria-label="Recipient's username"
@@ -19,7 +19,7 @@
             <option>Select by categoory</option>
           </select>
         </div>
-      </div>
+      </div>-->
       <div class="row clearfix">
         <div class="col-lg-12">
           <table class="table table-bordered">
@@ -38,12 +38,12 @@
             <tbody>
             <tr *ngFor="let product of products">
               <th scope="row">1</th>
-              <td><img src="./assets/img/product.png" width="50"> </td>
+              <td><ng-container *ngIf="product.image!='';else elseBlock"><img src="{{imgUrl + product.image}}" width="50"></ng-container><ng-template #elseBlock><img src="http://via.placeholder.com/90x60"></ng-template></td>
               <td>{{ product.name }}</td>
               <td>{{ product.category.name }}</td>
               <td><span class="badge badge-success">Ready to sell</span></td>
               <td>{{ product.totalAvailableQuantity }}</td>
-              <td>235/=</td>
+              <td><ng-container *ngIf="product.maxPrice==product.minPrice; else rangeBlock">{{product.maxPrice}}</ng-container><ng-template #rangeBlock>{{product.minPrice}} - {{product.maxPrice}}</ng-template></td>
               <td>
                 <button class="btn btn-success btn-sm">Sell</button>
                 <button class="btn btn-danger btn-sm">Damaged</button>

@@ -6,7 +6,6 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { EmployeeAddComponent } from './components/employee-add/employee-add.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EmployeeUpdateComponent } from './components/employee-update/employee-update.component';
-import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [

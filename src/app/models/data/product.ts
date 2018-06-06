@@ -10,6 +10,8 @@ export class Product {
   image: string;
   barcode: string;
   totalAvailableQuantity: number;
+  maxPrice: number;
+  minPrice: number;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

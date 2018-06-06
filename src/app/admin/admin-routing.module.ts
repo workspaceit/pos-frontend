@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {DashboardLayoutComponent} from './components/dashboard-layout/dashboard-layout.component';
 import {InnerLayoutComponent} from './components/inner-layout/inner-layout.component';
-import {CompanyInfoComponent} from './components/company-info/company-info.component';
 
 const routes: Routes = [
   { path: '', component: InnerLayoutComponent,
@@ -15,7 +14,7 @@ const routes: Routes = [
       { path: 'accounts', loadChildren: './accounts/accounts.module#AccountsModule' },
       { path: 'sale', loadChildren: './sale/sale.module#SaleModule' },
       { path: 'wholesaler', loadChildren: './wholesaler/wholesaler.module#WholesalerModule' },
-      { path: 'company-info', component: CompanyInfoComponent },
+      { path: 'shop', loadChildren: './shop/shop.module#ShopModule' },
     ]
   },
   { path: 'dashboard', component: DashboardLayoutComponent,
