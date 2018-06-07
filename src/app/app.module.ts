@@ -17,6 +17,7 @@ import { FourZeroFourComponent } from './components/four-zero-four/four-zero-fou
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { FourZeroFourComponent } from './components/four-zero-four/four-zero-fou
     FormsModule,
     ReactiveFormsModule,
     CommonModule
+
   ],
   providers: [
     // {

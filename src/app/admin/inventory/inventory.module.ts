@@ -9,15 +9,19 @@ import {DropzoneModule} from 'ngx-dropzone-wrapper';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ProductUpdateComponent } from './components/product-update/product-update.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-
+import { ProductAutoCompleteComponent } from './components/product-auto-complete/product-auto-complete.component';
+import { FormsModule } from '@angular/forms';
+import {TypeaheadModule} from 'ngx-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
     InventoryRoutingModule,
     DropzoneModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule,
+    TypeaheadModule.forRoot()
   ],
-  declarations: [ProductListComponent, ProductAddComponent, ProductPurchaseComponent, ProductUpdateComponent]
+  declarations: [ProductListComponent, ProductAddComponent, ProductPurchaseComponent, ProductUpdateComponent, ProductAutoCompleteComponent]
 })
 export class InventoryModule { }

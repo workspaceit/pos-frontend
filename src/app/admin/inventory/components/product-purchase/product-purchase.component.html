@@ -5,6 +5,7 @@
         <div class="form-group">
           <label>Supplier</label>
           <input  class="form-control autocomplete-box" placeholder="Supplier name">
+
         </div>
       </div>
       <div class="bg-white wholesale-info-div">
@@ -17,11 +18,11 @@
         <table class="table">
           <tr>
             <td class="lg-sub-txt">Due:</td>
-            <td class="lg-sub-txt text-right">1,500tk</td>
+            <td class="lg-sub-txt text-right"></td>
           </tr>
           <tr>
             <td class="lg-sub-txt">Balance:</td>
-            <td class="lg-sub-txt text-right">10,250tk</td>
+            <td class="lg-sub-txt text-right"></td>
           </tr>
         </table>
         <button class="btn-detail-sale">Details</button>
@@ -32,23 +33,28 @@
       <div class="bg-white">
         <div class="ui-widget">
           <!--                        <label for="tags">Tags: </label>-->
-          <input id="tags" class="form-control" placeholder="Product name/ Barcode" style="margin-bottom: 15px;">
+          <!--<input id="tags" class="form-control" placeholder="Product name/ Barcode" style="margin-bottom: 15px;">-->
+          <app-product-auto-complete></app-product-auto-complete>
         </div>
         <div class="products-container-scroll">
 
           <div>
-            <div class="row product-bg">
+            <div class="row product-bg"  *ngFor="let product of cart.products; let i = index">
               <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
+                <p class="product-txt-title" (click)="showProductModal(i)" >{{product.name}}</p>
                 <div class="row clearfix purchase_txt">
                   <div class="col col-lg-4">
-                    <input type="text" class="form-control price_tf" placeholder="price">
+                    <input type="number" [(ngModel)]="cart.invetoryForms[i].purchasePrice" class="form-control price_tf" placeholder="price" >
                   </div>
                   <div class="col">
-
+                      <input type='hidden' value='{{product.id}}'  />
                       <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
+                      <input type='number' [(ngModel)]="cart.invetoryForms[i].purchaseQuantity" name='quantity' value='0' class='qty' />
                       <input type='button' value='+' class='qtyplus' field='quantity' />
+
+                  </div>
+                  <div class="col col-lg-2 text-right">
+                    <label class="product-txt-title">475 TK</label>
 
                   </div>
                 </div>
@@ -56,172 +62,10 @@
               </div>
               <div class="col col-lg-2 text-right">
                 <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
+                <a href="javascript:void(0)"><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px" (click)="removeProductFromCart(i)"></i></a>
                 <!-- </div> -->
               </div>
-            </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
             </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div><div class="row product-bg">
-            <div class="col">
-              <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-              <div class="row clearfix purchase_txt">
-                <div class="col col-lg-4">
-                  <input type="text" class="form-control price_tf" placeholder="price">
-                </div>
-                <div class="col">
-
-                    <input type='button' value='-' class='qtyminus' field='quantity' />
-                    <input type='text' name='quantity' value='0' class='qty' />
-                    <input type='button' value='+' class='qtyplus' field='quantity' />
-
-                </div>
-              </div>
-
-            </div>
-            <div class="col col-lg-2 text-right">
-              <!-- <div class="row"> -->
-              <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-              <!-- </div> -->
-            </div>
-          </div>
           </div>
 
 
@@ -303,7 +147,7 @@
 
   </div>
 </div>
-<div class="modal fade" id="product1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -314,37 +158,32 @@
       </div>
       <div class="modal-body clearfix">
         <div class="col-md-4">
-          <img src="./assets/img/product1.png" class="img-fluid">
+          <img
+            onError="this.src='assets/img/image-not-available-90x60.png'"
+            src="{{imgUrl+modalProductDetails.image}}" class="img-fluid">
         </div>
         <div class="col-md-8">
           <p class="small-para" style="font-size: 18px;font-weight: 500;margin-bottom: 0px">Product Name :</p>
-          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">Northstar Converse</p>
+          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.name}}</p>
           <p class="small-para" style="font-size: 18px;font-weight: 500">Bar Code :</p>
-          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">56898874</p>
+          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.barcode}}</p>
         </div>
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-6">
-              <p class="medium-para-01">Costing Price :</p>
+              <p class="medium-para-01">Price :</p>
             </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">3000tk</p>
+
+            <div *ngIf="modalProductDetails.minPrice!==modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.minPrice}} - {{modalProductDetails.maxPrice}}</p>
             </div>
-            <div class="col-md-6">
-              <p class="medium-para-01">Discount :</p>
+            <div *ngIf="modalProductDetails.minPrice===modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.maxPrice}} TK</p>
             </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">200tk</p>
-            </div>
-            <div class="col-md-6">
-              <p class="medium-para-01">Sales Rate :</p>
-            </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">2780tk</p>
-            </div>
+
             <div class="col-md-12" style="text-align: center;margin-top: 20px">
               <p class="small-para">In Stokes</p>
-              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">15</p>
+              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">{{modalProductDetails.totalAvailableQuantity}}</p>
             </div>
           </div>
         </div>

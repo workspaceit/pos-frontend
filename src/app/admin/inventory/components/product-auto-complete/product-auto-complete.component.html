@@ -1,0 +1,11 @@
+<!--<pre class="card card-block card-header mb-3">Model: {{selected | json}}</pre>-->
+<input [(ngModel)]="asyncSelected"
+       [typeahead]="dataSource"
+       (typeaheadLoading)="changeTypeaheadLoading($event)"
+       (typeaheadOnSelect)="typeaheadOnSelect($event)"
+       [typeaheadOptionsLimit]="7"
+       typeaheadOptionField="name"
+       placeholder="Locations loaded with timeout"
+       id="tags"
+       class="form-control" placeholder="Product name/ Barcode" style="margin-bottom: 15px;"
+>
