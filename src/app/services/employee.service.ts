@@ -45,12 +45,15 @@ export class EmployeeService extends BaseService{
   }
 
   public updateEmployee(employeeValues, employeeId): Observable<Employee> {
+    console.log(employeeValues);
     let params = new HttpParams()
       .set('type', employeeValues['type'])
 
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
       .set('personalInfo.dob', employeeValues['personalInfo.dob'])
       .set('personalInfo.address', employeeValues['personalInfo.address'])
+      .set('personalInfo.email', employeeValues['personalInfo.email'])
+      .set('personalInfo.phone', employeeValues['personalInfo.phone'])
 
       .set('employeeId', employeeValues.employeeId)
       .set('salary', employeeValues.salary);

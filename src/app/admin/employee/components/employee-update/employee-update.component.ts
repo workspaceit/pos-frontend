@@ -29,7 +29,6 @@ export class EmployeeUpdateComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       params => {
         this.employeeId = params['employeeId'];
-        console.log(this.employeeId);
         this.getEmployee();
 
       }
@@ -47,6 +46,9 @@ export class EmployeeUpdateComponent implements OnInit {
       'personalInfo.fullName': [this.employee.personalInformation.fullName, Validators.required],
       'personalInfo.address': [this.employee.personalInformation.address.formattedAddress],
       'personalInfo.dob': [dob],
+      'authCredential.email': [this.employee.personalInformation.authCredential.email],
+      'personalInfo.email': [this.employee.personalInformation.email],
+      'personalInfo.phone': [this.employee.personalInformation.phone],
 
       'type': [this.employee.type, Validators.required]
     });
@@ -57,6 +59,7 @@ export class EmployeeUpdateComponent implements OnInit {
     this.employeeService.getEmployeeById(this.employeeId).subscribe(
       employee => {
         this.employee = employee;
+        console.log(this.employee);
         this.createEmployeeForm();
         (<any>$('#dob')).datepicker({
           dateFormat: 'dd-mm-yy'
@@ -72,7 +75,6 @@ export class EmployeeUpdateComponent implements OnInit {
 
   updateEmployee(){
     let dob: string | Date = '';
-    console.log(this.employeeForm.value);
     dob = this.employeeForm.value['personalInfo.dob'] !== ''?
       moment(this.employeeForm.value['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'): '';
     this.employeeForm.value['personalInfo.dob'] = dob;

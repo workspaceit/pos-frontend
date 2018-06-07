@@ -8,6 +8,15 @@
         <div class="col-lg-6">
 
           <div class="form-group">
+            <label>Login Email</label>
+            <input type="email" formControlName="authCredential.email" class="form-control"  placeholder="" disabled>
+          </div>
+          <div class="form-group">
+            <label>Login Password</label>
+            <input type="password"  class="form-control"  placeholder="" value="********" disabled>
+          </div>
+
+          <div class="form-group">
             <label>Employee name</label>
             <input type="text" class="form-control" formControlName="personalInfo.fullName" name="name"  placeholder="">
             <small *ngIf="employeeForm.controls['personalInfo.fullName'].hasError('required')
@@ -50,7 +59,23 @@
           <div class="form-group">
             <label>Employee ID</label>
             <input type="text" formControlName="employeeId" class="form-control"  placeholder="" name="id">
-            <!--<small class="form-text text-alert">We'll never share your email with anyone else.</small>-->
+            <small *ngIf="employeeForm.controls['employeeId'].hasError('employeeId')" class="form-text text-alert">
+              {{ employeeForm.controls['employeeId'].getError('employeeId') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Contact Email</label>
+            <input type="email" formControlName="personalInfo.email" class="form-control"  placeholder="">
+            <small *ngIf="employeeForm.controls['personalInfo.email'].hasError('personalInfo.email')" class="form-text text-alert">
+              {{ employeeForm.controls['personalInfo.email'].getError('personalInfo.email') }}
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" formControlName="personalInfo.phone" class="form-control"  placeholder="">
+            <small *ngIf="employeeForm.controls['personalInfo.phone'].hasError('personalInfo.phone')" class="form-text text-alert">
+              {{ employeeForm.controls['personalInfo.phone'].getError('personalInfo.phone') }}
+            </small>
           </div>
         </div>
 
