@@ -38,6 +38,7 @@ export class EmployeeAddComponent implements OnInit {
       'personalInfo.address': [''],
       'personalInfo.email': [''],
       'personalInfo.dob': [''],
+      'personalInfo.phone': [''],
 
       'authCredential.email': ['', Validators.required],
       'authCredential.password': ['', Validators.required],

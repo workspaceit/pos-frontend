@@ -91,6 +91,13 @@
         </small>
       </div>
       <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" formControlName="personalInfo.phone" class="form-control"  placeholder="">
+        <small *ngIf="employeeForm.controls['personalInfo.phone'].hasError('personalInfo.phone')" class="form-text text-alert">
+          {{ employeeForm.controls['personalInfo.phone'].getError('personalInfo.phone') }}
+        </small>
+      </div>
+      <div class="form-group">
         <label>Address</label>
         <textarea formControlName="personalInfo.address" name="address" class="form-control"></textarea>
         <small *ngIf="employeeForm.controls['personalInfo.address'].hasError('personalInfo.address')"

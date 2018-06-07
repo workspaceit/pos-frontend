@@ -22,6 +22,7 @@ export class EmployeeService extends BaseService{
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
       .set('personalInfo.dob', moment(employeeValues['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'))
       .set('personalInfo.email', employeeValues['personalInfo.email'])
+      .set('personalInfo.phone', employeeValues['personalInfo.phone'])
       .set('personalInfo.address', employeeValues['personalInfo.address'])
 
       .set('employeeId', employeeValues.employeeId)
