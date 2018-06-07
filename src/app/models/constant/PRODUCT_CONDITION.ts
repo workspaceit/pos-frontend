@@ -1,0 +1,4 @@
+enum PRODUCT_CONDITION{
+  GOOD,
+  DAMAGED
+}

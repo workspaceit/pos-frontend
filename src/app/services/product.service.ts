@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Product} from '../models/data/product';
 import {Observable} from 'rxjs/Observable';
 import {ProductListResponse} from '../models/response-models/product-list-response';
+import {ProductSearchForm} from '../models/form/product/product-search-form';
 
 @Injectable()
 export class ProductService extends BaseService{
@@ -25,4 +26,32 @@ export class ProductService extends BaseService{
     return this.httpClient.get<ProductListResponse>(this.authApiUrl + '	/api/product/get-all/' + limit + '/' + offset);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public getProductsBySearchCriteria(limit: number, offset: number, productSearchForm:ProductSearchForm): Observable<ProductListResponse>{
+    let searchParam = '?';
+    if(productSearchForm.name!==''){
+      searchParam +='name='+productSearchForm.name;
+    }
+    if(productSearchForm.categoryId>0){
+      searchParam +='&';
+      searchParam +='categoryId='+productSearchForm.categoryId;
+    }
+    return this.httpClient.get<ProductListResponse>(this.authApiUrl + '	/api/product/get-all/' + limit + '/' + offset+searchParam);
+  }
 }

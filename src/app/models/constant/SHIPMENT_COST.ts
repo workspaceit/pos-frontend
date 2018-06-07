@@ -1,0 +1,6 @@
+enum SHIPMENT_COST{
+  CF,
+  LABOR,
+  CARRYING,
+  OTHERS
+}
