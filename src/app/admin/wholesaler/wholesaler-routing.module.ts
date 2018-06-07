@@ -6,7 +6,7 @@ import {WholesalerListComponent} from './components/wholesaler-list/wholesaler-l
 import {WholesalerUpdateComponent} from './components/wholesaler-update/wholesaler-update.component';
 
 const routes: Routes = [
-  { path: 'details/1', component: WholesalerInfoComponent },
+  { path: 'details/:id', component: WholesalerInfoComponent },
   { path: 'add', component: WholesalerAddComponent },
   { path: 'list', component: WholesalerListComponent },
   { path: 'update/:wholesalerId', component: WholesalerUpdateComponent },

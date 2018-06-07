@@ -12,15 +12,24 @@
           <th scope="col">ID</th>
           <th scope="col">Email</th>
           <th scope="col">Phone</th>
+          <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let supplier of suppliers" routerLink="/admin/supplier/update/{{supplier.id}}">
+        <tr *ngFor="let supplier of suppliers" >
           <td>{{supplier.id}}</td>
           <td>{{supplier.company.title}}</td>
           <td>{{supplier.supplierId}}</td>
           <td>{{supplier.company.email}}</td>
           <td>{{supplier.company.phone}}</td>
+          <td>
+            <button  class="btn btn-success btn-sm" routerLink="/admin/supplier/details/{{supplier.id}}" >
+              <i class="fa fa-id-card"></i>
+            </button>
+            <button  class="btn btn-success btn-sm" routerLink="/admin/supplier/update/{{supplier.id}}" >
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
