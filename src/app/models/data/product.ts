@@ -3,7 +3,7 @@ import {Category} from './category';
 export class Product {
 
   id: number;
-  category: Category;
+  category: Category = new Category();
   name: string;
   weight: number;
   weightUnit: string;

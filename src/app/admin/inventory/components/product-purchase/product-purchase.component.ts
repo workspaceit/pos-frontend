@@ -3,7 +3,6 @@ import {ProductService} from '../../../../services/product.service';
 import {ProductSearchForm} from '../../../../models/form/product/product-search-form';
 import {Product} from '../../../../models/data/product';
 import {ProductListResponse} from '../../../../models/response-models/product-list-response';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-product-purchase',

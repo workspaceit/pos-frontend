@@ -7,6 +7,7 @@
   import {AuthService} from '../../../../services/auth.service';
   import {ProductService} from '../../../../services/product.service';
   import {ValidatorUtil} from '../../../../util/validator-util';
+  import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-add',
@@ -22,7 +23,7 @@ export class ProductAddComponent implements OnInit {
   apiUrl = environment.authApiUrl;
 
   constructor(private formBuilder: FormBuilder, private categoryService: CategoryService, private authService: AuthService,
-              private productService: ProductService) { }
+              private productService: ProductService,private router:Router) { }
 
   ngOnInit() {
     this.createFrom();
@@ -68,6 +69,7 @@ export class ProductAddComponent implements OnInit {
     this.productService.addProduct(this.productAddForm.value).subscribe(
       data => {
         console.log(data);
+        this.router.navigate(['admin/inventory/products']);
       },
       error => {
         ValidatorUtil.bindValidationError(error.error, this.productAddForm);

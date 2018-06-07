@@ -7,14 +7,17 @@ import { ProductAddComponent } from './components/product-add/product-add.compon
 import { ProductPurchaseComponent } from './components/product-purchase/product-purchase.component';
 import {DropzoneModule} from 'ngx-dropzone-wrapper';
 import {ReactiveFormsModule} from '@angular/forms';
+import { ProductUpdateComponent } from './components/product-update/product-update.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     InventoryRoutingModule,
     DropzoneModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
-  declarations: [ProductListComponent, ProductAddComponent, ProductPurchaseComponent]
+  declarations: [ProductListComponent, ProductAddComponent, ProductPurchaseComponent, ProductUpdateComponent]
 })
 export class InventoryModule { }
