@@ -22,7 +22,7 @@
             <select class="form-control select-cstm" formControlName="categoryId">
               <option selected="0">--Select Category--</option>
               <option *ngFor="let category of categories" value="{{category.id}}"
-                      [selected]="category.id == productUpdateForm.get('categoryId').value.id">{{ category.name }}</option>
+                      [selected]="category.id === productUpdateForm.get('categoryId').value">{{ category.name }}</option>
             </select>
             <small *ngIf="productUpdateForm.get('categoryId').hasError('categoryId')" class="form-text text-alert">
               {{ productUpdateForm.get('categoryId').getError('categoryId') }}

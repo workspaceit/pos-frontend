@@ -61,7 +61,7 @@ export class ProductUpdateComponent implements OnInit {
   createFrom() {
     this.productUpdateForm = this.formBuilder.group({
       name: [this.product.name, Validators.required],
-      categoryId: [this.product.category],
+      categoryId: [this.product.category.id],
       weight: [this.product.weight],
       weightUnit: [this.product.weightUnit],
       imageToken: [this.product.image],
