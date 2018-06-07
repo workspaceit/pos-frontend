@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Product} from '../models/data/product';
 import {Observable} from 'rxjs/Observable';
 import {ProductListResponse} from '../models/response-models/product-list-response';
+import {Employee} from '../models/data/employee';
 
 @Injectable()
 export class ProductService extends BaseService{
@@ -24,5 +25,23 @@ export class ProductService extends BaseService{
   public getPaginatedProducts(limit: number, offset: number): Observable<ProductListResponse>{
     return this.httpClient.get<ProductListResponse>(this.authApiUrl + '	/api/product/get-all/' + limit + '/' + offset);
   }
+
+  public getProductById(productId: number): Observable<Product>{
+    return this.httpClient.get<Product>(this.authApiUrl + '/api/product/get/' + productId);
+  }
+  public updateProduct(productValues, productId): Observable<Product> {
+    let params = new HttpParams()
+      .set('name', productValues['name'])
+
+      .set('categoryId', productValues['categoryId'])
+      .set('imageToken', productValues['imageToken'])
+      .set('weight', productValues['weight'])
+
+      .set('weightUnit', productValues['weightUnit'])
+      .set('barcode', productValues['barcode']);
+
+    return this.httpClient.post<Product>(this.authApiUrl + '/api/product/update/' + productId, params);
+  }
+
 
 }
