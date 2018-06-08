@@ -5,7 +5,7 @@ export class ShipmentCreateForm {
   carryingCost:number;
   laborCost:number;
   otherCost:number;
-  purchaseDate:number;
+  purchaseDate:string;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);
