@@ -1,3 +1,5 @@
+import {PRODUCT_CONDITION} from '../constant/PRODUCT_CONDITION';
+
 export class InventoryFrom {
   public productId: number;
   public purchasePrice: number;

@@ -1,65 +1,93 @@
 <div class="container-fluid container-wrapper">
   <div class="row clearfix" style="margin: 0px;margin-top: 13px">
-    <div class="col-md-3">
-      <div class="bg-white" style="min-height: 100px;margin-bottom: 15px;">
-        <div class="form-group">
-          <label>Supplier</label>
-          <input  class="form-control autocomplete-box" placeholder="Supplier name">
-
-        </div>
-      </div>
-      <div class="bg-white wholesale-info-div">
-        <h4>Wholesale Information</h4>
-        <address>
-          1530s, "dutiful or courteous approach," from address (v.) and from French adresse. Sense of "formal speech" is from 1751. Sense of "superscription of a letter" is from 1712 and led to the meaning "place of residence" (1888).
-        </address>
-        <hr>
-        <h5>Status</h5>
-        <table class="table">
-          <tr>
-            <td class="lg-sub-txt">Due:</td>
-            <td class="lg-sub-txt text-right"></td>
-          </tr>
-          <tr>
-            <td class="lg-sub-txt">Balance:</td>
-            <td class="lg-sub-txt text-right"></td>
-          </tr>
-        </table>
-        <button class="btn-detail-sale">Details</button>
-      </div>
-
-    </div>
-    <div class="col-md-6" style="padding: 0px">
+    <div class="col-md-8" style="padding: 0px">
       <div class="bg-white">
+
+        <div class="ui-widget">
+          <div class="form-group">
+            <label>Supplier</label>
+            <select  class="form-control" [(ngModel)]="purchaseCreateForm.shipment.supplierId" >
+              <option value="0"> Select supplier </option>
+              <option *ngFor="let supplier of suppliers" [value]="supplier.id" >
+                {{supplier.company.title}}
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="ui-widget">
           <!--                        <label for="tags">Tags: </label>-->
-          <!--<input id="tags" class="form-control" placeholder="Product name/ Barcode" style="margin-bottom: 15px;">-->
           <app-product-auto-complete></app-product-auto-complete>
+
+        </div>
+
+        <div class="dam_filter">
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Damaged</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">New</label>
+          </div>
         </div>
         <div class="products-container-scroll">
 
           <div>
+            <div class="row product-bg">
+              <div class="col">
+                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
+                <div class="row clearfix purchase_txt">
+                  <div class="col col-lg-4">
+                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
+                    <input type="text" class="form-control price_tf">
+                  </div>
+                  <div class="col col-lg-4">
+                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
+                    <input type="text" class="form-control price_tf" >
+                  </div>
+                  <div class="col col-lg-3 align-self-end">
+                    <form  method='POST' action='#'>
+                      <input type='button' value='-' class='qtyminus' field='quantity' />
+                      <input type='text' name='quantity' value='0' class='qty' />
+                      <input type='button' value='+' class='qtyplus' field='quantity' />
+                    </form>
+                  </div>
+                  <div class="col col-lg-1 align-self-end pr-0">
+                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col col-lg-2 text-right">
+                <!-- <div class="row"> -->
+                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
+                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
+                <!-- </div> -->
+              </div>
+            </div>
+
             <div class="row product-bg"  *ngFor="let cartDetails of cart.cartDetails; let i = index">
               <div class="col">
                 <p class="product-txt-title" (click)="showProductModal(i)" >{{cartDetails.product.name}}</p>
                 <div class="row clearfix purchase_txt">
                   <div class="col col-lg-4">
+                    <label class="small-para text-white" >Purchase price</label>
                     <input type="number" [(ngModel)]="cartDetails.inventoryForm.purchasePrice" class="form-control price_tf" placeholder="Purchase price" min="0" >
                   </div>
                   <div class="col col-lg-4">
-
+                    <label class="small-para text-white" >Selling price</label>
                     <input type="number" [(ngModel)]="cartDetails.inventoryForm.sellingPrice" class="form-control price_tf" placeholder="Selling price" min="0" >
                   </div>
 
-                  <div class="col col-lg-2">
-                      <input type='button' value='-' class='qtyminus' field='quantity' (click)="decreaseQuantity(i)" />
-                      <input type='number' [(ngModel)]="cartDetails.inventoryForm.purchaseQuantity" name='quantity' value='0' class='qty' min="0" />
-                      <input type='button' value='+' class='qtyplus' field='quantity' (click)="increaseQuantity(i)" />
+                  <div class="col col-lg-3 align-self-end">
+                    <input type='button' value='-' class='qtyminus' field='quantity' (click)="decreaseQuantity(i)" />
+                    <input type='number' [(ngModel)]="cartDetails.inventoryForm.purchaseQuantity" name='quantity' value='0' class='qty' min="0" />
+                    <input type='button' value='+' class='qtyplus' field='quantity' (click)="increaseQuantity(i)" />
 
                   </div>
-                  <div class="col col-lg-2 text-right">
-                    <label class="product-txt-title">{{cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity}} TK</label>
-
+                  <div class="col col-lg-1 align-self-end pr-0">
+                    <label class="small-para text-white" >{{cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity}} TK</label>
                   </div>
                 </div>
 
@@ -70,101 +98,122 @@
                 <!-- </div> -->
               </div>
             </div>
-          </div>
-
-
-
-        </div>
-        <div class="col-md-12" style="padding: 0px;">
-          <div>
-            <label>Product price payment</label><br>
-            <input type="button" value="Add More account" (click)="addProductPricePaymentAccount()">
-            <p *ngFor="let paymentAccount of purchaseCreateForm.productPricePaymentAccount;let i = index">
-              <select class="form-control" [(ngModel)]="paymentAccount.ledgerId" >
-                <option value="0" >Select Account</option>
-                <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
-                  {{ledger.name}}
-                </option>
-              </select>
-              <input class="form-control" type="number" [(ngModel)]="paymentAccount.amount" >
-
-            </p>
-          </div>
-          <div>
-            <label>Shipping cost payment</label>
-            <select class="form-control" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.ledgerId">
-              <option value="0" >Select Account</option>
-              <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
-                {{ledger.name}}
-              </option>
-            </select>
-            <input class="form-control" type="number" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.amount" >
 
           </div>
-          <table class="table">
 
-            <tr>
-              <td class="lg-sub-txt">Total:</td>
-              <td class="lg-sub-txt text-right">{{getTotalPrice()}} TK</td>
-            </tr>
-            <tr>
-              <td class="lg-sub-txt">Total Paid:</td>
-              <td class="lg-sub-txt text-right">{{getTotalPaid()}} TK</td>
-            </tr>
-            <tr>
-              <td class="sm-sub-txt">Due:</td>
-              <td class="sm-sub-txt text-right">{{getDue()}} TK</td>
-            </tr>
-          </table>
+
+
         </div>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="row" style="min-height: 394px;">
         <div class="col-lg-12">
           <div class="row bg-white clearfix" style="margin: 0px;">
+
+            <div class="col-12">
+              <div class="row clearfix">
+                <div class="col-5 pl-0">
+                  <div class="form-group" *ngFor="let paymentAccount of purchaseCreateForm.productPricePaymentAccount;let i = index" >
+
+                    <label class="small-para" for="exampleFormControlSelect1">Payment</label>
+                    <select class="form-control" [(ngModel)]="paymentAccount.ledgerId" >
+                      <option value="0" >Select Account</option>
+                      <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
+                        {{ledger.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-5 pl-0">
+                  <div class="form-group">
+                    <label class="small-para" >Amount</label>
+                    <input type="email" class="form-control" [(ngModel)]="paymentAccount.amount" >
+                  </div>
+                </div>
+                <div class="col-2 align-self-center">
+                  <button type="button" class="btn btn-primary mt-2"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row clearfix">
+                <div class="col-5 pl-0">
+                  <div class="form-group">
+                    <label class="small-para" for="exampleFormControlSelect1">Shipping Cost</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-5 pl-0">
+                  <div class="form-group">
+                    <label class="small-para" for="exampleFormControlInput1">Amount</label>
+                    <input type="email" class="form-control" id="Amount">
+                  </div>
+                </div>
+                <div class="col-2 align-self-center">
+                  <button type="button" class="btn btn-primary mt-2"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
             <div class="col-6">
               <div class="row" style="padding-right: 15px !important">
-                <label class="small-para">C/F Cost</label>
+                <label class="small-para">Vat(%) :</label>
                 <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" [(ngModel)]="purchaseCreateForm.shipment.cfCost" >
+                <input class="form-control custom-input-sm" type="text" >
+                <label class="small-para">Recieved Amount :</label>
+                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
+                <input class="form-control custom-input-sm" type="text" >
 
-                <label class="small-para">Other Cost</label>
-                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" [(ngModel)]="purchaseCreateForm.shipment.otherCost"  >
-                <label class="small-para">Date :</label>
-                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input id="purchaseDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="purchaseCreateForm.shipment.purchaseDate" >
 
               </div>
             </div>
             <div class="col-6">
               <div class="row">
-                <label class="small-para">Carrying Cost</label>
-                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" [(ngModel)]="purchaseCreateForm.shipment.carryingCost" >
-                <label class="small-para">Labour Cost</label>
+                <label class="small-para">Discount(%) :</label>
                 <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" [(ngModel)]="purchaseCreateForm.shipment.laborCost"  >
-
-                </div>
+                <input class="form-control custom-input-sm" type="text" >
+                <label class="small-para">Net Total :</label>
+                <!-- <p class="medium-para">+88 01722 ******</p> -->
+                <input class="form-control custom-input-sm" type="text" id="inputSmall">
+              </div>
             </div>
+
             <div class="col-md-12">
               <div class="row">
-                <p class="small-para">Remarks</p>
-                <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" id="inputSmall" [(ngModel)]="purchaseCreateForm.shipment.purchaseDate" >
+                <table class="table">
+                  <tr>
+                    <td class="small-para px-0">Subtotal:</td>
+                    <td class="small-para text-right px-0">10,000tk</td>
+                  </tr>
+                  <tr>
+                    <td class="small-para px-0">Discount:</td>
+                    <td class="small-para text-right px-0">440tk</td>
+                  </tr>
+                  <tr>
+                    <td class="small-para px-0">Total:</td>
+                    <td class="small-para text-right px-0">9,560</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!--<button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
-      <button type="button" class="btn-default sale-button" style="background: #1ba233;">Purchase</button>
+      <button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>
+      <button type="button" class="btn-default sale-button" style="background: #1ba233;">Sell</button>
     </div>
 
   </div>
 </div>
+<!--
+  Product Details Modal
+-->
 <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -210,7 +259,7 @@
   </div>
 </div>
 
-<!--<div class="calculator-container">
+<div class="calculator-container">
   <table class="calculator" id="calc">
     <tr>
       <td colspan="4" class="calc_td_result">
@@ -293,4 +342,6 @@
     <button class="btn btn-calc-close btn-danger" id="calcClose"><i class="fa fa-times"></i></button>
   </div>
 
-</div>-->
+</div>
+
+<?php include 'layout/footer.php';?>

@@ -170,50 +170,6 @@
 
   </div>
 </div>
-<div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="modal-title bold-text" id="exampleModalLabel" style="letter-spacing: 0px">Product Details</span>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body clearfix">
-        <div class="col-md-4">
-          <img
-            onError="this.src='assets/img/image-not-available-90x60.png'"
-            src="{{imgUrl+modalProductDetails.image}}" class="img-fluid">
-        </div>
-        <div class="col-md-8">
-          <p class="small-para" style="font-size: 18px;font-weight: 500;margin-bottom: 0px">Product Name :</p>
-          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.name}}</p>
-          <p class="small-para" style="font-size: 18px;font-weight: 500">Bar Code :</p>
-          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.barcode}}</p>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-6">
-              <p class="medium-para-01">Price :</p>
-            </div>
-
-            <div *ngIf="modalProductDetails.minPrice!==modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">{{modalProductDetails.minPrice}} - {{modalProductDetails.maxPrice}}</p>
-            </div>
-            <div *ngIf="modalProductDetails.minPrice===modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">{{modalProductDetails.maxPrice}} TK</p>
-            </div>
-
-            <div class="col-md-12" style="text-align: center;margin-top: 20px">
-              <p class="small-para">In Stokes</p>
-              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">{{modalProductDetails.totalAvailableQuantity}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!--<div class="calculator-container">
   <table class="calculator" id="calc">
