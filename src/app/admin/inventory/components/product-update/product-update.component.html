@@ -20,7 +20,7 @@
           <div class="form-group">
             <label>Category</label>
             <select class="form-control select-cstm" formControlName="categoryId">
-              <option selected="0">--Select Category--</option>
+              <option value="0" selected disabled="disabled">--Select Category--</option>
               <option *ngFor="let category of categories" value="{{category.id}}"
                       [selected]="category.id === productUpdateForm.get('categoryId').value">{{ category.name }}</option>
             </select>

@@ -79,7 +79,13 @@
       <div class="form-group">
         <label>Employee ID</label>
         <input type="text" formControlName="employeeId" class="form-control"  placeholder="" name="id">
-        <!--<small class="form-text text-alert">We'll never share your email with anyone else.</small>-->
+        <small *ngIf="employeeForm.controls['employeeId'].hasError('required')
+        && (employeeForm.controls['employeeId'].dirty || employeeForm.controls['employeeId'].touched)"
+               class="form-text text-alert">Employee ID required
+        </small>
+        <small *ngIf="employeeForm.controls['employeeId'].hasError('employeeId')" class="form-text text-alert">
+          {{ employeeForm.controls['employeeId'].getError('employeeId') }}
+        </small>
       </div>
     </div>
     <div class="col-lg-6">

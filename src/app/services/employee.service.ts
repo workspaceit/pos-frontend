@@ -52,8 +52,8 @@ export class EmployeeService extends BaseService{
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
       .set('personalInfo.dob', employeeValues['personalInfo.dob'])
       .set('personalInfo.address', employeeValues['personalInfo.address'])
-      .set('personalInfo.email', employeeValues['personalInfo.email'])
-      .set('personalInfo.phone', employeeValues['personalInfo.phone'])
+      .set('personalInfo.email', employeeValues['personalInfo.email'] == null ? '': employeeValues['personalInfo.email'] )
+      .set('personalInfo.phone', employeeValues['personalInfo.phone'] == null ? '': employeeValues['personalInfo.phone'])
 
       .set('employeeId', employeeValues.employeeId)
       .set('salary', employeeValues.salary);
