@@ -50,8 +50,7 @@
         && (employeeForm.controls['personalInfo.dob'].dirty || employeeForm.controls['personalInfo.dob'].touched)"
                    class="form-text text-alert">Date of birth required
             </small>
-            <small *ngIf="employeeForm.controls['personalInfo.dob'].hasError('required')
-        && (employeeForm.controls['personalInfo.dob'].dirty || employeeForm.controls['personalInfo.dob'].touched)"
+            <small *ngIf="employeeForm.controls['personalInfo.dob'].hasError('personalInfo.dob')"
                    class="form-text text-alert">{{ employeeForm.controls['personalInfo.dob'].getError('personalInfo.dob') }}
             </small>
           </div>

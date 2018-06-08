@@ -45,7 +45,7 @@ export class EmployeeUpdateComponent implements OnInit {
 
       'personalInfo.fullName': [this.employee.personalInformation.fullName, Validators.required],
       'personalInfo.address': [this.employee.personalInformation.address.formattedAddress],
-      'personalInfo.dob': [dob],
+      'personalInfo.dob': [this.employee.personalInformation.dob],
       'authCredential.email': [this.employee.personalInformation.authCredential.email],
       'personalInfo.email': [this.employee.personalInformation.email],
       'personalInfo.phone': [this.employee.personalInformation.phone],
