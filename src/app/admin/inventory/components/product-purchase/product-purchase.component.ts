@@ -12,13 +12,14 @@ import {PurchasePaymentCreateForm} from '../../../../models/form/purchase-paymen
 import {PurchaseCreateForm} from '../../../../models/form/purchase-create-form';
 import {ShipmentCreateForm} from '../../../../models/form/shipment-create-form';
 import {CartDetails} from '../../../../models/data/cart-details';
+import {ShipmentService} from '../../../../services/shipment.service';
 
 
 @Component({
   selector: 'app-product-purchase',
   templateUrl: './product-purchase.component.html',
   styleUrls: ['./product-purchase.component.css'],
-  providers: [ProductService,InventoryService,LedgerService,ProductAutoCompleteCommunicator]
+  providers: [ProductService,InventoryService,LedgerService,ProductAutoCompleteCommunicator,ShipmentService]
 })
 export class ProductPurchaseComponent implements OnInit {
 
@@ -31,6 +32,7 @@ export class ProductPurchaseComponent implements OnInit {
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
+              private shipmentService:ShipmentService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator) {
     this.purchaseCreateForm = new PurchaseCreateForm();
     this.modalProductDetails = new Product();
@@ -53,6 +55,12 @@ export class ProductPurchaseComponent implements OnInit {
     this.purchaseCreateForm.productPricePaymentAccount.push(productPricePaymentAccount);
     this.purchaseCreateForm.shippingCostPaymentAccount = shippingCostPaymentAccount;
 
+
+    this.purchaseCreateForm.shipment.cfCost = 0;
+    this.purchaseCreateForm.shipment.carryingCost = 0;
+    this.purchaseCreateForm.shipment.carryingCost = 0;
+    this.purchaseCreateForm.shipment.laborCost = 0;
+    this.purchaseCreateForm.shipment.otherCost = 0;
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((data)=>{
       const alreadyExistingProduct = this.cart.cartDetails.find(value => value.product.name === data.name);
@@ -77,7 +85,11 @@ export class ProductPurchaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.shipmentService.create(new PurchaseCreateForm());
     this.getLedger();
+    (<any>$('#purchaseDate')).datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
   }
   public removeProductFromCart(index:number){
     this.cart.cartDetails.splice(index,1);
@@ -108,7 +120,8 @@ export class ProductPurchaseComponent implements OnInit {
     purchasePaymentCreateForm.ledgerId = 0;
 
     this.purchaseCreateForm.productPricePaymentAccount.push(purchasePaymentCreateForm);
-  }public getTotalPaid(){
+  }
+  public getTotalPaid(){
     let totalPaid = 0;
     console.log("getTotalPaid");
     for(const productPricePaymentAccount of this.purchaseCreateForm.productPricePaymentAccount){
@@ -123,7 +136,7 @@ export class ProductPurchaseComponent implements OnInit {
       console.log("getTotalPrice");
       for(const cartDetails of this.cart.cartDetails){
 
-        totalPrice += cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity;;
+        totalPrice += cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity;
       }
       return totalPrice;
   }
@@ -132,5 +145,8 @@ export class ProductPurchaseComponent implements OnInit {
     const totalPrice = this.getTotalPrice();
 
     return totalPrice - totalPaid;
+  }
+  public submitPurchase(){
+
   }
 }
