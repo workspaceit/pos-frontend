@@ -39,22 +39,26 @@
         <div class="products-container-scroll">
 
           <div>
-            <div class="row product-bg"  *ngFor="let product of cart.products; let i = index">
+            <div class="row product-bg"  *ngFor="let cartDetails of cart.cartDetails; let i = index">
               <div class="col">
-                <p class="product-txt-title" (click)="showProductModal(i)" >{{product.name}}</p>
+                <p class="product-txt-title" (click)="showProductModal(i)" >{{cartDetails.product.name}}</p>
                 <div class="row clearfix purchase_txt">
                   <div class="col col-lg-4">
-                    <input type="number" [(ngModel)]="cart.invetoryForms[i].purchasePrice" class="form-control price_tf" placeholder="price" >
+                    <input type="number" [(ngModel)]="cartDetails.inventoryForm.purchasePrice" class="form-control price_tf" placeholder="Purchase price" min="0" >
                   </div>
-                  <div class="col">
-                      <input type='hidden' value='{{product.id}}'  />
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='number' [(ngModel)]="cart.invetoryForms[i].purchaseQuantity" name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
+                  <div class="col col-lg-4">
+
+                    <input type="number" [(ngModel)]="cartDetails.inventoryForm.sellingPrice" class="form-control price_tf" placeholder="Selling price" min="0" >
+                  </div>
+
+                  <div class="col col-lg-2">
+                      <input type='button' value='-' class='qtyminus' field='quantity' (click)="decreaseQuantity(i)" />
+                      <input type='number' [(ngModel)]="cartDetails.inventoryForm.purchaseQuantity" name='quantity' value='0' class='qty' min="0" />
+                      <input type='button' value='+' class='qtyplus' field='quantity' (click)="increaseQuantity(i)" />
 
                   </div>
                   <div class="col col-lg-2 text-right">
-                    <label class="product-txt-title">475 TK</label>
+                    <label class="product-txt-title">{{cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity}} TK</label>
 
                   </div>
                 </div>
@@ -72,18 +76,44 @@
 
         </div>
         <div class="col-md-12" style="padding: 0px;">
+          <div>
+            <label>Product price payment</label><br>
+            <input type="button" value="Add More account" (click)="addProductPricePaymentAccount()">
+            <p *ngFor="let paymentAccount of purchaseCreateForm.productPricePaymentAccount;let i = index">
+              <select class="form-control" [(ngModel)]="paymentAccount.ledgerId" >
+                <option value="0" >Select Account</option>
+                <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
+                  {{ledger.name}}
+                </option>
+              </select>
+              <input class="form-control" type="number" [(ngModel)]="paymentAccount.amount" >
+
+            </p>
+          </div>
+          <div>
+            <label>Shipping cost payment</label>
+            <select class="form-control" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.ledgerId">
+              <option value="0" >Select Account</option>
+              <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
+                {{ledger.name}}
+              </option>
+            </select>
+            <input class="form-control" type="number" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.amount" >
+
+          </div>
           <table class="table">
-            <tr>
-              <td class="lg-sub-txt">Subtotal:</td>
-              <td class="lg-sub-txt text-right">10,000tk</td>
-            </tr>
-            <tr>
-              <td class="sm-sub-txt">Discount:</td>
-              <td class="sm-sub-txt text-right">440tk</td>
-            </tr>
+
             <tr>
               <td class="lg-sub-txt">Total:</td>
-              <td class="lg-sub-txt text-right">9,560</td>
+              <td class="lg-sub-txt text-right">{{getTotalPrice()}} TK</td>
+            </tr>
+            <tr>
+              <td class="lg-sub-txt">Total Paid:</td>
+              <td class="lg-sub-txt text-right">{{getTotalPaid()}} TK</td>
+            </tr>
+            <tr>
+              <td class="sm-sub-txt">Due:</td>
+              <td class="sm-sub-txt text-right">{{getDue()}} TK</td>
             </tr>
           </table>
         </div>
@@ -141,7 +171,7 @@
           </div>
         </div>
       </div>
-      <button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>
+      <!--<button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
       <button type="button" class="btn-default sale-button" style="background: #1ba233;">Purchase</button>
     </div>
 

@@ -3,10 +3,17 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+
+const environmentConst = {
+  baseUrl:'http://192.168.1.18:8080/dccpos',
+  //baseUrl:"http://localhost:8080"
+}
+
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.1.18:8080/dccpos/api',
-  authApiUrl: 'http://192.168.1.18:8080/dccpos/auth',
-  oAuthApiUrl: 'http://192.168.1.18:8080/dccpos/oauth',
-  imgUrl: 'http://192.168.1.18:8080/dccpos/common/',
+  baseUrl:environmentConst.baseUrl,
+  apiUrl: environmentConst.baseUrl+'/api',
+  authApiUrl: environmentConst.baseUrl+'/auth',
+  oAuthApiUrl: environmentConst.baseUrl+'/oauth',
+  imgUrl: environmentConst.baseUrl+'/common/',
 };

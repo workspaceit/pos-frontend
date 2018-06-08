@@ -1,9 +1,8 @@
-import {Product} from './product';
-import {InventoryCreateForm} from '../form/inventory-create-form';
+
+import {CartDetails} from './cart-details';
 
 export class Cart{
-  public products:Product[];
-  public invetoryForms:InventoryCreateForm[];
+  public cartDetails:CartDetails[];
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

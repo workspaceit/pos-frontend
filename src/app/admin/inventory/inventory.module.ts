@@ -12,6 +12,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { ProductAutoCompleteComponent } from './components/product-auto-complete/product-auto-complete.component';
 import { FormsModule } from '@angular/forms';
 import {TypeaheadModule} from 'ngx-bootstrap';
+import {InventoryTotalPricePipe} from '../../pipes/inventory-total-price.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,6 +23,11 @@ import {TypeaheadModule} from 'ngx-bootstrap';
     FormsModule,
     TypeaheadModule.forRoot()
   ],
-  declarations: [ProductListComponent, ProductAddComponent, ProductPurchaseComponent, ProductUpdateComponent, ProductAutoCompleteComponent]
+  declarations: [ProductListComponent,
+    ProductAddComponent,
+    ProductPurchaseComponent,
+    ProductUpdateComponent,
+    ProductAutoCompleteComponent,
+    InventoryTotalPricePipe]
 })
 export class InventoryModule { }
