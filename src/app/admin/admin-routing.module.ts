@@ -15,6 +15,8 @@ const routes: Routes = [
       { path: 'sale', loadChildren: './sale/sale.module#SaleModule' },
       { path: 'wholesaler', loadChildren: './wholesaler/wholesaler.module#WholesalerModule' },
       { path: 'shop', loadChildren: './shop/shop.module#ShopModule' },
+      { path: 'purchase', loadChildren: './purchase/purchase.module#PurchaseModule' },
+
     ]
   },
   { path: 'dashboard', component: DashboardLayoutComponent,

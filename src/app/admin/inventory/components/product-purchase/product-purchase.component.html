@@ -22,50 +22,18 @@
 
         <div class="dam_filter">
 
-          <div class="form-check form-check-inline">
+          <!--<div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
             <label class="form-check-label" for="inlineRadio1">Damaged</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
             <label class="form-check-label" for="inlineRadio2">New</label>
-          </div>
+          </div>-->
         </div>
         <div class="products-container-scroll">
 
           <div>
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
 
             <div class="row product-bg"  *ngFor="let cartDetails of cart.cartDetails; let i = index">
               <div class="col">
@@ -112,11 +80,11 @@
           <div class="row bg-white clearfix" style="margin: 0px;">
 
             <div class="col-12">
-              <div class="row clearfix">
+              <div class="row clearfix" *ngFor="let paymentAccount of purchaseCreateForm.productPricePaymentAccount;let i = index" >
                 <div class="col-5 pl-0">
-                  <div class="form-group" *ngFor="let paymentAccount of purchaseCreateForm.productPricePaymentAccount;let i = index" >
+                  <div class="form-group"  >
 
-                    <label class="small-para" for="exampleFormControlSelect1">Payment</label>
+                    <label class="small-para" >Product payment</label>
                     <select class="form-control" [(ngModel)]="paymentAccount.ledgerId" >
                       <option value="0" >Select Account</option>
                       <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
@@ -128,59 +96,65 @@
                 <div class="col-5 pl-0">
                   <div class="form-group">
                     <label class="small-para" >Amount</label>
-                    <input type="email" class="form-control" [(ngModel)]="paymentAccount.amount" >
+                    <input type="number" class="form-control" [(ngModel)]="paymentAccount.amount" >
                   </div>
                 </div>
-                <div class="col-2 align-self-center">
-                  <button type="button" class="btn btn-primary mt-2"><i class="fa fa-plus"></i></button>
+                <div class="col-2 align-self-center" *ngIf="i == 0">
+                  <button type="button" class="btn btn-primary mt-2" (click)="addProductPricePaymentAccount()" ><i class="fa fa-plus"></i></button>
                 </div>
               </div>
             </div>
             <div class="col-12">
-              <div class="row clearfix">
+              <div class="row clearfix"  >
                 <div class="col-5 pl-0">
-                  <div class="form-group">
-                    <label class="small-para" for="exampleFormControlSelect1">Shipping Cost</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                  <div class="form-group"  >
+
+                    <label class="small-para" >Shipment cost payment</label>
+                    <select class="form-control" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.ledgerId" >
+                      <option value="0" >Select Account</option>
+                      <option *ngFor="let ledger of paymentLedger" [value]="ledger.id" >
+                        {{ledger.name}}
+                      </option>
                     </select>
                   </div>
                 </div>
                 <div class="col-5 pl-0">
                   <div class="form-group">
-                    <label class="small-para" for="exampleFormControlInput1">Amount</label>
-                    <input type="email" class="form-control" id="Amount">
+                    <label class="small-para" >Amount</label>
+                    <input type="number" class="form-control" [(ngModel)]="purchaseCreateForm.shippingCostPaymentAccount.amount" >
                   </div>
-                </div>
-                <div class="col-2 align-self-center">
-                  <button type="button" class="btn btn-primary mt-2"><i class="fa fa-plus"></i></button>
                 </div>
               </div>
             </div>
+
             <div class="col-6">
               <div class="row" style="padding-right: 15px !important">
-                <label class="small-para">Vat(%) :</label>
+
+                <label class="small-para">Carrying Cost</label>
                 <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" >
-                <label class="small-para">Recieved Amount :</label>
+                <input class="form-control custom-input-sm" type="number" [(ngModel)]="purchaseCreateForm.shipment.cost[_SHIPMENT_COST.CARRYING]" >
+                <label class="small-para">Labour Cost</label>
+                <!-- <p class="medium-para">+88 01722 ******</p> -->
+                <input class="form-control custom-input-sm" type="number" [(ngModel)]="purchaseCreateForm.shipment.cost[_SHIPMENT_COST.LABOR]"  >
+                <label class="small-para">Date :</label>
                 <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" >
+                <input id="purchaseDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="purchaseCreateForm.shipment.purchaseDate" >
+
 
 
               </div>
             </div>
             <div class="col-6">
               <div class="row">
-                <label class="small-para">Discount(%) :</label>
+                <label class="small-para">CF Cost :</label>
                 <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" >
-                <label class="small-para">Net Total :</label>
+                <input class="form-control custom-input-sm" type="number" [(ngModel)]="purchaseCreateForm.shipment.cost[_SHIPMENT_COST.CF]" >
+
+                <label class="small-para">Other cost :</label>
                 <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" id="inputSmall">
+                <input class="form-control custom-input-sm" type="number" [(ngModel)]="purchaseCreateForm.shipment.cost[_SHIPMENT_COST.OTHERS]"  >
+
+
               </div>
             </div>
 
@@ -188,25 +162,35 @@
               <div class="row">
                 <table class="table">
                   <tr>
-                    <td class="small-para px-0">Subtotal:</td>
-                    <td class="small-para text-right px-0">10,000tk</td>
+                    <td class="small-para px-0">Total :</td>
+                    <td class="small-para text-right px-0">{{getTotalPrice()}} TK</td>
                   </tr>
                   <tr>
-                    <td class="small-para px-0">Discount:</td>
-                    <td class="small-para text-right px-0">440tk</td>
+                    <td class="small-para px-0">Total Paid:</td>
+                    <td class="small-para text-right px-0">{{getTotalPaid()}} TK</td>
                   </tr>
                   <tr>
-                    <td class="small-para px-0">Total:</td>
-                    <td class="small-para text-right px-0">9,560</td>
+                    <td class="small-para px-0">Due:</td>
+                    <td class="small-para text-right px-0">{{getDue()}} TK</td>
                   </tr>
+
                 </table>
               </div>
+              <div class="row" *ngIf="errors.length>0">
+                <p>Errors :</p>
+                <ul>
+                  <li class="alert-danger" *ngFor="let error of errors">{{error.msg}}</li>
+                </ul>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
-      <button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>
-      <button type="button" class="btn-default sale-button" style="background: #1ba233;">Sell</button>
+     <!-- <button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
+
+
+      <button type="button" class="btn-default sale-button" style="background: #1ba233;" (click)="submitPurchase()">Purchase</button>
     </div>
 
   </div>
@@ -343,5 +327,3 @@
   </div>
 
 </div>
-
-<?php include 'layout/footer.php';?>

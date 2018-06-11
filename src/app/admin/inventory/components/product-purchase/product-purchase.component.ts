@@ -17,6 +17,8 @@ import {Supplier} from '../../../../models/data/supplier';
 import {SupplierService} from '../../../../services/supplier.service';
 import {SHIPMENT_COST} from '../../../../models/constant/SHIPMENT_COST';
 import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
+import {error} from 'util';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-purchase',
@@ -38,13 +40,15 @@ export class ProductPurchaseComponent implements OnInit {
   purchaseCreateForm: PurchaseCreateForm;
   suppliers: Supplier[];
   _SHIPMENT_COST = SHIPMENT_COST;
+  errors=[];
 
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
               private shipmentService:ShipmentService,
               private supplierService:SupplierService,
-              private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator) {
+              private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
+              private router: Router) {
     this.purchaseCreateForm = new PurchaseCreateForm();
     this.modalProductDetails = new Product();
     this.cart=new Cart();
@@ -66,14 +70,15 @@ export class ProductPurchaseComponent implements OnInit {
     this.purchaseCreateForm.productPricePaymentAccount.push(productPricePaymentAccount);
     this.purchaseCreateForm.shippingCostPaymentAccount = shippingCostPaymentAccount;
 
+    this.purchaseCreateForm.shipment = new ShipmentCreateForm();
     this.purchaseCreateForm.shipment.supplierId = 0;
-    this.purchaseCreateForm.shipment.cost = new Map<SHIPMENT_COST, string>();
-    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF] = 0;
-    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CARRYING] = 0;
-    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.LABOR] = 0;
-    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF] = 0;
-    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF] = 0;
+    this.purchaseCreateForm.shipment.cost = {};
 
+    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF.toString()] = 0;
+    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CARRYING.toString()] = null;
+    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.LABOR.toString()] = null;
+    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF.toString()] = null;
+    this.purchaseCreateForm.shipment.cost[SHIPMENT_COST.CF.toString()] = null;
 
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((data)=>{
@@ -100,12 +105,12 @@ export class ProductPurchaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const componentReff = this;
+    const componentRef = this;
     (<any>$('#purchaseDate')).datepicker({
       dateFormat: 'yy-mm-dd'
     }).on('change', function () {
       console.log('changed');
-      componentReff.purchaseCreateForm.shipment.purchaseDate = (<any>$)(this).val();
+      componentRef.purchaseCreateForm.shipment.purchaseDate = (<any>$)(this).val();
     });
 
 
@@ -141,6 +146,7 @@ export class ProductPurchaseComponent implements OnInit {
   public getSuppliers(){
     this.supplierService.getSuppliers().subscribe((data)=>{
         this.suppliers = data;
+        console.log('this.suppliers',this.suppliers);
     });
   }
   public addProductPricePaymentAccount(){
@@ -152,7 +158,7 @@ export class ProductPurchaseComponent implements OnInit {
   }
   public getTotalPaid(){
     let totalPaid = 0;
-    console.log("getTotalPaid");
+
     for(const productPricePaymentAccount of this.purchaseCreateForm.productPricePaymentAccount){
       totalPaid += productPricePaymentAccount.amount;
     }
@@ -162,12 +168,11 @@ export class ProductPurchaseComponent implements OnInit {
   }
   public getTotalPrice(){
       let totalPrice = 0;
-      console.log("getTotalPrice");
       for(const cartDetails of this.cart.cartDetails){
 
         totalPrice += cartDetails.inventoryForm.purchasePrice*cartDetails.inventoryForm.purchaseQuantity;
       }
-      return totalPrice;
+      return totalPrice+ this.getTotalCost();
   }
   public getDue(){
     const totalPaid = this.getTotalPaid();
@@ -184,6 +189,21 @@ export class ProductPurchaseComponent implements OnInit {
   }
   public submitPurchase(){
     this.purchaseCreateForm.inventories  = this.getInventories();
-    this.shipmentService.create(this.purchaseCreateForm);
+    this.shipmentService.create(this.purchaseCreateForm).subscribe((data)=>{
+      console.log("data",data);
+      this.router.navigate(['admin/purchase/shipments/list']);
+    },error=>{
+      console.log("error",error);
+      this.errors = error.error;
+    });
   }
+  public getTotalCost(){
+    let totalCost=0;
+
+    for(const key in this.purchaseCreateForm.shipment.cost){
+      totalCost += this.purchaseCreateForm.shipment.cost[key];
+    }
+    return totalCost;
+  }
+
 }

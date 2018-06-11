@@ -28,6 +28,7 @@ import {InventoryTotalPricePipe} from '../../pipes/inventory-total-price.pipe';
     ProductPurchaseComponent,
     ProductUpdateComponent,
     ProductAutoCompleteComponent,
-    InventoryTotalPricePipe]
+    InventoryTotalPricePipe],
+  exports:[ProductAutoCompleteComponent]
 })
 export class InventoryModule { }
