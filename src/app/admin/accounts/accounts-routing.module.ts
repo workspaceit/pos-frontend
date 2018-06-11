@@ -9,7 +9,7 @@ import {LedgerAddComponent} from './components/ledger-add/ledger-add.component';
 const routes: Routes = [
   { path: 'list', component: AccountListComponent },
   { path: 'add-ledger', component: LedgerAddComponent },
-  { path: 'invoice', component: InvoiceComponent },
+  { path: 'invoice/:invoiceFor/:invoiceTypeId', component: InvoiceComponent },
   { path: 'add-payment', component: PaymentAddComponent },
   { path: 'payment', component: PaymentComponent },
 ];

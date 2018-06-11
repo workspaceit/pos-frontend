@@ -42,7 +42,7 @@ export class ProductListComponent implements OnInit {
     );
   }
   pageChanged(pageNumber) {
-    this.offset = (pageNumber * this.limit) - this.limit;
+    this.offset = ((pageNumber * this.limit) - this.limit) === 0 ? 1 :((pageNumber * this.limit) - this.limit) ;
     this.getProducts();
     this.currentPage = pageNumber;
   }

@@ -3,7 +3,7 @@ import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';
 import {PurchaseCreateForm} from '../models/form/purchase-create-form';
 import {Observable} from 'rxjs/Observable';
-import {Shipment} from '../models/data/shipment/shipment';
+import {ShipmentListResponse} from '../models/response-models/shipment-list-response';
 
 @Injectable()
 export class ShipmentService extends BaseService {
@@ -15,8 +15,8 @@ export class ShipmentService extends BaseService {
 
      return this.httpClient.post<any>(this.authApiUrl + '/api/shipment/create',JSON.stringify(purchaseCreateForm),options);
   }
-  public getAll(limit: number, offset: number):Observable<any> {
+  public getAll(limit: number, offset: number):Observable<ShipmentListResponse> {
 
-    return this.httpClient.get<any>(this.authApiUrl + '/api/shipment/get-all/'+limit+'/'+offset);
+    return this.httpClient.get<ShipmentListResponse>(this.authApiUrl + '/api/shipment/get-all/'+limit+'/'+offset);
   }
 }

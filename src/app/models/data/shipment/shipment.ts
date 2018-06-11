@@ -5,6 +5,7 @@ import {ShipmentTransaction} from './shipment-transaction';
 import {Employee} from '../employee';
 
 export class Shipment {
+
   id: number;
   trackingId: string;
   supplier: Supplier = new Supplier();
@@ -21,4 +22,8 @@ export class Shipment {
   totalPaid: number;
   purchasedBy: Employee = new Employee();
   purchasedDate: Date;
+
+  constructor(values: Object = {}) {
+    Object.assign(this, values);
+  }
 }
