@@ -8,7 +8,7 @@ import {InventoryCreateForm} from '../../../../models/form/inventory-create-form
 import {Cart} from '../../../../models/data/cart';
 import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
-import {PurchasePaymentCreateForm} from '../../../../models/form/purchase-payment-create-form';
+import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
 import {PurchaseCreateForm} from '../../../../models/form/purchase-create-form';
 import {ShipmentCreateForm} from '../../../../models/form/shipment-create-form';
 import {CartDetails} from '../../../../models/data/cart-details';
@@ -59,11 +59,11 @@ export class ProductPurchaseComponent implements OnInit {
     this.purchaseCreateForm.productPricePaymentAccount =[];
     this.cart.cartDetails = [];
 
-    const productPricePaymentAccount = new PurchasePaymentCreateForm();
+    const productPricePaymentAccount = new PaymentLedgerForm();
     productPricePaymentAccount.ledgerId=0;
     productPricePaymentAccount.amount =0;
 
-    const shippingCostPaymentAccount = new PurchasePaymentCreateForm();
+    const shippingCostPaymentAccount = new PaymentLedgerForm();
     shippingCostPaymentAccount.ledgerId=0;
     shippingCostPaymentAccount.amount =0;
 
@@ -150,7 +150,7 @@ export class ProductPurchaseComponent implements OnInit {
     });
   }
   public addProductPricePaymentAccount(){
-    const purchasePaymentCreateForm = new PurchasePaymentCreateForm();
+    const purchasePaymentCreateForm = new PaymentLedgerForm();
     purchasePaymentCreateForm.amount = 0;
     purchasePaymentCreateForm.ledgerId = 0;
 
