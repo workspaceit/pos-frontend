@@ -8,6 +8,8 @@ import {ProductAutoCompleteComponent} from '../inventory/components/product-auto
 import {FormsModule} from '@angular/forms';
 import {TypeaheadModule} from 'ngx-bootstrap';
 import {InventoryModule} from '../inventory/inventory.module';
+import { SaleListComponent } from './components/sale-list/sale-list.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -15,8 +17,9 @@ import {InventoryModule} from '../inventory/inventory.module';
     CommonModule,
     SaleRoutingModule,
     FormsModule,
+    NgxPaginationModule,
     TypeaheadModule.forRoot()
   ],
-  declarations: [SellToConsumerComponent, SellToWholesalerComponent]
+  declarations: [SellToConsumerComponent, SellToWholesalerComponent, SaleListComponent]
 })
 export class SaleModule { }
