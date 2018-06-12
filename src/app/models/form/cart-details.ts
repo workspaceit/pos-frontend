@@ -1,5 +1,6 @@
-import {Product} from './product';
-import {InventoryCreateForm} from '../form/inventory-create-form';
+
+import {InventoryCreateForm} from './inventory-create-form';
+import {Product} from '../data/product';
 
 export class CartDetails{
   public product:Product;

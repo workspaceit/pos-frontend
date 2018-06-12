@@ -5,19 +5,18 @@ import {ProductAutoCompleteCommunicator} from '../../../../communicator/product-
 import {InventoryService} from '../../../../services/inventory-service';
 import {environment} from '../../../../../environments/environment';
 import {InventoryCreateForm} from '../../../../models/form/inventory-create-form';
-import {Cart} from '../../../../models/data/cart';
+import {Cart} from '../../../../models/form/cart';
 import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
 import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
 import {PurchaseCreateForm} from '../../../../models/form/purchase-create-form';
 import {ShipmentCreateForm} from '../../../../models/form/shipment-create-form';
-import {CartDetails} from '../../../../models/data/cart-details';
+import {CartDetails} from '../../../../models/form/cart-details';
 import {ShipmentService} from '../../../../services/shipment.service';
 import {Supplier} from '../../../../models/data/supplier';
 import {SupplierService} from '../../../../services/supplier.service';
 import {SHIPMENT_COST} from '../../../../models/constant/SHIPMENT_COST';
 import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
-import {error} from 'util';
 import {Router} from '@angular/router';
 
 @Component({
@@ -41,7 +40,6 @@ export class ProductPurchaseComponent implements OnInit {
   suppliers: Supplier[];
   _SHIPMENT_COST = SHIPMENT_COST;
   errors=[];
-
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
@@ -51,7 +49,7 @@ export class ProductPurchaseComponent implements OnInit {
               private router: Router) {
     this.purchaseCreateForm = new PurchaseCreateForm();
     this.modalProductDetails = new Product();
-    this.cart=new Cart();
+    this.cart= new Cart();
 
     this.purchaseCreateForm.inventories=[];
     this.purchaseCreateForm.shipment = new ShipmentCreateForm();
