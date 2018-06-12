@@ -18,4 +18,7 @@ export class LedgerService extends BaseService {
 
     return this.httpClient.get<any>(this.authApiUrl + '/api/ledger/get-all');
   }
+  public getLedgerDetailsByType(ledgerType: string):Observable<Ledger[]>{
+    return this.httpClient.get<Ledger[]>(this.authApiUrl + '/api/ledger/get/' + ledgerType);
+  }
 }
