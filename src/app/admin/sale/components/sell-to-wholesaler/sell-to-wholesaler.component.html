@@ -14,25 +14,28 @@
             </select>
           </div>
         </div>
+        <div class="dam_filter">
+          <div class="form-group">
+            <label>Filters</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="productConditionType"  [value]="'ALL'" checked [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >All</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="productConditionType"  [value]="'GOOD'"  [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >Good</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="productConditionType"  [value]="'DAMAGED'"  [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >Damaged</label>
+          </div>
+        </div>
         <div class="ui-widget">
           <app-product-auto-complete></app-product-auto-complete>
         </div>
 
-        <div class="dam_filter">
 
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="productConditionType"  value="all" checked [(ngModel)]="inventorySearchForm.condition">
-            <label class="form-check-label" >All</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="productConditionType"  value="GOOD">
-            <label class="form-check-label" >Damaged</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="productConditionType"  value="DAMAGED">
-            <label class="form-check-label" >Good</label>
-          </div>
-        </div>
         <div class="products-container-scroll">
               <div class="row product-bg" *ngFor="let saleCartProduct of saleCart.saleCartProduct ; let productIndex = index" >
                 <div class="col"  >

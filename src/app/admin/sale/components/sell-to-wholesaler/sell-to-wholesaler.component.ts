@@ -16,6 +16,7 @@ import {SaleCartProduct} from '../../../../models/form/sale/sale-cart-product';
 import {SaleCartInventory} from '../../../../models/form/sale/sale-cart-inventory';
 import {InventorySaleForm} from '../../../../models/form/sale/inventory-sale-form';
 import {InventorySearchForm} from '../../../../models/form/inventory/inventory-search-form';
+import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -49,6 +50,7 @@ export class SellToWholesalerComponent implements OnInit {
     this.products = [];
     this.saleForm.paymentAccount = [];
     this.saleCart.saleCartProduct = [];
+    this.inventorySearchForm.condition = 'ALL';
 
     const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
     paymentLedgerForm.amount=null;
@@ -57,7 +59,7 @@ export class SellToWholesalerComponent implements OnInit {
     this.saleForm.paymentAccount.push(paymentLedgerForm);
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
-        this.addProductToCart(product);
+        this.getInventoryByProductId(product);
     });
   }
 
@@ -75,46 +77,69 @@ export class SellToWholesalerComponent implements OnInit {
     this.getLedger();
     this.getWholesaler();
   }
-  public addProductToCart(product:Product){
+  public getInventoryByProductId(product:Product){
     const flag:boolean = this.isProductExistInCart(product);
-
+    console.log(this.inventorySearchForm.condition);
     if(flag)return;
 
     product.inventories = [];
-    this.inventoryService.getByProductId(product.id).subscribe((data)=>{
-      if(data.length===0){
-        console.log('0 Inventory');
-        return;
-      }
+    let productCondition:PRODUCT_CONDITION=null;
+    const condition = this.inventorySearchForm.condition;
+    switch(condition){
+      case 'GOOD':
+        productCondition = PRODUCT_CONDITION.GOOD;
+        break;
+      case 'DAMAGED':
+        productCondition = PRODUCT_CONDITION.DAMAGED;
+        break;
+    }
 
-      product.inventories = product.inventories.concat(data);
-      this.products.push(product);
+    if(productCondition===null){
 
-      const saleCartProduct:SaleCartProduct = new SaleCartProduct();
-      saleCartProduct.product = product;
-      saleCartProduct.saleCartInventory = [] ;
+      this.inventoryService.getByProductId(product.id).subscribe((data)=>{
+        this.addToCart(data,product);
+      });
+    }else{
+      this.inventoryService.getByProductIdAndCondition(product.id,productCondition).subscribe((data)=>{
+        this.addToCart(data,product);
+      });
+    }
 
-      for(const inventory of product.inventories){
-        const saleCartInventory = new SaleCartInventory();
-        const inventorySaleForm = new InventorySaleForm();
+  }
+  public addToCart(data:Inventory[],product:Product){
+    if(data.length===0){
+      console.log('0 Inventory');
+      return;
+    }
 
-        inventorySaleForm.inventoryId = inventory.id;
-        inventorySaleForm.quantity = null;
-        inventorySaleForm.sellingPrice = null;
+    product.inventories = product.inventories.concat(data);
+    this.products.push(product);
 
-        saleCartInventory.inventory = inventory;
-        saleCartInventory.inventorySaleForm = inventorySaleForm;
+    const saleCartProduct:SaleCartProduct = new SaleCartProduct();
+    saleCartProduct.product = product;
+    saleCartProduct.saleCartInventory = [] ;
 
-        saleCartProduct.saleCartInventory.push(saleCartInventory);
-      }
+    for(const inventory of product.inventories){
+      const saleCartInventory = new SaleCartInventory();
+      const inventorySaleForm = new InventorySaleForm();
+
+      inventorySaleForm.inventoryId = inventory.id;
+      inventorySaleForm.quantity = null;
+      inventorySaleForm.sellingPrice = null;
+
+      saleCartInventory.inventory = inventory;
+      saleCartInventory.inventorySaleForm = inventorySaleForm;
+
+      saleCartProduct.saleCartInventory.push(saleCartInventory);
+    }
 
 
-      this.saleCart.saleCartProduct.push(saleCartProduct);
-
-    });
+    this.saleCart.saleCartProduct.push(saleCartProduct);
   }
   public isProductExistInCart(product:Product){
-   const existingProduct =  this.products.find(value => product.id === value.id);
+   const existingProduct =  this.saleCart.saleCartProduct.find(value => value.product.id==product.id);
+
+
    return existingProduct==undefined || existingProduct==null?false:true;
   }
   public getLedger(){

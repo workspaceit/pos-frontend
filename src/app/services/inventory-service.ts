@@ -13,10 +13,13 @@ export class InventoryService extends BaseService{
   }
 
   public getByProductId(productId: number): Observable<Inventory[]>{
+    console.log('Here1');
+
     return this.httpClient.get<Inventory[]>(this.authApiUrl + '	/api/inventory/get-by-product-id/' + productId);
   }
   public getByProductIdAndCondition(productId: number,condition:PRODUCT_CONDITION): Observable<Inventory[]>{
-    return this.httpClient.get<Inventory[]>(this.authApiUrl + '	/api/inventory/get-by-product-id/' + productId+"&condition="+condition.toString());
+    console.log('Here');
+    return this.httpClient.get<Inventory[]>(this.authApiUrl + '	/api/inventory/get-by-product-id/' + productId+'?&condition='+condition.toString());
   }
 
 }
