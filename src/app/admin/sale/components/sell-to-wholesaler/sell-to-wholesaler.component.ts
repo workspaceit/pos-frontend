@@ -3,11 +3,12 @@ import {LedgerService} from '../../../../services/ledger-service';
 import {Router} from '@angular/router';
 import {ProductService} from '../../../../services/product.service';
 import {InventoryService} from '../../../../services/inventory-service';
-import {SupplierService} from '../../../../services/supplier.service';
 import {ProductAutoCompleteCommunicator} from '../../../../communicator/product-auto-complete-communicator';
 import {Ledger} from '../../../../models/data/accounting/ledger';
-import {Supplier} from '../../../../models/data/supplier';
 import {Inventory} from '../../../../models/data/Inventory';
+import {Product} from '../../../../models/data/product';
+import {Wholesaler} from '../../../../models/data/wholesaler';
+import {WholesalerService} from '../../../../services/wholesaler.service';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -16,29 +17,36 @@ import {Inventory} from '../../../../models/data/Inventory';
   providers: [ProductService,
     InventoryService,
     LedgerService,
-    SupplierService,
+    WholesalerService,
     ProductAutoCompleteCommunicator]
 })
 export class SellToWholesalerComponent implements OnInit {
-  private  paymentLedgers:Ledger[];
-  private  suppliers:Supplier[];
+  private paymentLedgers:Ledger[];
+  private wholesalers:Wholesaler[];
   private inventories:Inventory[];
+  private products:Product[];
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
-              private supplierService:SupplierService,
+              private wholesalerService:WholesalerService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
               private router: Router) {
     this.inventories = [];
-    productAutoCompleteCommunicator.onProductSelect.subscribe((data)=>{
+    this.products = [];
+    productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
+        const flag:boolean = this.isProductExistInCart(product);
 
-       this.inventoryService.getByProductId(data.id).subscribe((data)=>{
-         if(data.length==0){
+        if(flag)return;
+
+        product.inventories = [];
+        this.inventoryService.getByProductId(product.id).subscribe((data)=>{
+         if(data.length===0){
            console.log('0 Inventory');
          }
-         this.inventories = this.inventories.concat(data);
-         console.log('Inventory ',this.inventories,data);
-       });
+
+         product.inventories = product.inventories.concat(data);
+         this.products.push(product);
+        });
     });
   }
 
@@ -54,17 +62,31 @@ export class SellToWholesalerComponent implements OnInit {
      * API to fetch necessary data
      * */
     this.getLedger();
-    this.getSuppliers();
+    this.getWholesaler();
+  }
+  public isProductExistInCart(product:Product){
+   const existingProduct =  this.products.find(value => product.id === value.id);
+   return existingProduct==undefined || existingProduct==null?false:true;
   }
   public getLedger(){
     this.ledgerService.getBankOrCashAccount().subscribe((data)=>{
       this.paymentLedgers = data;
     });
   }
-  public getSuppliers(){
-    this.supplierService.getSuppliers().subscribe((data)=>{
-      this.suppliers = data;
-      console.log('this.suppliers',this.suppliers);
+  public getWholesaler(){
+    this.wholesalerService.getWholesalers().subscribe((data)=>{
+      this.wholesalers = data;
+      console.log('this.suppliers',this.wholesalers);
     });
+  }
+  public removeInventoryFromCart(productIndex,inventoryIndex){
+    const inventories = this.products[productIndex].inventories;
+    inventories.splice(inventoryIndex,1);
+    if(inventories.length==0){
+      this.removeProductFromCart(productIndex);
+    }
+  }
+  public removeProductFromCart(productIndex){
+    this.products.splice(productIndex,1);
   }
 }

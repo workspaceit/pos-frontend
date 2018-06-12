@@ -5,11 +5,11 @@
 
         <div class="ui-widget">
           <div class="form-group">
-            <label>Supplier</label>
+            <label>Wholesalers</label>
             <select  class="form-control"  >
-              <option value="0"> Select supplier </option>
-              <option *ngFor="let supplier of suppliers" [value]="supplier.id" >
-                {{supplier.company.title}}
+              <option value="0"> Select wholesaler </option>
+              <option *ngFor="let wholesaler of wholesalers" [value]="wholesaler.id" >
+                {{wholesaler.company.title}}
               </option>
             </select>
           </div>
@@ -34,441 +34,56 @@
           </div>
         </div>
         <div class="products-container-scroll">
+              <div class="row product-bg" *ngFor="let product of products ; let productIndex = index" >
+                <div class="col"  >
+                  <p class="product-txt-title" data-toggle="modal" data-target="#product1">{{product.name}}</p>
+                  <p class="product-txt-price">price :
+                    <label *ngIf="product.minPrice===product.maxPrice">{{product.maxPrice}} TK</label>
+                    <label *ngIf="product.minPrice!==product.maxPrice">{{product.minPrice}} TK - {{product.maxPrice}} TK</label>
+                  </p>
+                  <p class="product-txt-price" >
+                    <label *ngIf="product.minPrice!==product.maxPrice">
+                      Available quantity : {{product.totalAvailableQuantity}}<br>
+                      Good : {{product.goodQuantity}}<br>
+                      Damaged : {{product.damagedQuantity}} </label>
+                  </p>
+                  <div class="row clearfix purchase_txt" *ngFor="let inventory of product.inventories ; let inventoryIndex = index" >
+                    <div class="col col-lg-2">
+                      <label class="small-para text-white" >Avl quantity : {{inventory.availableQuantity}}</label><br>
+                      <label class="small-para text-white" >Status : {{inventory.condition}}</label>
+                    </div>
+                    <div class="col col-lg-4">
+                      <label class="small-para text-white" >Selling price</label>
+                      <input type="text" class="form-control price_tf" value="{{inventory.purchasePrice}}" >
+                    </div>
+                    <div class="col col-lg-3 align-self-end">
+                      <form  method='POST' action='#'>
+                        <input type='button' value='-' class='qtyminus' field='quantity' />
+                        <input type='text' name='quantity' value='0' class='qty' />
+                        <input type='button' value='+' class='qtyplus' field='quantity' />
+                      </form>
+                    </div>
+                    <div class="col col-lg-1 align-self-end pr-0">
+                      <label class="small-para text-white" >BDT 100</label>
+                    </div>
 
-          <div>
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
+                    <div class="col col-lg-2 text-right">
+                      <!-- <div class="row"> -->
+                      <a href="javascript:void(0)" (click)="removeInventoryFromCart(productIndex,inventoryIndex)">x</a>
+                      <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
+                      <!-- </div> -->
+                    </div>
+
                   </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
+
                 </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
+                <div class="col col-lg-2 text-right">
+                  <!-- <div class="row"> -->
+                  <a href="javascript:void(0)" (click)="removeProductFromCart(productIndex)" ><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
+                  <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
+                  <!-- </div> -->
                 </div>
-
               </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-            <div class="row product-bg">
-              <div class="col">
-                <p class="product-txt-title" data-toggle="modal" data-target="#product1">Northstar Coverse</p>
-                <div class="row clearfix purchase_txt">
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf">
-                  </div>
-                  <div class="col col-lg-4">
-                    <label class="small-para text-white" for="exampleFormControlInput1">Amount</label>
-                    <input type="text" class="form-control price_tf" >
-                  </div>
-                  <div class="col col-lg-3 align-self-end">
-                    <form  method='POST' action='#'>
-                      <input type='button' value='-' class='qtyminus' field='quantity' />
-                      <input type='text' name='quantity' value='0' class='qty' />
-                      <input type='button' value='+' class='qtyplus' field='quantity' />
-                    </form>
-                  </div>
-                  <div class="col col-lg-1 align-self-end pr-0">
-                    <label class="small-para text-white" for="exampleFormControlInput1">BDT 100</label>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col col-lg-2 text-right">
-                <!-- <div class="row"> -->
-                <a href=""><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                <!-- </div> -->
-              </div>
-            </div>
-
-          </div>
-
-
-
         </div>
       </div>
     </div>
