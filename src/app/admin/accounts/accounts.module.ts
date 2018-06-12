@@ -7,12 +7,15 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { LedgerAddComponent } from './components/ledger-add/ledger-add.component';
 import { PaymentAddComponent } from './components/payment-add/payment-add.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
-    AccountsRoutingModule
+    AccountsRoutingModule,
+    NgxPaginationModule
   ],
-  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent]
+  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent, LedgerListComponent]
 })
 export class AccountsModule { }
