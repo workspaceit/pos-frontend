@@ -21,10 +21,11 @@
             <tr *ngFor="let shipment of shipments | paginate : {itemsPerPage: limit, currentPage: currentPage, totalItems: count}">
               <td>{{ shipment.trackingId }}</td>
               <td>{{ shipment.totalQuantity }}</td>
-              <td>{{shipment.totalCost}}</td>
+              <td>{{ shipment.totalCost}}</td>
               <td>{{ shipment.purchasedDate }}</td>
               <td>
-                <button  class="btn btn-success btn-sm" routerLink="/admin/accounts/invoice/shipment/{{ shipment.id }}" >
+                <button  class="btn btn-success btn-sm"
+                         routerLink="/admin/accounts/invoice/shipment/{{ shipment.id }}">
                   <i class="fa fa-money-bill-alt"></i>
                 </button>
               </td>
