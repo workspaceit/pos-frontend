@@ -10,6 +10,11 @@ import {Product} from '../../../../models/data/product';
 import {Wholesaler} from '../../../../models/data/wholesaler';
 import {WholesalerService} from '../../../../services/wholesaler.service';
 import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
+import {SaleForm} from '../../../../models/form/sale/sale-form';
+import {SaleCart} from '../../../../models/form/sale/sale-cart';
+import {SaleCartProduct} from '../../../../models/form/sale/sale-cart-product';
+import {SaleCartInventory} from '../../../../models/form/sale/sale-cart-inventory';
+import {InventorySaleForm} from '../../../../models/form/sale/inventory-sale-form';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -22,11 +27,13 @@ import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create
     ProductAutoCompleteCommunicator]
 })
 export class SellToWholesalerComponent implements OnInit {
-  private paymentLedgers:Ledger[];
-  private wholesalers:Wholesaler[];
-  private inventories:Inventory[];
-  private products:Product[];
-  private paymentAccount:PaymentLedgerForm[];
+  protected saleForm:SaleForm;
+  protected saleCart:SaleCart;
+  protected paymentLedgers:Ledger[];
+  protected wholesalers:Wholesaler[];
+  protected inventories:Inventory[];
+  protected products:Product[];
+  protected paymentAccount:PaymentLedgerForm[];
 
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
@@ -37,6 +44,9 @@ export class SellToWholesalerComponent implements OnInit {
     this.inventories = [];
     this.products = [];
     this.paymentAccount = [];
+    this.saleForm = new SaleForm();
+    this.saleCart = new SaleCart();
+    this.saleCart.saleCartProduct = [];
 
     const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
     paymentLedgerForm.amount=null;
@@ -45,19 +55,7 @@ export class SellToWholesalerComponent implements OnInit {
     this.paymentAccount.push(paymentLedgerForm);
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
-        const flag:boolean = this.isProductExistInCart(product);
-
-        if(flag)return;
-
-        product.inventories = [];
-        this.inventoryService.getByProductId(product.id).subscribe((data)=>{
-         if(data.length===0){
-           console.log('0 Inventory');
-         }
-
-         product.inventories = product.inventories.concat(data);
-         this.products.push(product);
-        });
+        this.addProductToCart(product);
     });
   }
 
@@ -75,6 +73,44 @@ export class SellToWholesalerComponent implements OnInit {
     this.getLedger();
     this.getWholesaler();
   }
+  public addProductToCart(product:Product){
+    const flag:boolean = this.isProductExistInCart(product);
+
+    if(flag)return;
+
+    product.inventories = [];
+    this.inventoryService.getByProductId(product.id).subscribe((data)=>{
+      if(data.length===0){
+        console.log('0 Inventory');
+        return;
+      }
+
+      product.inventories = product.inventories.concat(data);
+      this.products.push(product);
+
+      const saleCartProduct:SaleCartProduct = new SaleCartProduct();
+      saleCartProduct.product = product;
+      saleCartProduct.saleCartInventory = [] ;
+
+      for(const inventory of product.inventories){
+        const saleCartInventory = new SaleCartInventory();
+        const inventorySaleForm = new InventorySaleForm();
+
+        inventorySaleForm.inventoryId = inventory.id;
+        inventorySaleForm.quantity = 0;
+        inventorySaleForm.sellingPrice = 0;
+
+        saleCartInventory.inventory = inventory;
+        saleCartInventory.inventorySaleForm = inventorySaleForm;
+
+        saleCartProduct.saleCartInventory.push(saleCartInventory);
+      }
+
+
+      this.saleCart.saleCartProduct.push(saleCartProduct);
+
+    });
+  }
   public isProductExistInCart(product:Product){
    const existingProduct =  this.products.find(value => product.id === value.id);
    return existingProduct==undefined || existingProduct==null?false:true;
@@ -91,14 +127,15 @@ export class SellToWholesalerComponent implements OnInit {
     });
   }
   public removeInventoryFromCart(productIndex,inventoryIndex){
-    const inventories = this.products[productIndex].inventories;
-    inventories.splice(inventoryIndex,1);
-    if(inventories.length==0){
+
+    this.saleCart.saleCartProduct[productIndex].saleCartInventory.splice(inventoryIndex,1);
+    const saleCartInventoryLength = this.saleCart.saleCartProduct[productIndex].saleCartInventory.length;
+    if(saleCartInventoryLength===0){
       this.removeProductFromCart(productIndex);
     }
   }
   public removeProductFromCart(productIndex){
-    this.products.splice(productIndex,1);
+    this.saleCart.saleCartProduct.splice(productIndex,1);
   }
   public addPaymentAccount(){
     console.log("ASDASD");

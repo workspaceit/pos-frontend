@@ -34,27 +34,27 @@
           </div>
         </div>
         <div class="products-container-scroll">
-              <div class="row product-bg" *ngFor="let product of products ; let productIndex = index" >
+              <div class="row product-bg" *ngFor="let saleCartProduct of saleCart.saleCartProduct ; let productIndex = index" >
                 <div class="col"  >
-                  <p class="product-txt-title" data-toggle="modal" data-target="#product1">{{product.name}}</p>
+                  <p class="product-txt-title" data-toggle="modal" data-target="#product1">{{saleCartProduct.product.name}}</p>
                   <p class="product-txt-price">price :
-                    <label *ngIf="product.minPrice===product.maxPrice">{{product.maxPrice}} TK</label>
-                    <label *ngIf="product.minPrice!==product.maxPrice">{{product.minPrice}} TK - {{product.maxPrice}} TK</label>
+                    <label *ngIf="saleCartProduct.product.minPrice===saleCartProduct.product.maxPrice">{{saleCartProduct.product.maxPrice}} TK</label>
+                    <label *ngIf="saleCartProduct.product.minPrice!==saleCartProduct.product.maxPrice">{{saleCartProduct.product.minPrice}} TK - {{saleCartProduct.product.maxPrice}} TK</label>
                   </p>
                   <p class="product-txt-price" >
-                    <label *ngIf="product.minPrice!==product.maxPrice">
-                      Available quantity : {{product.totalAvailableQuantity}}<br>
-                      Good : {{product.goodQuantity}}<br>
-                      Damaged : {{product.damagedQuantity}} </label>
+                    <label>
+                      Available quantity : {{saleCartProduct.product.totalAvailableQuantity}}<br>
+                      Good : {{saleCartProduct.product.goodQuantity}}<br>
+                      Damaged : {{saleCartProduct.product.damagedQuantity}} </label>
                   </p>
-                  <div class="row clearfix purchase_txt" *ngFor="let inventory of product.inventories ; let inventoryIndex = index" >
+                  <div class="row clearfix purchase_txt" *ngFor="let saleCartInventory of saleCartProduct.saleCartInventory ; let inventoryIndex = index" >
                     <div class="col col-lg-2">
-                      <label class="small-para text-white" >Avl quantity : {{inventory.availableQuantity}}</label><br>
-                      <label class="small-para text-white" >Status : {{inventory.condition}}</label>
+                      <label class="small-para text-white" >Avl quantity : {{saleCartInventory.inventory.availableQuantity}}</label><br>
+                      <label class="small-para text-white" >Status : {{saleCartInventory.inventory.condition}}</label>
                     </div>
                     <div class="col col-lg-4">
                       <label class="small-para text-white" >Selling price</label>
-                      <input type="text" class="form-control price_tf" value="{{inventory.purchasePrice}}" >
+                      <input type="text" class="form-control price_tf" value="{{saleCartInventory.inventory.purchasePrice}}" >
                     </div>
                     <div class="col col-lg-3 align-self-end">
                       <form  method='POST' action='#'>
@@ -64,7 +64,7 @@
                       </form>
                     </div>
                     <div class="col col-lg-1 align-self-end pr-0">
-                      <label class="small-para text-white" >BDT 100</label>
+                      <label class="small-para text-white" >BDT {{saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity}}</label>
                     </div>
 
                     <div class="col col-lg-2 text-right">
