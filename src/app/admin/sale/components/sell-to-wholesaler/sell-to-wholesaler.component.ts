@@ -9,6 +9,7 @@ import {Inventory} from '../../../../models/data/Inventory';
 import {Product} from '../../../../models/data/product';
 import {Wholesaler} from '../../../../models/data/wholesaler';
 import {WholesalerService} from '../../../../services/wholesaler.service';
+import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -25,6 +26,8 @@ export class SellToWholesalerComponent implements OnInit {
   private wholesalers:Wholesaler[];
   private inventories:Inventory[];
   private products:Product[];
+  private paymentAccount:PaymentLedgerForm[];
+
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
@@ -33,6 +36,14 @@ export class SellToWholesalerComponent implements OnInit {
               private router: Router) {
     this.inventories = [];
     this.products = [];
+    this.paymentAccount = [];
+
+    const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
+    paymentLedgerForm.amount=null;
+    paymentLedgerForm.ledgerId=0;
+
+    this.paymentAccount.push(paymentLedgerForm);
+
     productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
         const flag:boolean = this.isProductExistInCart(product);
 
@@ -88,5 +99,15 @@ export class SellToWholesalerComponent implements OnInit {
   }
   public removeProductFromCart(productIndex){
     this.products.splice(productIndex,1);
+  }
+  public addPaymentAccount(){
+    console.log("ASDASD");
+    const paymentAccount: PaymentLedgerForm = new PaymentLedgerForm();
+    paymentAccount.ledgerId = 0;
+
+    this.paymentAccount.push(paymentAccount);
+  }
+  public removePaymentAccount(index:number){
+    this.paymentAccount.splice(index,1);
   }
 }
