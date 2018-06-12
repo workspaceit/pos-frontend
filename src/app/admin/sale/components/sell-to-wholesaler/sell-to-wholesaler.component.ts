@@ -15,6 +15,7 @@ import {SaleCart} from '../../../../models/form/sale/sale-cart';
 import {SaleCartProduct} from '../../../../models/form/sale/sale-cart-product';
 import {SaleCartInventory} from '../../../../models/form/sale/sale-cart-inventory';
 import {InventorySaleForm} from '../../../../models/form/sale/inventory-sale-form';
+import {InventorySearchForm} from '../../../../models/form/inventory/inventory-search-form';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -33,26 +34,27 @@ export class SellToWholesalerComponent implements OnInit {
   protected wholesalers:Wholesaler[];
   protected inventories:Inventory[];
   protected products:Product[];
-  protected paymentAccount:PaymentLedgerForm[];
-
+  protected inventorySearchForm:InventorySearchForm;
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
               private wholesalerService:WholesalerService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
               private router: Router) {
-    this.inventories = [];
-    this.products = [];
-    this.paymentAccount = [];
     this.saleForm = new SaleForm();
     this.saleCart = new SaleCart();
+    this.inventorySearchForm = new InventorySearchForm();
+
+    this.inventories = [];
+    this.products = [];
+    this.saleForm.paymentAccount = [];
     this.saleCart.saleCartProduct = [];
 
     const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
     paymentLedgerForm.amount=null;
     paymentLedgerForm.ledgerId=0;
 
-    this.paymentAccount.push(paymentLedgerForm);
+    this.saleForm.paymentAccount.push(paymentLedgerForm);
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
         this.addProductToCart(product);
@@ -97,8 +99,8 @@ export class SellToWholesalerComponent implements OnInit {
         const inventorySaleForm = new InventorySaleForm();
 
         inventorySaleForm.inventoryId = inventory.id;
-        inventorySaleForm.quantity = 0;
-        inventorySaleForm.sellingPrice = 0;
+        inventorySaleForm.quantity = null;
+        inventorySaleForm.sellingPrice = null;
 
         saleCartInventory.inventory = inventory;
         saleCartInventory.inventorySaleForm = inventorySaleForm;
@@ -138,13 +140,87 @@ export class SellToWholesalerComponent implements OnInit {
     this.saleCart.saleCartProduct.splice(productIndex,1);
   }
   public addPaymentAccount(){
-    console.log("ASDASD");
     const paymentAccount: PaymentLedgerForm = new PaymentLedgerForm();
     paymentAccount.ledgerId = 0;
 
-    this.paymentAccount.push(paymentAccount);
+    this.saleForm.paymentAccount.push(paymentAccount);
   }
   public removePaymentAccount(index:number){
-    this.paymentAccount.splice(index,1);
+    this.saleForm.paymentAccount.splice(index,1);
+  }
+  public increaseQuantity(productIndex:number,inventoryIndex:number){
+    let quantity = this.saleCart.saleCartProduct[productIndex].saleCartInventory[inventoryIndex].inventorySaleForm.quantity;
+    if(this.isNan(quantity)){
+      quantity =1;
+    }else{
+      quantity++;
+    }
+    this.saleCart.saleCartProduct[productIndex].saleCartInventory[inventoryIndex].inventorySaleForm.quantity=quantity;
+  }
+  public decreaseQuantity(productIndex:number,inventoryIndex:number){
+    let quantity = this.saleCart.saleCartProduct[productIndex].saleCartInventory[inventoryIndex].inventorySaleForm.quantity;
+    if(quantity<=0)
+      return;
+
+    if(this.isNan(quantity)){
+      quantity = 0;
+    }else{
+      quantity--;
+    }
+
+    this.saleCart.saleCartProduct[productIndex].saleCartInventory[inventoryIndex].inventorySaleForm.quantity=quantity;
+  }
+  public getTotalProductPrice(){
+    let totalPrice = 0;
+    for(const saleCartProduct of this.saleCart.saleCartProduct){
+      for(const saleCartInventory of saleCartProduct.saleCartInventory) {
+        const quantity = saleCartInventory.inventorySaleForm.quantity;
+        const price = saleCartInventory.inventorySaleForm.sellingPrice;
+
+        if(isNaN(quantity)||isNaN(price))continue;
+
+        const total = quantity*price;
+        totalPrice += total;
+
+      }
+
+    }
+    return totalPrice;
+  }
+
+  public getTotalCost(){
+    let totalCost =  this.getVat();
+    return totalCost;
+  }
+  public getTotalAfterAddingCost(){
+    return this.getTotalCost()+this.getTotalProductPrice();
+  }
+  public getDiscount(){
+    const discount = this.saleForm.discount;
+    return this.isNan(discount)?0:discount;
+  }
+  public getVat(){
+    const vat =  this.saleForm.vat;
+    return this.isNan(vat)?0:vat;
+  }
+
+  public getTotal(){
+    const totalPrice = this.getTotalAfterAddingCost() - this.getDiscount();
+    return totalPrice;
+  }
+  public isNan(value:number){
+    if(typeof value === 'number' && !Number.isNaN(value))
+      return false;
+    return true;
+  }
+  public getTotalReceive(){
+    let totalReceivedAmount = 0;
+    for(const paymentAccount of this.saleForm.paymentAccount){
+      totalReceivedAmount += paymentAccount.amount;
+    }
+    return totalReceivedAmount;
+  }
+  public getTotalDue(){
+    return this.getTotal() - this.getTotalReceive();
   }
 }

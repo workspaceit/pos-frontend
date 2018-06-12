@@ -21,7 +21,7 @@
         <div class="dam_filter">
 
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="productConditionType"  value="all" checked>
+            <input class="form-check-input" type="radio" name="productConditionType"  value="all" checked [(ngModel)]="inventorySearchForm.condition">
             <label class="form-check-label" >All</label>
           </div>
           <div class="form-check form-check-inline">
@@ -54,34 +54,36 @@
                     </div>
                     <div class="col col-lg-4">
                       <label class="small-para text-white" >Selling price</label>
-                      <input type="text" class="form-control price_tf" value="{{saleCartInventory.inventory.purchasePrice}}" >
+                      <input type="number" class="form-control price_tf" value="{{saleCartInventory.inventory.purchasePrice}}" [(ngModel)]="saleCartInventory.inventorySaleForm.sellingPrice" >
                     </div>
                     <div class="col col-lg-3 align-self-end">
                       <form  method='POST' action='#'>
-                        <input type='button' value='-' class='qtyminus' field='quantity' />
-                        <input type='text' name='quantity' value='0' class='qty' />
-                        <input type='button' value='+' class='qtyplus' field='quantity' />
+                        <input type='button' value='-' class='qtyminus'  (click)="decreaseQuantity(productIndex,inventoryIndex)" />
+                        <input type='text' name='quantity' value='0' class='qty' [(ngModel)]="saleCartInventory.inventorySaleForm.quantity" />
+                        <input type='button' value='+' class='qtyplus' (click)="increaseQuantity(productIndex,inventoryIndex)" />
                       </form>
                     </div>
                     <div class="col col-lg-1 align-self-end pr-0">
-                      <label class="small-para text-white" >BDT {{saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity}}</label>
+                      <label class="small-para text-white" >BDT
+                        <label *ngIf="isNan(saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity)">
+                         0
+                        </label>
+                        <label *ngIf="!isNan(saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity)">
+                          {{saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity}}
+                        </label>
+                      </label>
+
                     </div>
 
                     <div class="col col-lg-2 text-right">
-                      <!-- <div class="row"> -->
                       <a href="javascript:void(0)" (click)="removeInventoryFromCart(productIndex,inventoryIndex)">x</a>
-                      <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                      <!-- </div> -->
                     </div>
 
                   </div>
 
                 </div>
                 <div class="col col-lg-2 text-right">
-                  <!-- <div class="row"> -->
                   <a href="javascript:void(0)" (click)="removeProductFromCart(productIndex)" ><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
-                  <!--<a href=""><i class="fa fa-plus-circle fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>-->
-                  <!-- </div> -->
                 </div>
               </div>
         </div>
@@ -92,7 +94,7 @@
         <div class="col-lg-12">
           <div class="row bg-white clearfix" style="margin: 0px;">
 
-            <div class="col-12" *ngFor="let account of paymentAccount;let i = index;">
+            <div class="col-12" *ngFor="let account of saleForm.paymentAccount;let i = index;">
               <div class="row clearfix">
                 <div class="col-5 pl-0">
                   <div class="form-group">
@@ -108,7 +110,7 @@
                 <div class="col-5 pl-0">
                   <div class="form-group">
                     <label class="small-para" >Amount</label>
-                    <input type="email" class="form-control" id="Amount" [(ngModel)]="account.amount"  >
+                    <input [disabled]="account.ledgerId>0?false:true" type="number" class="form-control" id="Amount" [(ngModel)]="account.amount"  >
                   </div>
                 </div>
                 <div class="col-2 align-self-center">
@@ -120,49 +122,65 @@
 
             <div class="col-6">
               <div class="row" style="padding-right: 15px !important">
-                <label class="small-para">Vat(%) :</label>
+                <label class="small-para">Vat :</label>
                 <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" >
-                <label class="small-para">Recieved Amount :</label>
+                <input class="form-control custom-input-sm" type="number" min="0" [(ngModel)]="saleForm.vat" >
+                <label class="small-para">Description :</label>
                 <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
-                <input class="form-control custom-input-sm" type="text" >
+                <input class="form-control custom-input-sm" type="text" [(ngModel)]="saleForm.description" >
 
 
               </div>
             </div>
             <div class="col-6">
               <div class="row">
-                <label class="small-para">Discount(%) :</label>
+                <label class="small-para">Discount :</label>
                 <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" >
-                <label class="small-para">Net Total :</label>
-                <!-- <p class="medium-para">+88 01722 ******</p> -->
-                <input class="form-control custom-input-sm" type="text" id="inputSmall">
+                <input class="form-control custom-input-sm" type="number" min="0" [(ngModel)]="saleForm.discount" >
               </div>
             </div>
 
             <div class="col-md-12">
               <div class="row">
                 <table class="table">
+
                   <tr>
                     <td class="small-para px-0">Subtotal:</td>
-                    <td class="small-para text-right px-0">10,000tk</td>
+                    <td class="small-para text-right px-0">{{getTotalProductPrice()}} Tk</td>
                   </tr>
+
+                  <tr>
+                    <td class="small-para px-0">Vat:</td>
+                    <td class="small-para text-right px-0">{{getVat()}} Tk</td>
+                  </tr>
+
                   <tr>
                     <td class="small-para px-0">Discount:</td>
-                    <td class="small-para text-right px-0">440tk</td>
+                    <td class="small-para text-right px-0">{{getDiscount()}} Tk</td>
+                  </tr>
+                  <tr>
+                    <td class="small-para px-0">Total Paid:</td>
+                    <td class="small-para text-right px-0">{{getTotalReceive()}} Tk</td>
                   </tr>
                   <tr>
                     <td class="small-para px-0">Total:</td>
-                    <td class="small-para text-right px-0">9,560</td>
+                    <td class="small-para text-right px-0">{{getTotal()}} Tk</td>
                   </tr>
+
+
+
+                  <tr>
+                    <td class="small-para px-0">Due :</td>
+                    <td class="small-para text-right px-0">{{getTotalDue()}} Tk</td>
+                  </tr>
+
                 </table>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>
+      <!--<button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
       <button type="button" class="btn-default sale-button" style="background: #1ba233;">Sell</button>
     </div>
 
