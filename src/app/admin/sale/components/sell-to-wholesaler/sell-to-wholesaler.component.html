@@ -6,7 +6,7 @@
         <div class="ui-widget">
           <div class="form-group">
             <label>Wholesalers</label>
-            <select  class="form-control"  >
+            <select  class="form-control" [(ngModel)]="saleForm.wholesalerId" >
               <option value="0"> Select wholesaler </option>
               <option *ngFor="let wholesaler of wholesalers" [value]="wholesaler.id" >
                 {{wholesaler.company.title}}
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col col-lg-4">
                       <label class="small-para text-white" >Selling price</label>
-                      <input type="number" class="form-control price_tf" value="{{saleCartInventory.inventory.purchasePrice}}" [(ngModel)]="saleCartInventory.inventorySaleForm.sellingPrice" >
+                      <input type="number" class="form-control price_tf"  [(ngModel)]="saleCartInventory.inventorySaleForm.sellingPrice" >
                     </div>
                     <div class="col col-lg-3 align-self-end">
                       <form  method='POST' action='#'>
@@ -141,6 +141,10 @@
                 <!-- <p class="medium-para">+88 01722 ******</p> -->
                 <input class="form-control custom-input-sm" type="number" min="0" [(ngModel)]="saleForm.discount" >
               </div>
+              <label class="small-para">Date :</label>
+
+              <input id="saleDate" class="form-control custom-input-sm-date datepick"  >
+
             </div>
 
             <div class="col-md-12">
@@ -178,13 +182,21 @@
                   </tr>
 
                 </table>
+
+                <div class="row" *ngIf="errors.length>0">
+                  <p>Errors :</p>
+                  <ul>
+                    <li class="alert-danger" *ngFor="let error of errors">{{error.msg}}</li>
+                  </ul>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
       <!--<button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
-      <button type="button" class="btn-default sale-button" style="background: #1ba233;">Sell</button>
+      <button type="button" class="btn-default sale-button" style="background: #1ba233;" (click)="submitSell()">Sell</button>
     </div>
 
   </div>

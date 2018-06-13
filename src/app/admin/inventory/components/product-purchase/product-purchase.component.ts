@@ -189,7 +189,7 @@ export class ProductPurchaseComponent implements OnInit {
     this.purchaseCreateForm.inventories  = this.getInventories();
     this.shipmentService.create(this.purchaseCreateForm).subscribe((data)=>{
       console.log("data",data);
-      this.router.navigate(['admin/purchase/shipments/list']);
+      this.router.navigate(['admin/purchase/shipments/list']).then();
     },error=>{
       console.log("error",error);
       this.errors = error.error;

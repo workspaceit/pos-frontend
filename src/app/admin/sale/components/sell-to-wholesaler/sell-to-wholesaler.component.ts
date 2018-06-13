@@ -17,6 +17,8 @@ import {SaleCartInventory} from '../../../../models/form/sale/sale-cart-inventor
 import {InventorySaleForm} from '../../../../models/form/sale/inventory-sale-form';
 import {InventorySearchForm} from '../../../../models/form/inventory/inventory-search-form';
 import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
+import {SaleService} from '../../../../services/sale.service';
+import {SALE_TYPE} from '../../../../models/constant/SALE_TYPE';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -26,9 +28,11 @@ import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
     InventoryService,
     LedgerService,
     WholesalerService,
+    SaleService,
     ProductAutoCompleteCommunicator]
 })
 export class SellToWholesalerComponent implements OnInit {
+
   protected saleForm:SaleForm;
   protected saleCart:SaleCart;
   protected paymentLedgers:Ledger[];
@@ -36,16 +40,23 @@ export class SellToWholesalerComponent implements OnInit {
   protected inventories:Inventory[];
   protected products:Product[];
   protected inventorySearchForm:InventorySearchForm;
+  protected errors=[];
+
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
               private ledgerService: LedgerService,
               private wholesalerService:WholesalerService,
+              private saleService:SaleService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
               private router: Router) {
+
     this.saleForm = new SaleForm();
     this.saleCart = new SaleCart();
     this.inventorySearchForm = new InventorySearchForm();
 
+
+    this.saleForm.wholesalerId = 0;
+    this.saleForm.type = SALE_TYPE.WHOLESALE;
     this.inventories = [];
     this.products = [];
     this.saleForm.paymentAccount = [];
@@ -65,12 +76,12 @@ export class SellToWholesalerComponent implements OnInit {
 
   ngOnInit() {
     const componentRef = this;
-    /*(<any>$('#saleDate')).datepicker({
+    (<any>$('#saleDate')).datepicker({
       dateFormat: 'yy-mm-dd'
     }).on('change', function () {
       console.log('changed');
-    //  componentReff.purchaseCreateForm.shipment.purchaseDate = (<any>$)(this).val();
-    });*/
+      componentRef.saleForm.date = (<any>$)(this).val();
+    });
     /**
      * API to fetch necessary data
      * */
@@ -108,7 +119,7 @@ export class SellToWholesalerComponent implements OnInit {
   }
   public addToCart(data:Inventory[],product:Product){
     if(data.length===0){
-      console.log('0 Inventory');
+      alert('Product sold out');
       return;
     }
 
@@ -129,6 +140,8 @@ export class SellToWholesalerComponent implements OnInit {
 
       saleCartInventory.inventory = inventory;
       saleCartInventory.inventorySaleForm = inventorySaleForm;
+      saleCartInventory.inventorySaleForm.sellingPrice = saleCartInventory.inventory.sellingPrice;
+      saleCartInventory.inventorySaleForm.quantity = 1;
 
       saleCartProduct.saleCartInventory.push(saleCartInventory);
     }
@@ -247,5 +260,23 @@ export class SellToWholesalerComponent implements OnInit {
   }
   public getTotalDue(){
     return this.getTotal() - this.getTotalReceive();
+  }
+  public submitSell(){
+    this.errors = [];
+    this.saleForm.inventories = this.getInventorySaleFormCart();
+    this.saleService.create(this.saleForm).subscribe((data)=>{
+      this.router.navigate(['admin/sale/sale-list']).then();
+    },(error)=>{
+      this.errors= error.error;
+    });
+  }
+  private getInventorySaleFormCart(){
+    const inventorySaleForms:InventorySaleForm[] = [];
+    for(const saleCartProduct of  this.saleCart.saleCartProduct){
+     for(const saleCartInventory  of   saleCartProduct.saleCartInventory){
+       inventorySaleForms.push(saleCartInventory.inventorySaleForm);
+      }
+    }
+    return inventorySaleForms;
   }
 }
