@@ -11,6 +11,13 @@
         </div>
         <div class="col-4">
           <img src="{{ imgUrl + invoice.shopInformation.logo}}" class="img-fluid">
+          <p>{{invoice.shopInformation.name}}</p>
+          <p>
+            {{invoice.shopInformation.address}}
+          </p>
+          <p>
+            Phone : {{invoice.shopInformation.phone}}, Email : {{invoice.shopInformation.email}}
+          </p>
         </div>
         <div class="col-4 text-right">
           <h5>Billed to</h5>
