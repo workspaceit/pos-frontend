@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LedgerService} from '../../../../services/ledger-service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../../../services/product.service';
 import {InventoryService} from '../../../../services/inventory-service';
 import {ProductAutoCompleteCommunicator} from '../../../../communicator/product-auto-complete-communicator';
@@ -22,8 +22,8 @@ import {SALE_TYPE} from '../../../../models/constant/SALE_TYPE';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
-  templateUrl: './sell-to-wholesaler.component.html',
-  styleUrls: ['./sell-to-wholesaler.component.css'],
+  templateUrl: './sell.component.html',
+  styleUrls: ['./sell.component.css'],
   providers: [ProductService,
     InventoryService,
     LedgerService,
@@ -31,8 +31,8 @@ import {SALE_TYPE} from '../../../../models/constant/SALE_TYPE';
     SaleService,
     ProductAutoCompleteCommunicator]
 })
-export class SellToWholesalerComponent implements OnInit {
-
+export class SellComponent implements OnInit {
+  protected _SALE_TYPE;
   protected saleForm:SaleForm;
   protected saleCart:SaleCart;
   protected paymentLedgers:Ledger[];
@@ -48,15 +48,16 @@ export class SellToWholesalerComponent implements OnInit {
               private wholesalerService:WholesalerService,
               private saleService:SaleService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
 
+    this._SALE_TYPE = SALE_TYPE;
     this.saleForm = new SaleForm();
     this.saleCart = new SaleCart();
     this.inventorySearchForm = new InventorySearchForm();
 
 
     this.saleForm.wholesalerId = 0;
-    this.saleForm.type = SALE_TYPE.WHOLESALE;
     this.inventories = [];
     this.products = [];
     this.saleForm.paymentAccount = [];
@@ -72,6 +73,23 @@ export class SellToWholesalerComponent implements OnInit {
     productAutoCompleteCommunicator.onProductSelect.subscribe((product)=>{
         this.getInventoryByProductId(product);
     });
+
+
+    this.activatedRoute.params.subscribe(
+      params => {
+        const saleType = params['saleType'];
+        switch(saleType){
+          case 'wholesale':
+            this.saleForm.type = SALE_TYPE.WHOLESALE;
+            break;
+          case 'consumer':
+            this.saleForm.type = SALE_TYPE.CONSUMER_SALE;
+            break;
+          default:
+            this.router.navigate(['404']).then();
+        }
+      }
+    );
   }
 
   ngOnInit() {

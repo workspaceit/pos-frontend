@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SaleRoutingModule } from './sale-routing.module';
-import { SellToConsumerComponent } from './components/sell-to-consumer/sell-to-consumer.component';
-import { SellToWholesalerComponent } from './components/sell-to-wholesaler/sell-to-wholesaler.component';
-import {ProductAutoCompleteComponent} from '../inventory/components/product-auto-complete/product-auto-complete.component';
 import {FormsModule} from '@angular/forms';
 import {TypeaheadModule} from 'ngx-bootstrap';
 import {InventoryModule} from '../inventory/inventory.module';
 import { SaleListComponent } from './components/sale-list/sale-list.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {SellComponent} from './components/sell/sell.component';
 
 @NgModule({
   imports: [
@@ -20,6 +17,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgxPaginationModule,
     TypeaheadModule.forRoot()
   ],
-  declarations: [SellToConsumerComponent, SellToWholesalerComponent, SaleListComponent]
+  declarations: [SellComponent, SaleListComponent]
 })
 export class SaleModule { }

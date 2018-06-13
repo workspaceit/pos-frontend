@@ -22,6 +22,7 @@ import {InventoryTotalPricePipe} from '../../pipes/inventory-total-price.pipe';
     NgxPaginationModule,
     FormsModule,
     TypeaheadModule.forRoot()
+
   ],
   declarations: [ProductListComponent,
     ProductAddComponent,
