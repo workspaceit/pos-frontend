@@ -21,6 +21,9 @@
         </div>
         <div class="col-4 text-right">
           <h5>Billed to</h5>
+          <p *ngIf="invoice.billTo.id!==null">
+            {{invoice.billTo.id}}
+          </p>
           <p>{{invoice.billTo.name}}</p>
           <p>
             {{invoice.billTo.address.formattedAddress}}

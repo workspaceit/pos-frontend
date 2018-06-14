@@ -19,6 +19,10 @@ import {InventorySearchForm} from '../../../../models/form/inventory/inventory-s
 import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
 import {SaleService} from '../../../../services/sale.service';
 import {SALE_TYPE} from '../../../../models/constant/SALE_TYPE';
+import {ConsumerService} from '../../../../services/consumer.service';
+import {Consumer} from '../../../../models/data/consumer';
+import {ConsumerForm} from '../../../../models/form/consumer-form';
+import {PersonalInfoForm} from '../../../../models/form/personal-info-form';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -28,6 +32,7 @@ import {SALE_TYPE} from '../../../../models/constant/SALE_TYPE';
     InventoryService,
     LedgerService,
     WholesalerService,
+    ConsumerService,
     SaleService,
     ProductAutoCompleteCommunicator]
 })
@@ -37,6 +42,7 @@ export class SellComponent implements OnInit {
   protected saleCart:SaleCart;
   protected paymentLedgers:Ledger[];
   protected wholesalers:Wholesaler[];
+  protected consumers:Consumer[];
   protected inventories:Inventory[];
   protected products:Product[];
   protected inventorySearchForm:InventorySearchForm;
@@ -48,16 +54,24 @@ export class SellComponent implements OnInit {
               private wholesalerService:WholesalerService,
               private saleService:SaleService,
               private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator,
+              private consumerService:ConsumerService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
+    this.paymentLedgers = [];
+    this.wholesalers=[];
+    this.consumers=[];
     this._SALE_TYPE = SALE_TYPE;
     this.saleForm = new SaleForm();
     this.saleCart = new SaleCart();
+    this.saleForm.consumerInfo = new ConsumerForm();
+    this.saleForm.consumerInfo.personalInfo = new PersonalInfoForm();
+
     this.inventorySearchForm = new InventorySearchForm();
 
 
     this.saleForm.wholesalerId = 0;
+    this.saleForm.consumerInfoId = 0;
     this.inventories = [];
     this.products = [];
     this.saleForm.paymentAccount = [];
@@ -93,6 +107,7 @@ export class SellComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log( this.saleForm.type);
     const componentRef = this;
     (<any>$('#saleDate')).datepicker({
       dateFormat: 'yy-mm-dd'
@@ -105,6 +120,7 @@ export class SellComponent implements OnInit {
      * */
     this.getLedger();
     this.getWholesaler();
+    this.getConsumers();
   }
   public getInventoryByProductId(product:Product){
     const flag:boolean = this.isProductExistInCart(product);
@@ -182,6 +198,24 @@ export class SellComponent implements OnInit {
     this.wholesalerService.getWholesalers().subscribe((data)=>{
       this.wholesalers = data;
       console.log('this.suppliers',this.wholesalers);
+    });
+  }
+  public getConsumers(){
+    this.consumerService.getByAll().subscribe((data)=>{
+      this.consumers = data;
+      console.log('this.consumers',this.consumers);
+    });
+  }
+  public getNewConsumerFormAndCloseModal(){
+    this.consumerService.getNewForml().subscribe((data)=>{
+      this.saleForm.consumerInfo = data;
+      (<any>$('#consumerForm')).modal('hide');
+    });
+
+  }
+  public getNewConsumerForm(){
+    this.consumerService.getNewForml().subscribe((data)=>{
+      this.saleForm.consumerInfo = data;
     });
   }
   public removeInventoryFromCart(productIndex,inventoryIndex){
@@ -283,7 +317,7 @@ export class SellComponent implements OnInit {
     this.errors = [];
     this.saleForm.inventories = this.getInventorySaleFormCart();
     this.saleService.create(this.saleForm).subscribe((data)=>{
-      this.router.navigate(['admin/sale/sale-list']).then();
+      this.router.navigate(['admin/sale/get-all/list']).then();
     },(error)=>{
       this.errors= error.error;
     });
@@ -296,5 +330,14 @@ export class SellComponent implements OnInit {
       }
     }
     return inventorySaleForms;
+  }
+
+  public showConsumerModal(){
+    (<any>$('#consumerForm')).modal({backdrop: 'static', keyboard: false});
+  }
+  public removeConsumerForm(){
+    console.log(this.saleForm.consumerInfo);
+    this.saleForm.consumerInfo = new ConsumerForm();
+    this.saleForm.consumerInfo.personalInfo = new PersonalInfoForm();
   }
 }

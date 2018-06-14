@@ -19,24 +19,27 @@ export class LoginComponent implements OnInit {
     private authService: AuthService) {
     this.username = '';
     this.password = '';
+    if(this.authService.isLoggedIn()){
+      this.router.navigate(['admin/dashboard']).then();
+    }
   }
 
   ngOnInit() {
-    if(this.authService.isLoggedIn()){
-      this.router.navigate(['admin/dashboard']);
-    }
+
   }
 
   login() {
     this.loginService.authenticate(this.username, this.password).subscribe(
       (oAuthCredential)=> {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        /*const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         if(returnUrl !== '/'){
           this.router.navigate([returnUrl]);
         }
         else {
           this.router.navigate(['admin/dashboard']);
-        }
+        }*/
+
+        this.router.navigate(['admin/dashboard']);
       },
       error => {
         GrowlUtil.notify({type:'error', title:'Error!' , message: error.error.error_description});

@@ -5,7 +5,7 @@ import {SaleListComponent} from './components/sale-list/sale-list.component';
 
 const routes: Routes = [
   { path: ':saleType', component: SellComponent },
-  { path: 'sale-list', component: SaleListComponent}
+  { path: 'get-all/list', component: SaleListComponent}
 ];
 
 @NgModule({
