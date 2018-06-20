@@ -37,7 +37,7 @@ export class InvoiceComponent implements OnInit {
         {
           this.getSaleInvoice();
           this.invoiceFor = 'Sale';
-          this.receiptTag = 'Received'
+          this.receiptTag = 'Received';
         }
 
       }
