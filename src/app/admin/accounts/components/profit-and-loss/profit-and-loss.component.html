@@ -1,4 +1,9 @@
 <table>
-  <app-report-row *ngFor="let reportAccount of profitAndLossReport.expenseAccounts" [reportAccounts]="reportAccount"></app-report-row>
+  <tbody>
+
+  <tr *ngFor="let row of tableRows" >
+    <td>{{row.title}}</td>
+  </tr>
+  </tbody>
 </table>
 
