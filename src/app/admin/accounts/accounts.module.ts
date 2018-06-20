@@ -9,6 +9,8 @@ import { PaymentAddComponent } from './components/payment-add/payment-add.compon
 import { PaymentComponent } from './components/payment/payment.component';
 import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ProfitAndLossComponent } from './components/profit-and-loss/profit-and-loss.component';
+import { ReportRowComponent } from './components/report-row/report-row.component';
 
 @NgModule({
   imports: [
@@ -16,6 +18,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AccountsRoutingModule,
     NgxPaginationModule
   ],
-  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent, LedgerListComponent]
+  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent, LedgerListComponent, ProfitAndLossComponent, ReportRowComponent]
 })
 export class AccountsModule { }

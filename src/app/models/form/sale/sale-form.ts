@@ -1,7 +1,7 @@
 import {InventorySaleForm} from './inventory-sale-form';
-import {PaymentLedgerForm} from '../purchase-payment-create-form';
 import {SALE_TYPE} from '../../constant/SALE_TYPE';
 import {ConsumerForm} from '../consumer-form';
+import {PaymentLedgerForm} from '../payment-ledger-form';
 
 export class SaleForm{
   inventories:InventorySaleForm[];

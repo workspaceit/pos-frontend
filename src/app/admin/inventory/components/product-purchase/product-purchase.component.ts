@@ -8,7 +8,6 @@ import {InventoryCreateForm} from '../../../../models/form/inventory-create-form
 import {Cart} from '../../../../models/form/cart';
 import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
-import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
 import {PurchaseCreateForm} from '../../../../models/form/purchase-create-form';
 import {ShipmentCreateForm} from '../../../../models/form/shipment-create-form';
 import {CartDetails} from '../../../../models/form/cart-details';
@@ -18,6 +17,7 @@ import {SupplierService} from '../../../../services/supplier.service';
 import {SHIPMENT_COST} from '../../../../models/constant/SHIPMENT_COST';
 import {PRODUCT_CONDITION} from '../../../../models/constant/PRODUCT_CONDITION';
 import {Router} from '@angular/router';
+import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
 
 @Component({
   selector: 'app-product-purchase',

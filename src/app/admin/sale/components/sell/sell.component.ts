@@ -9,7 +9,6 @@ import {Inventory} from '../../../../models/data/Inventory';
 import {Product} from '../../../../models/data/product';
 import {Wholesaler} from '../../../../models/data/wholesaler';
 import {WholesalerService} from '../../../../services/wholesaler.service';
-import {PaymentLedgerForm} from '../../../../models/form/purchase-payment-create-form';
 import {SaleForm} from '../../../../models/form/sale/sale-form';
 import {SaleCart} from '../../../../models/form/sale/sale-cart';
 import {SaleCartProduct} from '../../../../models/form/sale/sale-cart-product';
@@ -23,6 +22,7 @@ import {ConsumerService} from '../../../../services/consumer.service';
 import {Consumer} from '../../../../models/data/consumer';
 import {ConsumerForm} from '../../../../models/form/consumer-form';
 import {PersonalInfoForm} from '../../../../models/form/personal-info-form';
+import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
