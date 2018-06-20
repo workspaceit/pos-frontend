@@ -64,6 +64,16 @@
             <td>Total:</td>
             <td class="text-right">{{invoice.total - invoice.discount}}</td>
           </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td>{{receiptTag}}:</td>
+            <td class="text-right">{{invoice.paidOrReceive}}</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td>Due:</td>
+            <td class="text-right">{{invoice.due}}</td>
+          </tr>
           </tfoot>
         </table>
       </div>

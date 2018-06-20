@@ -16,6 +16,7 @@ export class InvoiceComponent implements OnInit {
   invoiceFor: string;
   invoice: Invoice = new Invoice();
   imgUrl= environment.imgUrl;
+  receiptTag: string;
 
   constructor(private activatedRoute: ActivatedRoute,private invoiceService: InvoiceService) { }
 
@@ -30,11 +31,13 @@ export class InvoiceComponent implements OnInit {
         {
           this.getShipmentInvoice();
           this.invoiceFor = 'Shipment';
+          this.receiptTag = 'Paid';
         }
         else
         {
           this.getSaleInvoice();
           this.invoiceFor = 'Sale';
+          this.receiptTag = 'Received'
         }
 
       }
