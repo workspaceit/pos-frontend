@@ -9,18 +9,19 @@ import {ProfitAndLossReport} from '../../../../models/data/report/profit-and-los
   providers:[CategoryService]
 })
 export class ProfitAndLossComponent implements OnInit {
-  protected profitAndLossComponent:ProfitAndLossReport;
+  protected profitAndLossReport:ProfitAndLossReport;
 
   constructor(private categoryService:CategoryService) {
-   this.profitAndLossComponent = new ProfitAndLossReport();
+   this.profitAndLossReport = new ProfitAndLossReport();
   }
 
   private getProfitAndLoss(){
     this.categoryService.getProfitandLoss('2014-02-02','2018-08-12').subscribe(value => {
-        this.profitAndLossComponent = value;
+        this.profitAndLossReport = value;
     });
   }
   ngOnInit() {
+    this.getProfitAndLoss();
   }
 
 }

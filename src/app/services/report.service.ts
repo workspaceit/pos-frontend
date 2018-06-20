@@ -10,7 +10,7 @@ export class CategoryService extends BaseService {
   constructor(private httpClient: HttpClient) { super(); }
 
   public getProfitandLoss(startDate:string,finishDate:string):Observable<ProfitAndLossReport> {
-    return this.httpClient.get<ProfitAndLossReport>(this.apiUrl + '/report/get-profit-and-loss/'+startDate+'/'+finishDate);
+    return this.httpClient.get<ProfitAndLossReport>(this.authApiUrl + '/api/report/get-profit-and-loss/'+startDate+'/'+finishDate);
   }
 
 }
