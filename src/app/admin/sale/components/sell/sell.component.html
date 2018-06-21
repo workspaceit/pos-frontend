@@ -57,7 +57,7 @@
         <div class="products-container-scroll">
               <div class="row product-bg" *ngFor="let saleCartProduct of saleCart.saleCartProduct ; let productIndex = index" >
                 <div class="col"  >
-                  <p class="product-txt-title" data-toggle="modal" data-target="#product1">{{saleCartProduct.product.name}}</p>
+                  <p class="product-txt-title" data-toggle="modal" (click)="showProductModal(productIndex)">{{saleCartProduct.product.name}}</p>
                   <p class="product-txt-price">price :
                     <label *ngIf="saleCartProduct.product.minPrice===saleCartProduct.product.maxPrice">{{saleCartProduct.product.maxPrice}} TK</label>
                     <label *ngIf="saleCartProduct.product.minPrice!==saleCartProduct.product.maxPrice">{{saleCartProduct.product.minPrice}} TK - {{saleCartProduct.product.maxPrice}} TK</label>
@@ -219,7 +219,8 @@
 
   </div>
 </div>
-<div class="modal fade" id="product1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -230,90 +231,35 @@
       </div>
       <div class="modal-body clearfix">
         <div class="col-md-4">
-          <img src="./assets/img/product1.png" class="img-fluid">
+          <img
+            onError="this.src='assets/img/image-not-available-90x60.png'"
+            src="{{imgUrl+modalProductDetails.image}}" class="img-fluid">
         </div>
         <div class="col-md-8">
           <p class="small-para" style="font-size: 18px;font-weight: 500;margin-bottom: 0px">Product Name :</p>
-          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">Northstar Converse</p>
+          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.name}}</p>
           <p class="small-para" style="font-size: 18px;font-weight: 500">Bar Code :</p>
-          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">56898874</p>
+          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.barcode}}</p>
         </div>
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-6">
-              <p class="medium-para-01">Costing Price :</p>
+              <p class="medium-para-01">Price :</p>
             </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">3000tk</p>
+
+            <div *ngIf="modalProductDetails.minPrice!==modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.minPrice}} - {{modalProductDetails.maxPrice}}</p>
             </div>
-            <div class="col-md-6">
-              <p class="medium-para-01">Discount :</p>
+            <div *ngIf="modalProductDetails.minPrice===modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.maxPrice}} TK</p>
             </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">200tk</p>
-            </div>
-            <div class="col-md-6">
-              <p class="medium-para-01">Sales Rate :</p>
-            </div>
-            <div class="col-md-6" style="text-align: right;">
-              <p class="medium-para-01">2780tk</p>
-            </div>
+
             <div class="col-md-12" style="text-align: center;margin-top: 20px">
               <p class="small-para">In Stokes</p>
-              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">15</p>
+              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">{{modalProductDetails.totalAvailableQuantity}}</p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="consumerForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span class="modal-title bold-text" style="letter-spacing: 0px">
-          Consumer Details
-        </span>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body clearfix">
-        <div  class="form-group">
-
-          <label >Consumer Id
-            <a href="javascript:void(0)" (click)="getNewConsumerFormAndCloseModal()">generate new</a>
-          </label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.consumerId" />
-        </div>
-        <div  class="form-group">
-          <label >Full name</label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.fullName">
-        </div>
-        <div  class="form-group">
-          <label >Dob</label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.dob">
-        </div>
-        <div  class="form-group">
-          <label >Email</label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.email">
-        </div>
-        <div  class="form-group">
-          <label >Phone</label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.phone">
-        </div>
-        <div  class="form-group">
-          <label >Address</label>
-          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.address">
-        </div>
-        <span>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                    Done
-                  </button>
-        </span>
-
-
       </div>
     </div>
   </div>

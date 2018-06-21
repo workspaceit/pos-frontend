@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {SaleListResponse} from '../models/response-models/sale-list-response';
 import {SaleForm} from '../models/form/sale/sale-form';
+import {SALE_TYPE} from '../models/constant/SALE_TYPE';
 
 @Injectable()
 export class SaleService extends BaseService{
@@ -12,9 +13,15 @@ export class SaleService extends BaseService{
 
   public create(saleForm: SaleForm):Observable<any> {
     const options = {headers: {'Content-Type': 'application/json'}};
-    console.log(JSON.stringify(saleForm));
+    const submittedSaleForm = new SaleForm(saleForm);
+    if(submittedSaleForm.type === SALE_TYPE.WHOLESALE){
+      delete submittedSaleForm.consumerInfo;
+    }
+    console.log(saleForm);
 
-    return this.httpClient.post<any>(this.authApiUrl + '/api/sale/create',JSON.stringify(saleForm),options);
+    console.log(submittedSaleForm);
+
+    return this.httpClient.post<any>(this.authApiUrl + '/api/sale/create',JSON.stringify(submittedSaleForm),options);
   }
 
   public getAll(limit: number, offset: number):Observable<SaleListResponse> {
