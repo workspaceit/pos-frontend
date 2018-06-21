@@ -1,8 +1,38 @@
-<table>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th scope="col" class="text-left">Ordinary Income/Expense</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
   <tbody>
-
-  <tr *ngFor="let row of tableRows" >
-    <td>{{row.title}}</td>
+  <tr>
+    <td>
+      <span [style.marginLeft.px]="5" >Revenue</span>
+    </td>
+    <td></td>
+  </tr>
+  <tr *ngFor="let row of incomeTableRows" >
+    <td>
+      <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+    </td>
+    <td>
+      <span [style.marginLeft.px]="row.spaces" >{{row.amount}}</span>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <span [style.marginLeft.px]="5" >Total Revenue</span>
+    </td>
+    <td></td>
+  </tr>
+  <tr *ngFor="let row of incomeTableRows" >
+    <td>
+      <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+    </td>
+    <td>
+      <span [style.marginLeft.px]="row.spaces" >{{row.amount}}</span>
+    </td>
   </tr>
   </tbody>
 </table>
