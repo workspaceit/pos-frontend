@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService} from '../../../../services/report.service';
 import {ProfitAndLossReport} from '../../../../models/data/report/profit-and-loss-report';
 import {ReportAccount} from '../../../../models/data/report/report-account';
-import {ProfitAndLossTable} from '../../../../models/view/profit-and-loss-table';
 import {DatePipe} from '@angular/common';
+import {ReportAccountTable} from '../../../../models/view/report-account-table';
 
 @Component({
   selector: 'app-profit-and-loss',
@@ -12,8 +12,8 @@ import {DatePipe} from '@angular/common';
   providers:[ReportService]
 })
 export class ProfitAndLossComponent implements OnInit {
-  protected expenseTableRows: ProfitAndLossTable[];
-  protected incomeTableRows: ProfitAndLossTable[];
+  protected expenseTableRows: ReportAccountTable[];
+  protected incomeTableRows: ReportAccountTable[];
   protected profitAndLossReport: ProfitAndLossReport;
   protected searchedDate={from:'',to:''};
   constructor(private reportService: ReportService) {
@@ -65,8 +65,8 @@ export class ProfitAndLossComponent implements OnInit {
   public searchProfitAndLoss(){
     this.getProfitAndLoss();
   }
-  private getRows(reportAccounts: ReportAccount[], spaceCount: number): ProfitAndLossTable[] {
-    let tableRows: ProfitAndLossTable[] = [];
+  private getRows(reportAccounts: ReportAccount[], spaceCount: number): ReportAccountTable[] {
+    let tableRows: ReportAccountTable[] = [];
     for (const ra of reportAccounts) {
 
 
@@ -74,7 +74,7 @@ export class ProfitAndLossComponent implements OnInit {
         continue;
       }
 
-      const tr = new ProfitAndLossTable();
+      const tr = new ReportAccountTable();
       tr.id = ra.id;
       tr.title = ra.title;
       tr.amount = ra.amount;
