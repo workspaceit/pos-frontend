@@ -17,13 +17,25 @@ export class PaymentAddComponent implements OnInit {
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
   protected paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
-  paymentLedgerForm: PaymentLedgerForm = new PaymentLedgerForm();
-  selectedBeneficialAccount: number;
 
 
-  constructor(private ledgerService: LedgerService) { }
+  constructor(private ledgerService: LedgerService) {
+    this.paymentCreateForm.cashOrBank = [];
+    const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
+    paymentLedgerForm.amount=null;
+    paymentLedgerForm.ledgerId=0;
+
+    this.paymentCreateForm.cashOrBank.push(paymentLedgerForm);
+  }
 
   ngOnInit() {
+    const componentRef = this;
+    (<any>$('#saleDate')).datepicker({
+      dateFormat: 'yy-mm-dd'
+    }).on('change', function () {
+      console.log('changed');
+      componentRef.paymentCreateForm.date = (<any>$)(this).val();
+    });
     this.getBankOrCash();
     this.getSupplier();
   }
@@ -43,6 +55,30 @@ export class PaymentAddComponent implements OnInit {
         console.log(this.beneficialAccount);
       }
     );
+  }
+  public addPaymentAccount(){
+    const paymentAccount: PaymentLedgerForm = new PaymentLedgerForm();
+    paymentAccount.ledgerId = 0;
+
+    this.paymentCreateForm.cashOrBank.push(paymentAccount);
+  }
+  public removePaymentAccount(index:number){
+    this.paymentCreateForm.cashOrBank.splice(index,1);
+  }
+
+  public getTotalDrAmount()
+  {
+    let totalDr = 0;
+    for (const totalAmount of this.paymentCreateForm.cashOrBank)
+    {
+      if(isNaN(totalAmount.amount))
+      {
+        continue;
+      }
+
+      totalDr+= totalAmount.amount;
+    }
+    return totalDr;
   }
 
 
