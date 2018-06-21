@@ -1,34 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import {CategoryService} from '../../../../services/report.service';
+import { ReportService} from '../../../../services/report.service';
 import {ProfitAndLossReport} from '../../../../models/data/report/profit-and-loss-report';
 import {ReportAccount} from '../../../../models/data/report/report-account';
 import {ProfitAndLossTable} from '../../../../models/view/profit-and-loss-table';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-profit-and-loss',
   templateUrl: './profit-and-loss.component.html',
   styleUrls: ['./profit-and-loss.component.css'],
-  providers:[CategoryService]
+  providers:[ReportService]
 })
 export class ProfitAndLossComponent implements OnInit {
   protected expenseTableRows: ProfitAndLossTable[];
   protected incomeTableRows: ProfitAndLossTable[];
   protected profitAndLossReport: ProfitAndLossReport;
-  protected date={from:'',to:''};
-  constructor(private categoryService: CategoryService) {
+  protected searchedDate={from:'',to:''};
+  constructor(private reportService: ReportService) {
     this.expenseTableRows = [];
     this.incomeTableRows = [];
     this.profitAndLossReport = new ProfitAndLossReport();
+    const datePipe = new DatePipe('en-US');
+    const fromDate = new Date();
+    fromDate.setMonth(fromDate.getMonth()-1);
 
-    this.date.from='2010-08-01';
-    this.date.to='2018-08-01';
+    this.searchedDate.from = datePipe.transform(fromDate, 'yyyy-MM-dd');
+    this.searchedDate.to = datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+
+
 
   }
 
   private getProfitAndLoss() {
     this.expenseTableRows= [];
     this.incomeTableRows= [];
-    this.categoryService.getProfitAndLoss(this.date.from, this.date.to).subscribe(value => {
+    this.reportService.getProfitAndLoss(this.searchedDate.from, this.searchedDate.to).subscribe(value => {
       this.profitAndLossReport = value;
       const expense = this.getRows(this.profitAndLossReport.expenseAccounts, 10);
       const income = this.getRows(this.profitAndLossReport.incomeAccounts, 10);
@@ -45,13 +52,13 @@ export class ProfitAndLossComponent implements OnInit {
       dateFormat: 'yy-mm-dd'
     }).on('change', function () {
       console.log('changed');
-      componentRef.date.from = (<any>$)(this).val();
+      componentRef.searchedDate.from = (<any>$)(this).val();
     });
     (<any>$('#endDate')).datepicker({
       dateFormat: 'yy-mm-dd'
     }).on('change', function () {
       console.log('changed');
-      componentRef.date.to = (<any>$)(this).val();
+      componentRef.searchedDate.to = (<any>$)(this).val();
     });
     this.getProfitAndLoss();
   }

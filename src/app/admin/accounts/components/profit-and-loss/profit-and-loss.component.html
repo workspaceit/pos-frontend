@@ -6,9 +6,9 @@
 
     <div class="col-lg-12">
       <label>From :</label>
-      <input id="startDate" class="form-control custom-input-sm-date datepick"  >
+      <input id="startDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.from"  >
       <label>To :</label>
-      <input id="endDate" class="form-control custom-input-sm-date datepick"  >
+      <input id="endDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.to"  >
       <button type="submit" class="btn btn-primary" (click)="searchProfitAndLoss()">Search</button>
     </div>
 
@@ -17,7 +17,7 @@
         <thead>
         <tr>
           <th scope="col" class="text-left">Ordinary Income/Expense</th>
-          <th scope="col"></th>
+          <th scope="col">Amount</th>
         </tr>
         </thead>
         <tbody>
@@ -32,8 +32,8 @@
             <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
           </td>
           <td>
-            <span *ngIf="row.isGroup" [style.marginLeft.px]="row.spaces" ></span>
-            <span *ngIf="!row.isGroup" [style.marginLeft.px]="row.spaces" >{{row.amount}}</span>
+            <span *ngIf="row.isGroup"  ></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
           </td>
         </tr>
         <tr>
@@ -48,7 +48,7 @@
           </td>
           <td>
             <span *ngIf="row.isGroup" [style.marginLeft.px]="row.spaces" ></span>
-            <span *ngIf="!row.isGroup" [style.marginLeft.px]="row.spaces" >{{row.amount}}</span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
           </td>
         </tr>
         <tr>

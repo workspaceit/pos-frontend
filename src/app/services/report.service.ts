@@ -5,12 +5,21 @@ import {ProfitAndLossReport} from '../models/data/report/profit-and-loss-report'
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class CategoryService extends BaseService {
+export class ReportService extends BaseService {
 
   constructor(private httpClient: HttpClient) { super(); }
 
   public getProfitAndLoss(startDate:string, finishDate:string):Observable<ProfitAndLossReport> {
-    return this.httpClient.get<ProfitAndLossReport>(this.authApiUrl + '/api/report/get-profit-and-loss/'+startDate+'/'+finishDate);
+    let params = '?';
+    if(startDate!==null && startDate!==''){
+      params+='startDate='+startDate;
+    }
+
+    if(finishDate!==null && finishDate!==''){
+      params+='&finishDate='+finishDate;
+
+    }
+    return this.httpClient.get<ProfitAndLossReport>(this.authApiUrl + '/api/report/get-profit-and-loss'+params);
   }
 
 }
