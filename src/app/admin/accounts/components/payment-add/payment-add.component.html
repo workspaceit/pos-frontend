@@ -7,10 +7,16 @@
       <table class="table table-bordered">
         <tbody>
         <tr>
+          <td></td>
+          <td></td>
+          <td class="text-right"><span class="balance-txt">Dr</span></td>
+          <td class="text-right"><span class="balance-txt">Cr</span></td>
+        </tr>
+        <tr>
           <td>
             <div class="col-md-auto">
               <label>Beneficial Account</label>
-              <select class="form-control custom-select" STYLE="display: inline-block;">
+              <select class="form-control custom-select" STYLE="display: inline-block;" [(ngModel)]="paymentCreateForm.beneficial.ledgerId">
                 <option value="0" selected disabled="disabled">--Select Beneficial Account--</option>
                 <option *ngFor="let beneficial of beneficialAccount" value="{{beneficial.id}}">{{beneficial.name}}</option>
               </select>
@@ -18,34 +24,30 @@
           </td>
           <td>
             <label>Amount</label>
-            <input type="text" class="form-control">
+            <input type="number" class="form-control" min="0" [disabled]="paymentCreateForm.beneficial.ledgerId <=0" [(ngModel)]="paymentCreateForm.beneficial.amount" >
           </td>
           <td class="text-right"><span class="balance-txt"></span></td>
-          <td class="text-right"><span class="balance-txt">$130</span></td>
+          <td class="text-right"><span class="balance-txt">${{paymentCreateForm.beneficial.amount}}</span></td>
         </tr>
-        <tr>
+        <tr *ngFor="let cashOrBank of paymentCreateForm.cashOrBank;let i = index">
           <td>
             <div class="col-md-auto">
               <label>Bank/Cash</label>
-              <select class="form-control custom-select" STYLE="display: inline-block;">
+              <select class="form-control custom-select" STYLE="display: inline-block;" [(ngModel)]="cashOrBank.ledgerId">
                 <option value="0" selected disabled="disabled">--Select Bank/Cash--</option>
                 <option *ngFor="let bank of bankOrCash" value="{{bank.id}}">{{bank.name}}</option>
               </select>
             </div>
             <div class="col col-md-12 text-right">
-              <button class="btn btn-success btn-sm btn-ad-new">
-                <i class="fa fa-plus-circle"></i>
-              </button>
-              <button class="btn btn-danger btn-sm btn-ad-new">
-                <i class="fa fa-minus-circle"></i>
-              </button>
+              <button *ngIf="i==0"  class="btn btn-success btn-sm btn-ad-new" (click)="addPaymentAccount()"><i class="fa fa-plus-circle"></i></button>
+              <button *ngIf="i>0" class="btn btn-danger btn-sm btn-ad-new" (click)="removePaymentAccount(i)"><i class="fa fa-minus-circle"></i></button>
             </div>
           </td>
           <td>
-            <label>Amount {{paymentCreateForm.beneficial.amount}}</label>
-            <input type="number" name="asd" class="form-control" [(ngModel)]="paymentCreateForm.beneficial.amount" >
+            <label>Amount</label>
+            <input type="number" name="asd" class="form-control" [disabled]="cashOrBank.ledgerId <=0" [(ngModel)]="cashOrBank.amount">
           </td>
-          <td class="text-right"><span class="balance-txt">$130</span></td>
+          <td class="text-right"><span class="balance-txt">${{cashOrBank.amount}}</span></td>
           <td class="text-right"><span class="balance-txt"></span></td>
         </tr>
         </tbody>
@@ -55,10 +57,10 @@
             <span class="balance-txt">Total</span>
           </td>
           <td class="text-right">
-            <span class="balance-txt">$130</span>
+            <span class="balance-txt">${{getTotalDrAmount()}}</span>
           </td>
           <td class="text-right">
-            <span class="balance-txt">$260</span>
+            <span class="balance-txt">${{paymentCreateForm.beneficial.amount}}</span>
           </td>
         </tr>
         </tfoot>
@@ -67,7 +69,7 @@
       <div class="form-row">
         <div class="form-group col col-md-3">
           <label>Date</label>
-          <input type="text" class="form-control datepick">
+          <input type="text" id="saleDate" class="form-control datepick">
         </div>
       </div>
       <div class="form-row">
