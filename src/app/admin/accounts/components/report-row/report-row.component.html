@@ -1,4 +1,6 @@
 <tr>
-    <td>{{reportAccount.title}}</td>
+  <td>{{reportAccount.title}}</td>
+</tr>
+<tr *ngFor="let tmpReportAccount of reportAccount.child" [reportAccounts]="tmpReportAccount" app-report-row >
 </tr>
 

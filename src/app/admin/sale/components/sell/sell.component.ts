@@ -47,6 +47,7 @@ export class SellComponent implements OnInit {
   protected products:Product[];
   protected inventorySearchForm:InventorySearchForm;
   protected errors=[];
+  protected modalProductDetails:Product;
 
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
@@ -66,7 +67,7 @@ export class SellComponent implements OnInit {
     this.saleCart = new SaleCart();
     this.saleForm.consumerInfo = new ConsumerForm();
     this.saleForm.consumerInfo.personalInfo = new PersonalInfoForm();
-
+    this.modalProductDetails = new Product();
     this.inventorySearchForm = new InventorySearchForm();
 
 
@@ -306,6 +307,7 @@ export class SellComponent implements OnInit {
   public getTotalReceive(){
     let totalReceivedAmount = 0;
     for(const paymentAccount of this.saleForm.paymentAccount){
+      if(isNaN(paymentAccount.amount))continue;
       totalReceivedAmount += paymentAccount.amount;
     }
     return totalReceivedAmount;
@@ -339,5 +341,10 @@ export class SellComponent implements OnInit {
     console.log(this.saleForm.consumerInfo);
     this.saleForm.consumerInfo = new ConsumerForm();
     this.saleForm.consumerInfo.personalInfo = new PersonalInfoForm();
+  }
+  public showProductModal(index){
+    this.modalProductDetails = this.saleCart.saleCartProduct[index].product;
+
+    (<any>$('#productDetailModal')).modal('show');
   }
 }
