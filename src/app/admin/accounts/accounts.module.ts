@@ -11,12 +11,13 @@ import { LedgerListComponent } from './components/ledger-list/ledger-list.compon
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ProfitAndLossComponent } from './components/profit-and-loss/profit-and-loss.component';
 import { ReportRowComponent } from './components/report-row/report-row.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     AccountsRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,FormsModule
   ],
   declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent, LedgerListComponent, ProfitAndLossComponent, ReportRowComponent]
 })

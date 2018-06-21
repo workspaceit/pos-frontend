@@ -42,8 +42,8 @@
             </div>
           </td>
           <td>
-            <label>Amount</label>
-            <input type="text" class="form-control">
+            <label>Amount {{paymentCreateForm.beneficial.amount}}</label>
+            <input type="number" name="asd" class="form-control" [(ngModel)]="paymentCreateForm.beneficial.amount" >
           </td>
           <td class="text-right"><span class="balance-txt">$130</span></td>
           <td class="text-right"><span class="balance-txt"></span></td>

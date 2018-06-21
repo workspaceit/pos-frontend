@@ -53,7 +53,8 @@
         </tr>
         <tr>
           <td>
-            <span [style.marginLeft.px]="5" ><b>Gross profit</b></span>
+            <span *ngIf="profitAndLossReport.grossProfit>=0" [style.marginLeft.px]="5" ><b>Gross profit</b></span>
+            <span  *ngIf="profitAndLossReport.grossProfit<=0" [style.marginLeft.px]="5" ><b>Gross loss</b></span>
           </td>
           <td><b>{{profitAndLossReport.grossProfit}}</b></td>
         </tr>

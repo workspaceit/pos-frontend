@@ -16,7 +16,7 @@ export class PaymentAddComponent implements OnInit {
 
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
-  paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
+  protected paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
   paymentLedgerForm: PaymentLedgerForm = new PaymentLedgerForm();
   selectedBeneficialAccount: number;
 

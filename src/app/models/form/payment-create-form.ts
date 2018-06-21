@@ -1,7 +1,7 @@
 import {PaymentLedgerForm} from './payment-ledger-form';
 
 export class PaymentCreateForm {
-  beneficial:PaymentLedgerForm = new PaymentLedgerForm();
+  public beneficial:PaymentLedgerForm = new PaymentLedgerForm();
   cashOrBank: PaymentLedgerForm[];
   narration: string;
   date: number;
