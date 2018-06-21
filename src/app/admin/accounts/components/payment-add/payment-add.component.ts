@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LEDGER_SEARCH_TYPE} from '../../../../models/constant/LEDGER_SEARCH_TYPE';
 import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
+import {PaymentCreateForm} from '../../../../models/form/payment-create-form';
+import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
 
 @Component({
   selector: 'app-payment-add',
@@ -14,6 +16,10 @@ export class PaymentAddComponent implements OnInit {
 
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
+  paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
+  paymentLedgerForm: PaymentLedgerForm = new PaymentLedgerForm();
+  selectedBeneficialAccount: number;
+
 
   constructor(private ledgerService: LedgerService) { }
 
