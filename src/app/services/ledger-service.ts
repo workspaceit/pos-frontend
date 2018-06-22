@@ -5,6 +5,7 @@ import {Ledger} from '../models/data/accounting/ledger';
 import {AuthService} from './auth.service';
 import {HttpClient} from '@angular/common/http';
 import {LedgerListResponse} from '../models/response-models/ledger-list-response';
+import {PaymentCreateForm} from '../models/form/payment-create-form';
 
 @Injectable()
 export class LedgerService extends BaseService {
@@ -20,5 +21,10 @@ export class LedgerService extends BaseService {
   }
   public getLedgerDetailsByType(ledgerType: string):Observable<Ledger[]>{
     return this.httpClient.get<Ledger[]>(this.authApiUrl + '/api/ledger/get/' + ledgerType);
+  }
+  public createPayment(paymentCreateForm: PaymentCreateForm)
+  {
+    const options = {headers: {'Content-Type': 'application/json'}};
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/payment',JSON.stringify(paymentCreateForm),options);
   }
 }

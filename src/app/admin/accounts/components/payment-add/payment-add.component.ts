@@ -81,5 +81,12 @@ export class PaymentAddComponent implements OnInit {
     return totalDr;
   }
 
+  public submitPayment()
+  {
+    this.ledgerService.createPayment(this.paymentCreateForm).subscribe((data)=>{
+      console.log(data);
+    });
+  }
+
 
 }
