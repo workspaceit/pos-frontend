@@ -1,3 +1,75 @@
-<p>
-  balance-sheet works!
-</p>
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Accounts</h4>
+    </div>
+
+    <div class="col-lg-12">
+      <label>From :</label>
+      <input id="startDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.from"  >
+      <label>To :</label>
+      <input id="endDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.to"  >
+      <button type="submit" class="btn btn-primary" (click)="searchProfitAndLoss()">Search</button>
+    </div>
+
+    <div class="col-lg-12 cstm-d-table">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th scope="col" class="text-left"></th>
+          <th scope="col">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="5" ><b>Assets</b></span>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let row of assetTableRows" >
+          <td>
+            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+          </td>
+          <td>
+            <span *ngIf="row.isGroup"  ></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="10" ><b>Total Assets</b></span>
+          </td>
+          <td><b>{{balanceSheetReport.totalAsset}}</b></td>
+        </tr>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="5" ><b>Liabilities and Owners Equity</b></span>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let row of liabilityTableRows" >
+          <td>
+            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+          </td>
+          <td>
+            <span *ngIf="row.isGroup" [style.marginLeft.px]="row.spaces" ></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="10" ><b>Total liability</b></span>
+          </td>
+          <td><b>{{balanceSheetReport.totalLiability}}</b></td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+
+

@@ -4,6 +4,7 @@ import {ProfitAndLossReport} from '../../../../models/data/report/profit-and-los
 import {ReportAccount} from '../../../../models/data/report/report-account';
 import {DatePipe} from '@angular/common';
 import {ReportAccountTable} from '../../../../models/view/report-account-table';
+import {ReportUtil} from '../../../../util/report-util';
 
 @Component({
   selector: 'app-profit-and-loss',
@@ -16,6 +17,8 @@ export class ProfitAndLossComponent implements OnInit {
   protected incomeTableRows: ReportAccountTable[];
   protected profitAndLossReport: ProfitAndLossReport;
   protected searchedDate={from:'',to:''};
+  protected reportUtil:ReportUtil;
+
   constructor(private reportService: ReportService) {
     this.expenseTableRows = [];
     this.incomeTableRows = [];
@@ -37,8 +40,8 @@ export class ProfitAndLossComponent implements OnInit {
     this.incomeTableRows= [];
     this.reportService.getProfitAndLoss(this.searchedDate.from, this.searchedDate.to).subscribe(value => {
       this.profitAndLossReport = value;
-      const expense = this.getRows(this.profitAndLossReport.expenseAccounts, 10);
-      const income = this.getRows(this.profitAndLossReport.incomeAccounts, 10);
+      const expense = this.reportUtil.getRows(this.profitAndLossReport.expenseAccounts, 10);
+      const income = this.reportUtil.getRows(this.profitAndLossReport.incomeAccounts, 10);
 
       this.expenseTableRows = this.expenseTableRows.concat(expense);
       this.incomeTableRows = this.incomeTableRows.concat(income);
@@ -65,62 +68,6 @@ export class ProfitAndLossComponent implements OnInit {
   public searchProfitAndLoss(){
     this.getProfitAndLoss();
   }
-  private getRows(reportAccounts: ReportAccount[], spaceCount: number): ReportAccountTable[] {
-    let tableRows: ReportAccountTable[] = [];
-    for (const ra of reportAccounts) {
 
 
-      if (!this.isPrintable(ra)) {
-        continue;
-      }
-
-      const tr = new ReportAccountTable();
-      tr.id = ra.id;
-      tr.title = ra.title;
-      tr.amount = ra.amount;
-      tr.isGroup = ra.isGroup;
-      tr.spaces = spaceCount;
-      tableRows.push(tr);
-
-      if (ra.child != null) {
-        const tmpTableRows = this.getRows(ra.child, spaceCount + 10);
-        tableRows = tableRows.concat(tmpTableRows);
-      }
-
-    }
-    console.log('tableRows', tableRows);
-    return tableRows;
-  }
-
-  private isPrintable(reportAccount: ReportAccount) {
-
-    if (reportAccount.isGroup) {
-      return this.isGroupPrintable(reportAccount);
-    } else {
-      return this.isLedgerPrintable(reportAccount);
-    }
-  }
-
-  private isLedgerPrintable(reportAccount: ReportAccount) {
-
-    if (reportAccount.amount > 0) {
-      return true;
-    } else {
-      return false;
-    }
-
-  }
-
-  private isGroupPrintable(reportAccount: ReportAccount) {
-    const reportAccountChild = reportAccount.child;
-    if (reportAccountChild === null || reportAccountChild.length === 0) {
-      return false;
-    }
-
-    for (const raChild of reportAccountChild) {
-      const flag = this.isPrintable(raChild);
-      if (flag) return true;
-    }
-    return false;
-  }
 }

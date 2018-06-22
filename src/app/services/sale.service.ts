@@ -5,21 +5,20 @@ import {Observable} from 'rxjs/Observable';
 import {SaleListResponse} from '../models/response-models/sale-list-response';
 import {SaleForm} from '../models/form/sale/sale-form';
 import {SALE_TYPE} from '../models/constant/SALE_TYPE';
+import {SaleFormUtil} from '../util/sale-form-util';
 
 @Injectable()
 export class SaleService extends BaseService{
-
-  constructor(private httpClient: HttpClient) { super(); }
+   private saleFormUtil:SaleFormUtil;
+  constructor(private httpClient: HttpClient) { super();
+    this.saleFormUtil = new SaleFormUtil();
+  }
 
   public create(saleForm: SaleForm):Observable<any> {
     const options = {headers: {'Content-Type': 'application/json'}};
-    const submittedSaleForm = new SaleForm(saleForm);
-    if(submittedSaleForm.type === SALE_TYPE.WHOLESALE){
-      delete submittedSaleForm.consumerInfo;
-    }
-    console.log(saleForm);
+    const submittedSaleForm =  this.saleFormUtil.deleteSaleFormObjectBeforeSubmit(saleForm);
 
-    console.log(submittedSaleForm);
+
 
     return this.httpClient.post<any>(this.authApiUrl + '/api/sale/create',JSON.stringify(submittedSaleForm),options);
   }
