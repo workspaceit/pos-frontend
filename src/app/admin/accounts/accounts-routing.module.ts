@@ -7,6 +7,7 @@ import {InvoiceComponent} from './components/invoice/invoice.component';
 import {LedgerAddComponent} from './components/ledger-add/ledger-add.component';
 import {LedgerListComponent} from './components/ledger-list/ledger-list.component';
 import {ProfitAndLossComponent} from './components/profit-and-loss/profit-and-loss.component';
+import {BalanceSheetComponent} from './components/balance-sheet/balance-sheet.component';
 
 const routes: Routes = [
   { path: 'list', component: AccountListComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'add-payment', component: PaymentAddComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'ledger-list' ,component: LedgerListComponent},
-  { path: 'profit-and-loss' ,component: ProfitAndLossComponent}
+  { path: 'profit-and-loss' ,component: ProfitAndLossComponent},
+  { path: 'balance-sheet' ,component: BalanceSheetComponent}
 ];
 
 @NgModule({

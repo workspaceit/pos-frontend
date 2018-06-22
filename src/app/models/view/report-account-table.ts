@@ -1,4 +1,4 @@
-export class ProfitAndLossTable{
+export class ReportAccountTable{
   public id:number;
   public title:string;
   public isGroup:boolean;

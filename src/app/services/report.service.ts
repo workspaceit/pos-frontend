@@ -21,5 +21,16 @@ export class ReportService extends BaseService {
     }
     return this.httpClient.get<ProfitAndLossReport>(this.authApiUrl + '/api/report/get-profit-and-loss'+params);
   }
+  public getBalanceSheet(startDate:string, finishDate:string):Observable<ProfitAndLossReport> {
+    let params = '?';
+    if(startDate!==null && startDate!==''){
+      params+='startDate='+startDate;
+    }
 
+    if(finishDate!==null && finishDate!==''){
+      params+='&finishDate='+finishDate;
+
+    }
+    return this.httpClient.get<ProfitAndLossReport>(this.authApiUrl + '/api/report/get-profit-and-loss'+params);
+  }
 }
