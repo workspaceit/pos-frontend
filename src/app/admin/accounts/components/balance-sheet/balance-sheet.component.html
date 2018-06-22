@@ -29,7 +29,8 @@
         </tr>
         <tr *ngFor="let row of assetTableRows" >
           <td>
-            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+            <span *ngIf="row.isGroup"  ><i><b>{{row.title}}</b></i></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
           </td>
           <td>
             <span *ngIf="row.isGroup"  ></span>
@@ -50,7 +51,8 @@
         </tr>
         <tr *ngFor="let row of liabilityTableRows" >
           <td>
-            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+            <span *ngIf="row.isGroup"  ><i><b>{{row.title}}</b></i></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
           </td>
           <td>
             <span *ngIf="row.isGroup" [style.marginLeft.px]="row.spaces" ></span>
@@ -58,6 +60,23 @@
           </td>
         </tr>
         <tr>
+
+          <td>
+            <span *ngIf="balanceSheetReport.grossProfit<0" [style.marginLeft.px]="10" ><b>Loss</b> ( Deduct from owner equity )</span>
+            <span *ngIf="balanceSheetReport.grossProfit>=0" [style.marginLeft.px]="10" ><b>Profit</b></span>
+          </td>
+          <td>
+
+            <span *ngIf="balanceSheetReport.grossProfit<0">
+               <b>( {{balanceSheetReport.grossProfit | mathabs }} )</b>
+            </span>
+            <span *ngIf="balanceSheetReport.grossProfit>=0">
+               <b> {{balanceSheetReport.grossProfit}} </b>
+            </span>
+          </td>
+        </tr>
+        <tr>
+
           <td>
             <span [style.marginLeft.px]="10" ><b>Total liability</b></span>
           </td>

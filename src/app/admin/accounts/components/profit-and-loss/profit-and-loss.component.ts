@@ -10,16 +10,16 @@ import {ReportUtil} from '../../../../util/report-util';
   selector: 'app-profit-and-loss',
   templateUrl: './profit-and-loss.component.html',
   styleUrls: ['./profit-and-loss.component.css'],
-  providers:[ReportService]
+  providers:[ReportService,ReportUtil]
 })
 export class ProfitAndLossComponent implements OnInit {
   protected expenseTableRows: ReportAccountTable[];
   protected incomeTableRows: ReportAccountTable[];
   protected profitAndLossReport: ProfitAndLossReport;
   protected searchedDate={from:'',to:''};
-  protected reportUtil:ReportUtil;
 
-  constructor(private reportService: ReportService) {
+
+  constructor(private reportService: ReportService,private reportUtil:ReportUtil) {
     this.expenseTableRows = [];
     this.incomeTableRows = [];
     this.profitAndLossReport = new ProfitAndLossReport();

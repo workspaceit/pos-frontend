@@ -17,7 +17,7 @@ export class SaleFormUtil{
   public deletePaymentAccount(saleForm,key:string){
     const paymentAccounts = <PaymentLedgerForm[]>saleForm[key];
 
-    for(let i=0;i<paymentAccounts.length){
+    for(let i=0;i<paymentAccounts.length;i++){
       const  paymentAccount  = paymentAccounts[i];
 
       if(paymentAccount.ledgerId===0){

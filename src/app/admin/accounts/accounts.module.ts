@@ -13,13 +13,20 @@ import { ProfitAndLossComponent } from './components/profit-and-loss/profit-and-
 import { ReportRowComponent } from './components/report-row/report-row.component';
 import {FormsModule} from '@angular/forms';
 import { BalanceSheetComponent } from './components/balance-sheet/balance-sheet.component';
+import {NumberPipe} from '../../pipes/number-pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     AccountsRoutingModule,
-    NgxPaginationModule,FormsModule
+    NgxPaginationModule,
+    FormsModule
   ],
-  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent, LedgerListComponent, ProfitAndLossComponent, ReportRowComponent, BalanceSheetComponent]
+  exports:[NumberPipe],
+  declarations: [AccountListComponent, InvoiceComponent,
+    LedgerAddComponent, PaymentAddComponent,
+    PaymentComponent, LedgerListComponent,
+    ProfitAndLossComponent, ReportRowComponent,
+    BalanceSheetComponent,NumberPipe]
 })
 export class AccountsModule { }
