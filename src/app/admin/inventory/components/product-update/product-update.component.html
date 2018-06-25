@@ -20,7 +20,7 @@
           <div class="form-group">
             <label>Category</label>
             <select class="form-control select-cstm" formControlName="categoryId">
-              <option value="0" selected disabled="disabled">--Select Category--</option>
+              <option value="0" >--Select Category--</option>
               <option *ngFor="let category of categories" value="{{category.id}}"
                       [selected]="category.id === productUpdateForm.get('categoryId').value">{{ category.name }}</option>
             </select>
@@ -31,6 +31,7 @@
           <div class="form-group">
             <label>Image</label>
             <div class="custom-file">
+              <img *ngIf="product.image!=null && product.image!=''" src="{{imageUrl}}{{product.image}}" style="max-height: 200px;max-width: 350px;">
               <dropzone #dz [config]="dropzoneConfig" (complete)="onUploadComplete($event,dz)"
                         [message]="'Click or drag images here to upload'" (error)="onUploadError($event)"
                         (success)="onUploadSuccess($event)">

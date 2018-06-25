@@ -14,7 +14,7 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   imgUrl= environment.imgUrl;
 
-  limit = 10;
+  limit = 6;
   offset = 1;
   currentPage = 1;
   count = 0;
@@ -42,7 +42,8 @@ export class ProductListComponent implements OnInit {
     );
   }
   pageChanged(pageNumber) {
-    this.offset = ((pageNumber * this.limit) - this.limit) === 0 ? 1 :((pageNumber * this.limit) - this.limit) ;
+    console.log('pageNumber',pageNumber);
+    this.offset = pageNumber ;
     this.getProducts();
     this.currentPage = pageNumber;
   }

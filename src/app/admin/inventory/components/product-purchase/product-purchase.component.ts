@@ -59,11 +59,11 @@ export class ProductPurchaseComponent implements OnInit {
 
     const productPricePaymentAccount = new PaymentLedgerForm();
     productPricePaymentAccount.ledgerId=0;
-    productPricePaymentAccount.amount =0;
+    productPricePaymentAccount.amount =null;
 
     const shippingCostPaymentAccount = new PaymentLedgerForm();
     shippingCostPaymentAccount.ledgerId=0;
-    shippingCostPaymentAccount.amount =0;
+    shippingCostPaymentAccount.amount =null;
 
     this.purchaseCreateForm.productPricePaymentAccount.push(productPricePaymentAccount);
     this.purchaseCreateForm.shippingCostPaymentAccount = shippingCostPaymentAccount;
@@ -149,10 +149,13 @@ export class ProductPurchaseComponent implements OnInit {
   }
   public addProductPricePaymentAccount(){
     const purchasePaymentCreateForm = new PaymentLedgerForm();
-    purchasePaymentCreateForm.amount = 0;
     purchasePaymentCreateForm.ledgerId = 0;
+    purchasePaymentCreateForm.amount = null;
 
     this.purchaseCreateForm.productPricePaymentAccount.push(purchasePaymentCreateForm);
+  }
+  public removeProductPricePaymentAccount(index:number){
+    this.purchaseCreateForm.productPricePaymentAccount.splice(index,1);
   }
   public getTotalPaid(){
     let totalPaid = 0;
@@ -203,5 +206,15 @@ export class ProductPurchaseComponent implements OnInit {
     }
     return totalCost;
   }
+  public shipmentCostPaymentLedgerIdParseInt(){
+    this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId = <number> this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId;
+    console.log(
+      this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId );
+    console.log(typeof
+      this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId );
 
+  }
+  public shipmentProductPaymentLedgerIdParseInt(index){
+
+  }
 }

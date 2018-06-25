@@ -347,4 +347,5 @@ export class SellComponent implements OnInit {
 
     (<any>$('#productDetailModal')).modal('show');
   }
+
 }
