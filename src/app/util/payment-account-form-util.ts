@@ -3,16 +3,20 @@ import {PaymentLedgerForm} from '../models/form/payment-ledger-form';
 export  class PaymentAccountFormUtil{
   public deletePaymentAccounts(saleForm, key:string){
     const paymentAccounts = <PaymentLedgerForm[]>saleForm[key];
-
+    const deletedIndex = [];
     for(let i=0;i<paymentAccounts.length;i++){
       const  paymentAccount  = paymentAccounts[i];
 
       if(paymentAccount.ledgerId===0){
-        paymentAccounts.splice(i,1);
+        deletedIndex.push(i);
       }
     }
-    console.log('paymentAccounts',paymentAccounts);
-    if(paymentAccounts.length===0){
+    for(let i=0;i<deletedIndex.length;i++){
+      deletedIndex.splice(deletedIndex[i],1);
+    }
+
+    console.log('paymentAccounts',saleForm[key]);
+    if(saleForm[key].length===0){
       delete saleForm[key];
     }
   }
