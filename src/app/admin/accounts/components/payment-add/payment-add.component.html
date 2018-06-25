@@ -17,7 +17,7 @@
             <div class="col-md-auto">
               <label>Beneficial Account</label>
               <select class="form-control custom-select" STYLE="display: inline-block;" [(ngModel)]="paymentCreateForm.beneficial.ledgerId">
-                <option value="0" selected disabled="disabled">--Select Beneficial Account--</option>
+                <option value="0" selected>--Select Beneficial Account--</option>
                 <option *ngFor="let beneficial of beneficialAccount" value="{{beneficial.id}}">{{beneficial.name}}</option>
               </select>
             </div>
@@ -27,14 +27,14 @@
             <input type="number" class="form-control" min="0" [disabled]="paymentCreateForm.beneficial.ledgerId <=0" [(ngModel)]="paymentCreateForm.beneficial.amount" >
           </td>
           <td class="text-right"><span class="balance-txt"></span></td>
-          <td class="text-right"><span class="balance-txt">${{paymentCreateForm.beneficial.amount}}</span></td>
+          <td class="text-right"><span class="balance-txt" *ngIf="paymentCreateForm.beneficial.amount;else beneficialAmount">${{paymentCreateForm.beneficial.amount}}</span></td>
         </tr>
         <tr *ngFor="let cashOrBank of paymentCreateForm.cashOrBank;let i = index">
           <td>
             <div class="col-md-auto">
               <label>Bank/Cash</label>
               <select class="form-control custom-select" STYLE="display: inline-block;" [(ngModel)]="cashOrBank.ledgerId">
-                <option value="0" selected disabled="disabled">--Select Bank/Cash--</option>
+                <option value="0" selected>--Select Bank/Cash--</option>
                 <option *ngFor="let bank of bankOrCash" value="{{bank.id}}">{{bank.name}}</option>
               </select>
             </div>
@@ -47,8 +47,9 @@
             <label>Amount</label>
             <input type="number" name="asd" class="form-control" [disabled]="cashOrBank.ledgerId <=0" [(ngModel)]="cashOrBank.amount">
           </td>
-          <td class="text-right"><span class="balance-txt">${{cashOrBank.amount}}</span></td>
+          <td class="text-right"><span class="balance-txt" *ngIf="cashOrBank.amount;else CashOrBankAmount">${{cashOrBank.amount}}</span></td>
           <td class="text-right"><span class="balance-txt"></span></td>
+          <ng-template #CashOrBankAmount><span class="balance-txt">$0</span></ng-template>
         </tr>
         </tbody>
         <tfoot>
@@ -60,7 +61,8 @@
             <span class="balance-txt">${{getTotalDrAmount()}}</span>
           </td>
           <td class="text-right">
-            <span class="balance-txt">${{paymentCreateForm.beneficial.amount}}</span>
+            <span class="balance-txt" *ngIf="paymentCreateForm.beneficial.amount; else beneficialAmount">${{paymentCreateForm.beneficial.amount}}</span>
+            <ng-template #beneficialAmount><span class="balance-txt">$0</span></ng-template>
           </td>
         </tr>
         </tfoot>
@@ -79,6 +81,12 @@
         </div>
       </div>
 
+    </div>
+    <div class="row" *ngIf="errors.length>0">
+      <p>Errors :</p>
+      <ul>
+        <li class="alert-danger" *ngFor="let error of errors">{{error.msg}}</li>
+      </ul>
     </div>
 
 
