@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {SaleListResponse} from '../models/response-models/sale-list-response';
 import {SaleForm} from '../models/form/sale/sale-form';
-import {SALE_TYPE} from '../models/constant/SALE_TYPE';
 import {SaleFormUtil} from '../util/sale-form-util';
 
 @Injectable()

@@ -7,8 +7,8 @@
           <div class="form-group">
             <label>Wholesalers</label>
             <select  class="form-control" [(ngModel)]="saleForm.wholesalerId" >
-              <option value="0"> Select wholesaler </option>
-              <option *ngFor="let wholesaler of wholesalers" [value]="wholesaler.id" >
+              <option  [ngValue]="0"> Select wholesaler </option>
+              <option *ngFor="let wholesaler of wholesalers" [ngValue]="wholesaler.id" >
                 {{wholesaler.company.title}}
               </option>
             </select>
@@ -121,8 +121,8 @@
                   <div class="form-group">
                     <label class="small-para" >Receive account</label>
                     <select class="form-control" [(ngModel)]="account.ledgerId" >
-                      <option value="0" >Select Account</option>
-                      <option *ngFor="let ledger of paymentLedgers" [value]="ledger.id" >
+                      <option [ngValue]="0" >Select Account</option>
+                      <option *ngFor="let ledger of paymentLedgers" [ngValue]="ledger.id" >
                         {{ledger.name}}
                       </option>
                     </select>

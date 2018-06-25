@@ -20,7 +20,7 @@ export class EmployeeService extends BaseService{
       .set('authCredential.confirmPassword', employeeValues['authCredential.confirmPassword'])
 
       .set('personalInfo.fullName', employeeValues['personalInfo.fullName'])
-      .set('personalInfo.dob', moment(employeeValues['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'))
+
       .set('personalInfo.email', employeeValues['personalInfo.email'])
       .set('personalInfo.phone', employeeValues['personalInfo.phone'])
       .set('personalInfo.address', employeeValues['personalInfo.address'])
@@ -28,6 +28,13 @@ export class EmployeeService extends BaseService{
       .set('employeeId', employeeValues.employeeId)
       .set('type', employeeValues.type)
       .set('salary', employeeValues.salary);
+
+    if(employeeValues['personalInfo.dob']!==null && employeeValues['personalInfo.dob'].trim()!==''){
+      params =   params.set('personalInfo.dob', moment(employeeValues['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'));
+    }else{
+      params =   params.set('personalInfo.dob', '');
+
+    }
 
     return this.httpClient.post<Employee>(this.authApiUrl + '/api/employee/create', params);
   }

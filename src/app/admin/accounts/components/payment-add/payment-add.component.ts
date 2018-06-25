@@ -4,6 +4,8 @@ import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
 import {PaymentCreateForm} from '../../../../models/form/payment-create-form';
 import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
+import {GrowlUtil} from '../../../../util/growl-util';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-payment-add',
@@ -16,10 +18,11 @@ export class PaymentAddComponent implements OnInit {
 
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
+  protected errors=[];
   protected paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
 
 
-  constructor(private ledgerService: LedgerService) {
+  constructor(private ledgerService: LedgerService,private router: Router) {
     this.paymentCreateForm.cashOrBank = [];
     const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
     paymentLedgerForm.amount=null;
@@ -83,8 +86,12 @@ export class PaymentAddComponent implements OnInit {
 
   public submitPayment()
   {
+    this.errors = [];
     this.ledgerService.createPayment(this.paymentCreateForm).subscribe((data)=>{
-      console.log(data);
+      GrowlUtil.notify({type:'notice', title: 'Success', message: 'Payment created'});
+      location.reload();
+    },(error)=>{
+      this.errors= error.error;
     });
   }
 

@@ -11,15 +11,16 @@ export  class PaymentAccountFormUtil{
         paymentAccounts.splice(i,1);
       }
     }
+    console.log('paymentAccounts',paymentAccounts);
     if(paymentAccounts.length===0){
       delete saleForm[key];
     }
   }
-  public deletePaymentAccount(saleForm, key:string){
-    const paymentAccount = <PaymentLedgerForm>saleForm[key];
+  public deletePaymentAccount(form, key:string){
+    const paymentAccount = <PaymentLedgerForm>form[key];
 
     if(paymentAccount.ledgerId===0){
-      delete saleForm[key];
+      delete form[key];
     }
   }
 }
