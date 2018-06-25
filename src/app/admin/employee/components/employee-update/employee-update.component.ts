@@ -38,7 +38,7 @@ export class EmployeeUpdateComponent implements OnInit {
   createEmployeeForm() {
     let dob: string | Date = '';
     dob = this.employee.personalInformation.dob != null?
-      moment(this.employee.personalInformation.dob, 'YYYY-MM-DD').format('DD-MM-YYYY'): '';
+      moment(this.employee.personalInformation.dob, 'YYYY-MM-DD').format('YYYY-MM-DD'): '';
     this.employeeForm = this.formBuilder.group({
       'employeeId': [this.employee.employeeId],
       'salary': [this.employee.salary],
@@ -62,7 +62,7 @@ export class EmployeeUpdateComponent implements OnInit {
         console.log(this.employee);
         this.createEmployeeForm();
         (<any>$('#dob')).datepicker({
-          dateFormat: 'dd-mm-yy'
+          dateFormat: 'yy-mm-dd'
         }).on('change', function () {
           thisComponent.employeeForm.controls['personalInfo.dob'].setValue((<any>$)(this).val());
         });
@@ -76,7 +76,7 @@ export class EmployeeUpdateComponent implements OnInit {
   updateEmployee(){
     let dob: string | Date = '';
     dob = this.employeeForm.value['personalInfo.dob'] !== ''?
-      moment(this.employeeForm.value['personalInfo.dob'], 'DD-MM-YYYY').format('MM/DD/YYYY'): '';
+      moment(this.employeeForm.value['personalInfo.dob'], 'YYYY-MM-DD').format('MM/DD/YYYY'): '';
     this.employeeForm.value['personalInfo.dob'] = dob;
     this.employeeService.updateEmployee(this.employeeForm.value, this.employeeId).subscribe(
       data => {

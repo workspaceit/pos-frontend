@@ -13,6 +13,9 @@
               <th scope="col">Tracking Id</th>
               <th scope="col">Total Quantity</th>
               <th scope="col">Total Cost</th>
+              <th scope="col">Total Price</th>
+              <th scope="col">Total Paid</th>
+              <th scope="col">Total Due</th>
               <th scope="col">Date</th>
               <th scope="col">Action</th>
             </tr>
@@ -22,6 +25,9 @@
               <td>{{ shipment.trackingId }}</td>
               <td>{{ shipment.totalQuantity }}</td>
               <td>{{ shipment.totalCost}}</td>
+              <td>{{ shipment.totalProductPrice + shipment.totalCost }}</td>
+              <td>{{ shipment.totalPaid }}</td>
+              <td>{{ (shipment.totalProductPrice + shipment.totalCost) - shipment.totalPaid }}</td>
               <td>{{ shipment.purchasedDate }}</td>
               <td>
                 <button  class="btn btn-success btn-sm"

@@ -49,7 +49,28 @@
           </tr>
           </tbody>
           <tfoot>
-          <tr>
+
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td  colspan="2"></td>
+            <td>Cf :</td>
+            <td class="text-right">{{invoice.shipmentCost['CF']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Labor :</td>
+            <td class="text-right">{{invoice.shipmentCost['LABOR']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Carrying :</td>
+            <td class="text-right">{{invoice.shipmentCost['CARRYING']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Others :</td>
+            <td class="text-right">{{invoice.shipmentCost['OTHERS']}}</td>
+          </tr>
+          <tr style="border-top: 4px solid #dee2e6">
             <td colspan="2"></td>
             <td>Sub total:</td>
             <td class="text-right">{{invoice.total}}</td>
