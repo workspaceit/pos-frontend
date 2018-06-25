@@ -6,6 +6,7 @@ import {AuthService} from './auth.service';
 import {HttpClient} from '@angular/common/http';
 import {LedgerListResponse} from '../models/response-models/ledger-list-response';
 import {PaymentCreateForm} from '../models/form/payment-create-form';
+import {InvestmentCreateForm} from '../models/form/investment-create-form';
 
 @Injectable()
 export class LedgerService extends BaseService {
@@ -26,5 +27,15 @@ export class LedgerService extends BaseService {
   {
     const options = {headers: {'Content-Type': 'application/json'}};
     return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/payment',JSON.stringify(paymentCreateForm),options);
+  }
+  public createReceipt(paymentCreateForm: PaymentCreateForm)
+  {
+    const options = {headers: {'Content-Type': 'application/json'}};
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/receipt',JSON.stringify(paymentCreateForm),options);
+  }
+  public makeInvestment(investmentCreateForm: InvestmentCreateForm)
+  {
+    const options = {headers: {'Content-Type': 'application/json'}};
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/investment/cash',JSON.stringify(investmentCreateForm),options);
   }
 }

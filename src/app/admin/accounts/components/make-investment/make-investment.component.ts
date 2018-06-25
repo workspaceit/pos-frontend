@@ -3,31 +3,31 @@ import {LedgerService} from '../../../../services/ledger-service';
 import {Ledger} from '../../../../models/data/accounting/ledger';
 import {PaymentCreateForm} from '../../../../models/form/payment-create-form';
 import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
+import {InvestmentCreateForm} from '../../../../models/form/investment-create-form';
 import {GrowlUtil} from '../../../../util/growl-util';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-payment-add',
-  templateUrl: './payment-add.component.html',
-  styleUrls: ['./payment-add.component.css'],
+  selector: 'app-make-investment',
+  templateUrl: './make-investment.component.html',
+  styleUrls: ['./make-investment.component.css'],
   providers: [LedgerService]
 })
-export class PaymentAddComponent implements OnInit {
-
+export class MakeInvestmentComponent implements OnInit {
 
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
   protected errors=[];
-  protected paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
 
+  protected investmentCreateForm: InvestmentCreateForm = new InvestmentCreateForm();
 
   constructor(private ledgerService: LedgerService,private router: Router) {
-    this.paymentCreateForm.cashOrBank = [];
+    this.investmentCreateForm.cashOrBank = [];
     const paymentLedgerForm:PaymentLedgerForm = new PaymentLedgerForm();
     paymentLedgerForm.amount=null;
     paymentLedgerForm.ledgerId=0;
 
-    this.paymentCreateForm.cashOrBank.push(paymentLedgerForm);
+    this.investmentCreateForm.cashOrBank.push(paymentLedgerForm);
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class PaymentAddComponent implements OnInit {
       dateFormat: 'yy-mm-dd'
     }).on('change', function () {
       console.log('changed');
-      componentRef.paymentCreateForm.date = (<any>$)(this).val();
+      componentRef.investmentCreateForm.date = (<any>$)(this).val();
     });
     this.getBankOrCash();
     this.getSupplier();
@@ -62,16 +62,16 @@ export class PaymentAddComponent implements OnInit {
     const paymentAccount: PaymentLedgerForm = new PaymentLedgerForm();
     paymentAccount.ledgerId = 0;
 
-    this.paymentCreateForm.cashOrBank.push(paymentAccount);
+    this.investmentCreateForm.cashOrBank.push(paymentAccount);
   }
   public removePaymentAccount(index:number){
-    this.paymentCreateForm.cashOrBank.splice(index,1);
+    this.investmentCreateForm.cashOrBank.splice(index,1);
   }
 
   public getTotalDrAmount()
   {
     let totalDr = 0;
-    for (const totalAmount of this.paymentCreateForm.cashOrBank)
+    for (const totalAmount of this.investmentCreateForm.cashOrBank)
     {
       if(isNaN(totalAmount.amount))
       {
@@ -83,18 +83,18 @@ export class PaymentAddComponent implements OnInit {
     return totalDr;
   }
 
-  public submitPayment()
+  public submitInvestment()
   {
     this.errors = [];
-    this.ledgerService.createPayment(this.paymentCreateForm).subscribe((data)=>{
-      GrowlUtil.notify({type:'notice', title: 'Success', message: 'Payment created'});
+    this.ledgerService.makeInvestment(this.investmentCreateForm).subscribe((data)=>{
+      GrowlUtil.notify({type:'notice', title: 'Success', message: 'Investment Added'});
       setTimeout(function () {
         location.reload();
       },1500);
+
     },(error)=>{
       this.errors= error.error;
     });
   }
-
 
 }
