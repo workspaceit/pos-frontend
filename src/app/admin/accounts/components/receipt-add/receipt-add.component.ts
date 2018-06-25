@@ -86,7 +86,9 @@ export class ReceiptAddComponent implements OnInit {
     this.errors = [];
     this.ledgerService.createReceipt(this.paymentCreateForm).subscribe((data)=>{
       GrowlUtil.notify({type:'notice', title: 'Success', message: 'Receipt created'});
-      location.reload();
+      setTimeout(function () {
+        location.reload();
+      },1500);
     },(error)=>{
       this.errors= error.error;
     });

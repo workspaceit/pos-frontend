@@ -9,6 +9,7 @@ import {LedgerListComponent} from './components/ledger-list/ledger-list.componen
 import {ProfitAndLossComponent} from './components/profit-and-loss/profit-and-loss.component';
 import {BalanceSheetComponent} from './components/balance-sheet/balance-sheet.component';
 import {ReceiptAddComponent} from './components/receipt-add/receipt-add.component';
+import {MakeInvestmentComponent} from './components/make-investment/make-investment.component';
 
 const routes: Routes = [
   { path: 'list', component: AccountListComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'invoice/:invoiceFor/:respectiveId', component: InvoiceComponent },
   { path: 'add-payment', component: PaymentAddComponent },
   { path: 'add-receipt', component: ReceiptAddComponent },
+  { path: 'make-investment', component: MakeInvestmentComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'ledger-list' ,component: LedgerListComponent},
   { path: 'profit-and-loss' ,component: ProfitAndLossComponent},
