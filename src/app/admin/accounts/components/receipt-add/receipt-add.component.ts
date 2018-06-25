@@ -7,19 +7,17 @@ import {GrowlUtil} from '../../../../util/growl-util';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-payment-add',
-  templateUrl: './payment-add.component.html',
-  styleUrls: ['./payment-add.component.css'],
+  selector: 'app-receipt-add',
+  templateUrl: './receipt-add.component.html',
+  styleUrls: ['./receipt-add.component.css'],
   providers: [LedgerService]
 })
-export class PaymentAddComponent implements OnInit {
-
+export class ReceiptAddComponent implements OnInit {
 
   bankOrCash: Ledger[] = [];
   beneficialAccount: Ledger[] = [];
   protected errors=[];
   protected paymentCreateForm: PaymentCreateForm = new PaymentCreateForm();
-
 
   constructor(private ledgerService: LedgerService,private router: Router) {
     this.paymentCreateForm.cashOrBank = [];
@@ -83,16 +81,15 @@ export class PaymentAddComponent implements OnInit {
     return totalDr;
   }
 
-  public submitPayment()
+  public submitReceipt()
   {
     this.errors = [];
-    this.ledgerService.createPayment(this.paymentCreateForm).subscribe((data)=>{
-      GrowlUtil.notify({type:'notice', title: 'Success', message: 'Payment created'});
+    this.ledgerService.createReceipt(this.paymentCreateForm).subscribe((data)=>{
+      GrowlUtil.notify({type:'notice', title: 'Success', message: 'Receipt created'});
       location.reload();
     },(error)=>{
       this.errors= error.error;
     });
   }
-
 
 }

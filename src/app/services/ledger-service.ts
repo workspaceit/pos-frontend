@@ -27,4 +27,9 @@ export class LedgerService extends BaseService {
     const options = {headers: {'Content-Type': 'application/json'}};
     return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/payment',JSON.stringify(paymentCreateForm),options);
   }
+  public createReceipt(paymentCreateForm: PaymentCreateForm)
+  {
+    const options = {headers: {'Content-Type': 'application/json'}};
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/receipt',JSON.stringify(paymentCreateForm),options);
+  }
 }

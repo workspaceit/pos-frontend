@@ -14,6 +14,7 @@ import { ReportRowComponent } from './components/report-row/report-row.component
 import {FormsModule} from '@angular/forms';
 import { BalanceSheetComponent } from './components/balance-sheet/balance-sheet.component';
 import {NumberPipe} from '../../pipes/number-pipe';
+import { ReceiptAddComponent } from './components/receipt-add/receipt-add.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import {NumberPipe} from '../../pipes/number-pipe';
     LedgerAddComponent, PaymentAddComponent,
     PaymentComponent, LedgerListComponent,
     ProfitAndLossComponent, ReportRowComponent,
-    BalanceSheetComponent,NumberPipe]
+    BalanceSheetComponent,NumberPipe, ReceiptAddComponent]
 })
 export class AccountsModule { }
