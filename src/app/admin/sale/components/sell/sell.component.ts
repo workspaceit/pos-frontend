@@ -23,6 +23,7 @@ import {Consumer} from '../../../../models/data/consumer';
 import {ConsumerForm} from '../../../../models/form/consumer-form';
 import {PersonalInfoForm} from '../../../../models/form/personal-info-form';
 import {PaymentLedgerForm} from '../../../../models/form/payment-ledger-form';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-sell-to-wholesaler',
@@ -48,6 +49,7 @@ export class SellComponent implements OnInit {
   protected inventorySearchForm:InventorySearchForm;
   protected errors=[];
   protected modalProductDetails:Product;
+  protected imgUrl= environment.imgUrl;
 
   constructor(private productService:ProductService,
               private inventoryService: InventoryService,
