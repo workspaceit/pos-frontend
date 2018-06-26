@@ -38,8 +38,9 @@ export class PaymentAddComponent implements OnInit {
       console.log('changed');
       componentRef.paymentCreateForm.date = (<any>$)(this).val();
     });
-    this.getBankOrCash();
+
     this.getLedger('supplier');
+    this.getBankOrCash();
   }
   getBankOrCash(){
     this.ledgerService.getLedgerDetailsByType('bankOrCash').subscribe(
