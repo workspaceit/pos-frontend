@@ -8,8 +8,8 @@
         <tbody>
         <tr>
           <td>
-            <button type="submit" class="btn btn-primary" (click)="getLedger('supplier')">Suppliers</button>
-            <button type="submit" class="btn btn-primary" (click)="getLedger('wholesaler')">Wholesaler</button>
+            <input type="radio" name="ledger" class="btn btn-primary" (click)="getLedger('supplier')">Suppliers
+            <input type="radio" name="ledger" class="btn btn-primary" (click)="getLedger('wholesaler')">Wholesaler
           </td>
           <td></td>
           <td class="text-right"><span class="balance-txt">Dr</span></td>
