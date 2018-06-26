@@ -80,24 +80,25 @@ export class ProductPurchaseComponent implements OnInit {
 
 
     productAutoCompleteCommunicator.onProductSelect.subscribe((data)=>{
-      const alreadyExistingProduct = this.cart.cartDetails.find(value => value.product.name === data.name);
 
+      /*const alreadyExistingProduct = this.cart.cartDetails.find(value => value.product.name === data.name);
+      if(alreadyExistingProduct !== undefined && alreadyExistingProduct !==null){
+        return;
+      }*/
 
+      const inventoryCreateForm: InventoryCreateForm = new InventoryCreateForm();
+      inventoryCreateForm.productId = data.id;
+      inventoryCreateForm.purchasePrice = 0;
+      inventoryCreateForm.sellingPrice = 0;
+      inventoryCreateForm.purchaseQuantity=0;
+      inventoryCreateForm.status =PRODUCT_CONDITION.GOOD;
 
-      if(alreadyExistingProduct === undefined || alreadyExistingProduct ===null){
-        const inventoryCreateForm: InventoryCreateForm = new InventoryCreateForm();
-        inventoryCreateForm.productId = data.id;
-        inventoryCreateForm.purchasePrice = 0;
-        inventoryCreateForm.sellingPrice = 0;
-        inventoryCreateForm.purchaseQuantity=0;
-        inventoryCreateForm.status =PRODUCT_CONDITION.GOOD;
+      const cartDetails =  new CartDetails();
+      cartDetails.product = data;
+      cartDetails.inventoryForm = inventoryCreateForm;
 
-        const cartDetails =  new CartDetails();
-        cartDetails.product = data;
-        cartDetails.inventoryForm = inventoryCreateForm;
+      this.cart.cartDetails.push(cartDetails);
 
-        this.cart.cartDetails.push(cartDetails);
-      }
 
     });
   }
@@ -159,7 +160,6 @@ export class ProductPurchaseComponent implements OnInit {
   }
   public getTotalPaid(){
     let totalPaid = 0;
-
     for(const productPricePaymentAccount of this.purchaseCreateForm.productPricePaymentAccount){
       totalPaid += productPricePaymentAccount.amount;
     }
@@ -206,15 +206,5 @@ export class ProductPurchaseComponent implements OnInit {
     }
     return totalCost;
   }
-  public shipmentCostPaymentLedgerIdParseInt(){
-    this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId = <number> this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId;
-    console.log(
-      this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId );
-    console.log(typeof
-      this.purchaseCreateForm.shippingCostPaymentAccount.ledgerId );
 
-  }
-  public shipmentProductPaymentLedgerIdParseInt(index){
-
-  }
 }

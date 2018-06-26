@@ -16,7 +16,7 @@ export class SaleFormUtil{
       delete submittedSaleForm.consumerInfo;
     }
 
-   // this.paymentAccountFormUtil.deletePaymentAccounts(submittedSaleForm,'paymentAccount');
+    this.paymentAccountFormUtil.deletePaymentAccounts(submittedSaleForm,'paymentAccount');
     return submittedSaleForm;
 
   }

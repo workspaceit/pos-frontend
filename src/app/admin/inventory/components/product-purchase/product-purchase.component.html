@@ -39,6 +39,16 @@
               <div class="col">
                 <p class="product-txt-title" (click)="showProductModal(i)" >{{cartDetails.product.name}}</p>
                 <div class="row clearfix purchase_txt">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio"  [value]="'GOOD'" checked  [(ngModel)]="cartDetails.inventoryForm.status" >
+                    <label class="form-check-label" >Good</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio"   [value]="'DAMAGED'" [(ngModel)]="cartDetails.inventoryForm.status" >
+                    <label class="form-check-label" >Damaged</label>
+                  </div>
+                </div>
+                <div class="row clearfix purchase_txt">
                   <div class="col col-lg-4">
                     <label class="small-para text-white" >Purchase price</label>
                     <input type="number" [(ngModel)]="cartDetails.inventoryForm.purchasePrice" class="form-control price_tf" placeholder="Purchase price" min="0" >
