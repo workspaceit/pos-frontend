@@ -39,7 +39,7 @@ export class PaymentAddComponent implements OnInit {
       componentRef.paymentCreateForm.date = (<any>$)(this).val();
     });
     this.getBankOrCash();
-    this.getSupplier();
+    this.getLedger('supplier');
   }
   getBankOrCash(){
     this.ledgerService.getLedgerDetailsByType('bankOrCash').subscribe(
@@ -49,9 +49,9 @@ export class PaymentAddComponent implements OnInit {
       }
     );
   }
-  getSupplier()
+  getLedger(type: string)
   {
-    this.ledgerService.getLedgerDetailsByType('supplier').subscribe(
+    this.ledgerService.getLedgerDetailsByType(type).subscribe(
       beneficial=> {
         this.beneficialAccount = beneficial;
         console.log(this.beneficialAccount);

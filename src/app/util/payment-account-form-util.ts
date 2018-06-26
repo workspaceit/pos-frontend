@@ -1,4 +1,5 @@
 import {PaymentLedgerForm} from '../models/form/payment-ledger-form';
+import {formatMoment} from 'ngx-bootstrap/chronos/format';
 
 export  class PaymentAccountFormUtil{
   public deletePaymentAccounts(saleForm, key:string){
@@ -11,14 +12,13 @@ export  class PaymentAccountFormUtil{
         paymentAccounts.splice(i,1);
       }
     }
-    console.log('paymentAccounts',paymentAccounts);
+
     if(paymentAccounts.length===0){
       delete saleForm[key];
     }
   }
   public deletePaymentAccount(form, key:string){
     const paymentAccount = <PaymentLedgerForm>form[key];
-
     if(paymentAccount.ledgerId===0){
       delete form[key];
     }

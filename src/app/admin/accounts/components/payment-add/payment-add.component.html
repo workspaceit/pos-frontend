@@ -7,7 +7,11 @@
       <table class="table table-bordered">
         <tbody>
         <tr>
-          <td></td>
+          <td>
+            <button type="submit" class="btn btn-primary" (click)="getLedger('supplier')">Suppliers</button>
+            <button type="submit" class="btn btn-primary" (click)="getLedger('employeeSalary')">Salary</button>
+            <button type="submit" class="btn btn-primary" (click)="getLedger('wholesaler')">Wholesaler</button>
+          </td>
           <td></td>
           <td class="text-right"><span class="balance-txt">Dr</span></td>
           <td class="text-right"><span class="balance-txt">Cr</span></td>
@@ -24,7 +28,7 @@
           </td>
           <td>
             <label>Amount</label>
-            <input type="number" class="form-control" min="0" [disabled]="paymentCreateForm.beneficial.ledgerId <=0" [(ngModel)]="paymentCreateForm.beneficial.amount" >
+            <input type="number" class="form-control" min="0" [disabled]="paymentCreateForm.beneficial.ledgerId <=0"  [(ngModel)]="paymentCreateForm.beneficial.amount" >
           </td>
           <td class="text-right"><span class="balance-txt"></span></td>
           <td class="text-right"><span class="balance-txt" *ngIf="paymentCreateForm.beneficial.amount;else beneficialAmount">${{paymentCreateForm.beneficial.amount}}</span></td>

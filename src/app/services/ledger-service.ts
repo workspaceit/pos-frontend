@@ -7,9 +7,11 @@ import {HttpClient} from '@angular/common/http';
 import {LedgerListResponse} from '../models/response-models/ledger-list-response';
 import {PaymentCreateForm} from '../models/form/payment-create-form';
 import {InvestmentCreateForm} from '../models/form/investment-create-form';
+import {LedgerFormUtil} from '../util/ledger-form-util';
 
 @Injectable()
 export class LedgerService extends BaseService {
+  private ledgerFormUtil: LedgerFormUtil = new LedgerFormUtil();
   constructor(private httpClient: HttpClient, private authService: AuthService) {
     super();
   }
@@ -26,12 +28,15 @@ export class LedgerService extends BaseService {
   public createPayment(paymentCreateForm: PaymentCreateForm)
   {
     const options = {headers: {'Content-Type': 'application/json'}};
-    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/payment',JSON.stringify(paymentCreateForm),options);
+    const submittedPaymentCreateForm = this.ledgerFormUtil.deletePaymentFormObjectBeforeSubmit(paymentCreateForm);
+    console.log(submittedPaymentCreateForm);
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/payment',JSON.stringify(submittedPaymentCreateForm),options);
   }
   public createReceipt(paymentCreateForm: PaymentCreateForm)
   {
     const options = {headers: {'Content-Type': 'application/json'}};
-    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/receipt',JSON.stringify(paymentCreateForm),options);
+    const submittedPaymentCreateForm = this.ledgerFormUtil.deletePaymentFormObjectBeforeSubmit(paymentCreateForm);
+    return this.httpClient.post<any>(this.authApiUrl + '/api/entry/make/receipt',JSON.stringify(submittedPaymentCreateForm),options);
   }
   public makeInvestment(investmentCreateForm: InvestmentCreateForm)
   {
