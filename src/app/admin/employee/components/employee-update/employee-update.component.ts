@@ -36,22 +36,21 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   createEmployeeForm() {
-    let dob: string | Date = '';
-    dob = this.employee.personalInformation.dob != null?
-      moment(this.employee.personalInformation.dob, 'YYYY-MM-DD').format('YYYY-MM-DD'): '';
-    this.employeeForm = this.formBuilder.group({
+    const formData = {
       'employeeId': [this.employee.employeeId],
       'salary': [this.employee.salary],
 
       'personalInfo.fullName': [this.employee.personalInformation.fullName, Validators.required],
       'personalInfo.address': [this.employee.personalInformation.address.formattedAddress],
-      'personalInfo.dob': [this.employee.personalInformation.dob],
       'authCredential.email': [this.employee.personalInformation.authCredential.email],
       'personalInfo.email': [this.employee.personalInformation.email],
       'personalInfo.phone': [this.employee.personalInformation.phone],
 
       'type': [this.employee.type, Validators.required]
-    });
+    };
+
+    formData['personalInfo.dob']=(this.employee.personalInformation.dob!==null)?[this.employee.personalInformation.dob]:[''];
+    this.employeeForm = this.formBuilder.group(formData);
   }
 
   getEmployee(){

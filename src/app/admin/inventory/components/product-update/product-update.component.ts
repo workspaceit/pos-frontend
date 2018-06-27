@@ -29,8 +29,12 @@ export class ProductUpdateComponent implements OnInit {
   product: Product = new Product();
 
 
-  constructor(private formBuilder: FormBuilder, private categoryService: CategoryService, private authService: AuthService,
-              private productService: ProductService,private router:Router,private activatedRoute: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder,
+              private categoryService: CategoryService,
+              private authService: AuthService,
+              private productService: ProductService,
+              private router:Router,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.createFrom();
