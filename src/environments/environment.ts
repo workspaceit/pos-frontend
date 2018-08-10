@@ -5,9 +5,9 @@
 
 
 const environmentConst = {
-  baseUrl:'http://192.168.1.18:8080/dccpos',
-  //baseUrl:"http://localhost:8080"
-}
+  baseUrl:'http://192.168.1.67:8080/dccpos',
+  // baseUrl:'http://163.53.151.2:8080/dccpos',
+};
 
 export const environment = {
   production: false,
