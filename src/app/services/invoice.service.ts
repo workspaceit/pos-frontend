@@ -4,7 +4,6 @@ import {AuthService} from './auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Invoice} from '../models/data/invoice/invoice';
-import {ProductListResponse} from '../models/response-models/product-list-response';
 
 @Injectable()
 export class InvoiceService extends BaseService{

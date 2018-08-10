@@ -1,3 +1,7 @@
+import {PRODUCT_CONDITION} from '../constant/PRODUCT_CONDITION';
+import {STOCK_STATUS} from '../constant/STOCK_STATUS';
+import {INVENTORY_CYCLE} from '../constant/INVENTORY_CYCLE';
+
 export class Inventory{
   public id:number;
   public sellingPrice:number;

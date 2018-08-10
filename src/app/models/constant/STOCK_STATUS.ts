@@ -1,4 +1,4 @@
-enum STOCK_STATUS{
+export enum STOCK_STATUS{
   IN_STOCK,SOLD_OUT
 
 }

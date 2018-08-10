@@ -4,6 +4,7 @@ import {ProductListComponent} from './components/product-list/product-list.compo
 import {ProductAddComponent} from './components/product-add/product-add.component';
 import {ProductPurchaseComponent} from './components/product-purchase/product-purchase.component';
 import { ProductUpdateComponent } from './components/product-update/product-update.component';
+import {ProductAutoCompleteComponent} from './components/product-auto-complete/product-auto-complete.component';
 
 
 const routes: Routes = [

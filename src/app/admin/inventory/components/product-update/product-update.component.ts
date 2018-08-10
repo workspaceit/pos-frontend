@@ -23,13 +23,18 @@ export class ProductUpdateComponent implements OnInit {
   categories: Category[] = [];
   dropzoneConfig: DropzoneConfigInterface;
   apiUrl = environment.authApiUrl;
+  imageUrl = environment.imgUrl;
 
   productId: number;
   product: Product = new Product();
 
 
-  constructor(private formBuilder: FormBuilder, private categoryService: CategoryService, private authService: AuthService,
-              private productService: ProductService,private router:Router,private activatedRoute: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder,
+              private categoryService: CategoryService,
+              private authService: AuthService,
+              private productService: ProductService,
+              private router:Router,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.createFrom();
@@ -59,14 +64,15 @@ export class ProductUpdateComponent implements OnInit {
     };
   }
   createFrom() {
-    this.productUpdateForm = this.formBuilder.group({
+    const formData = {
       name: [this.product.name, Validators.required],
-      categoryId: [this.product.category.id],
       weight: [this.product.weight],
       weightUnit: [this.product.weightUnit],
-      imageToken: [this.product.image],
+      imageToken: [''],
       barcode: [this.product.barcode]
-    });
+    };
+    formData['categoryId']=(this.product.category!=null)? [this.product.category.id]:0;
+    this.productUpdateForm = this.formBuilder.group(formData);
   }
 
   getCategories(){

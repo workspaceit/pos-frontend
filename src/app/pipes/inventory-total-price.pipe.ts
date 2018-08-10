@@ -1,5 +1,5 @@
 import {Pipe,PipeTransform} from '@angular/core';
-import {Cart} from '../models/data/cart';
+import {Cart} from '../models/form/cart';
 
 @Pipe({name:'totalPurchasedProduct'})
 export class InventoryTotalPricePipe implements PipeTransform {

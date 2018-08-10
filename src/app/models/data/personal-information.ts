@@ -1,5 +1,5 @@
 import {Address} from './address';
-import {COMPANY_ROLE} from './company-role.enum';
+import {COMPANY_ROLE} from '../constant/company-role.enum';
 import {AuthCredential} from './authCredential';
 
 export class PersonalInformation {

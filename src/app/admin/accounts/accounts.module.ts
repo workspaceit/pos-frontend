@@ -7,12 +7,28 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { LedgerAddComponent } from './components/ledger-add/ledger-add.component';
 import { PaymentAddComponent } from './components/payment-add/payment-add.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { LedgerListComponent } from './components/ledger-list/ledger-list.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { ProfitAndLossComponent } from './components/profit-and-loss/profit-and-loss.component';
+import { ReportRowComponent } from './components/report-row/report-row.component';
+import {FormsModule} from '@angular/forms';
+import { BalanceSheetComponent } from './components/balance-sheet/balance-sheet.component';
+import {NumberPipe} from '../../pipes/number-pipe';
+import { ReceiptAddComponent } from './components/receipt-add/receipt-add.component';
+import { MakeInvestmentComponent } from './components/make-investment/make-investment.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    AccountsRoutingModule
+    AccountsRoutingModule,
+    NgxPaginationModule,
+    FormsModule
   ],
-  declarations: [AccountListComponent, InvoiceComponent, LedgerAddComponent, PaymentAddComponent, PaymentComponent]
+  exports:[NumberPipe],
+  declarations: [AccountListComponent, InvoiceComponent,
+    LedgerAddComponent, PaymentAddComponent,
+    PaymentComponent, LedgerListComponent,
+    ProfitAndLossComponent, ReportRowComponent,
+    BalanceSheetComponent,NumberPipe, ReceiptAddComponent, MakeInvestmentComponent]
 })
 export class AccountsModule { }

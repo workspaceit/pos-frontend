@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12 uni-head">
+      <h4>Accounts</h4>
+    </div>
+
+    <div class="col-lg-12">
+      <label>From :</label>
+      <input id="startDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.from"  >
+      <label>To :</label>
+      <input id="endDate" class="form-control custom-input-sm-date datepick" [(ngModel)]="searchedDate.to"  >
+      <button type="submit" class="btn btn-primary" (click)="searchProfitAndLoss()">Search</button>
+    </div>
+
+    <div class="col-lg-12 cstm-d-table">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th scope="col" class="text-left">Ordinary Income/Expense</th>
+          <th scope="col">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="5" ><b>Revenue</b></span>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let row of incomeTableRows" >
+          <td>
+            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+          </td>
+          <td>
+            <span *ngIf="row.isGroup"  ></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span [style.marginLeft.px]="5" ><b>Total Revenue</b></span>
+          </td>
+          <td><b>{{profitAndLossReport.totalRevenue}}</b></td>
+        </tr>
+        <tr *ngFor="let row of expenseTableRows" >
+          <td>
+            <span [style.marginLeft.px]="row.spaces" >{{row.title}}</span>
+          </td>
+          <td>
+            <span *ngIf="row.isGroup" [style.marginLeft.px]="row.spaces" ></span>
+            <span *ngIf="!row.isGroup" [style.marginLeft.px]="10" >{{row.amount}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span *ngIf="profitAndLossReport.grossProfit>=0" [style.marginLeft.px]="5" ><b>Gross profit</b></span>
+            <span  *ngIf="profitAndLossReport.grossProfit<=0" [style.marginLeft.px]="5" ><b>Gross loss</b></span>
+          </td>
+          <td><b>{{profitAndLossReport.grossProfit | mathabs}}</b></td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+
+

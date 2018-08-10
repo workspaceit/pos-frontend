@@ -4,6 +4,7 @@ import {TypeaheadMatch} from 'ngx-bootstrap';
 import {ProductService} from '../../../../services/product.service';
 import {ProductSearchForm} from '../../../../models/form/product/product-search-form';
 import {ProductAutoCompleteCommunicator} from '../../../../communicator/product-auto-complete-communicator';
+import {delay} from 'q';
 
 @Component({
   selector: 'app-product-auto-complete',
@@ -11,33 +12,42 @@ import {ProductAutoCompleteCommunicator} from '../../../../communicator/product-
   styleUrls: ['./product-auto-complete.component.css']
 })
 export class ProductAutoCompleteComponent implements OnInit {
-  asyncSelected: string;
+  asyncProductNameSelected: string;
+  asyncBarcodeSelected: string;
   typeaheadLoading: boolean;
   typeaheadNoResults: boolean;
-  dataSource: Observable<any>;
-
+  productNameDataSource: Observable<any>;
+  barcodeDataSource: Observable<any>;
+  timout:any;
   constructor(private productService: ProductService,private productAutoCompleteCommunicator: ProductAutoCompleteCommunicator) {
-    this.dataSource = Observable.create((observer: any) => {
+    this.timout = null;
+    this.productNameDataSource = Observable.create((observer: any) => {
       // Runs on every search
-      observer.next(this.asyncSelected);
-    }).mergeMap((token: string) => this.getStatesAsObservable(token));
+      observer.next(this.asyncProductNameSelected);
+    }).mergeMap((token: string) => this.getProductByNameAsObservable(token));
+    this.barcodeDataSource = Observable.create((observer: any) => {
+      // Runs on every search
+      observer.next(this.asyncBarcodeSelected);
+    }).mergeMap((token: string) => this.getProductByBarcodeAsObservable(token));
+
   }
 
   ngOnInit() {
   }
 
-  getStatesAsObservable(token: string): Observable<any> {
+  getProductByNameAsObservable(token: string): Observable<any> {
 
-    const query = new RegExp(token, 'ig');
     const fn = () => {
       return new Observable((observer) => {
-        console.log(token);
+
+
         const productSearchForm: ProductSearchForm = new ProductSearchForm();
         productSearchForm.name = token;
         this.productService.getProductsBySearchCriteria(10,1,productSearchForm).subscribe((data)=>{
-          console.log("data",data);
+          console.log('data',data);
           observer.next(data.result);
         });
+
       });
     };
 
@@ -45,7 +55,35 @@ export class ProductAutoCompleteComponent implements OnInit {
 
 
   }
+  getProductByBarcodeAsObservable(token: string): Observable<any> {
 
+    const fn = () => {
+      return new Observable((observer) => {
+
+
+
+        if(this.timout!=null){
+          clearTimeout(this.timout);
+        }
+        this.timout = setTimeout(()=>{
+          console.log("token",token);
+          this.productService.getProductByBarCode(Number(token)).subscribe((data)=>{
+            console.log("data",data);
+            if(data!=null || data.id>0){
+              this.asyncBarcodeSelected = '';
+              this.productAutoCompleteCommunicator.publishSelectedProduct(data);
+            }
+          });
+        },200);
+
+
+      });
+    };
+
+    return fn();
+
+
+  }
   changeTypeaheadLoading(e: boolean): void {
     this.typeaheadLoading = e;
   }
@@ -54,7 +92,8 @@ export class ProductAutoCompleteComponent implements OnInit {
     console.log('Selected value: ', e.item);
     this.productAutoCompleteCommunicator.publishSelectedProduct(e.item);
     console.log('Selected value: ', e.value);
-    this.asyncSelected = '';
+    this.asyncProductNameSelected = '';
+    this.asyncBarcodeSelected = '';
   }
 
 }

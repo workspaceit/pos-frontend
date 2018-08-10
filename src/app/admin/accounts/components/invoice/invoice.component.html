@@ -1,23 +1,32 @@
 <div class="container">
   <div class="row clearfix">
     <div class="col-lg-12 uni-head">
-      <h4>Invoice</h4>
+      <h4>{{ invoiceFor}} Invoice</h4>
     </div>
     <div class="col-md-12">
       <div class="row justify-content-between align-items-end invoice-header">
         <div class="col-4 text-left">
-          <h5>Invoice ID: 0051</h5>
-          <p>Issue Date: 12 July,2018</p>
+          <h5>Invoice ID: {{invoice.invoiceTackingId}}</h5>
+          <p>Issue Date: {{invoice.issueDate | date}}</p>
         </div>
         <div class="col-4">
-          <img src="./assets/img/agora.png" class="img-fluid">
+          <img src="{{ imgUrl + invoice.shopInformation.logo}}" class="img-fluid">
+          <p>{{invoice.shopInformation.name}}</p>
+          <p>
+            {{invoice.shopInformation.address}}
+          </p>
+          <p>
+            Phone : {{invoice.shopInformation.phone}}, Email : {{invoice.shopInformation.email}}
+          </p>
         </div>
         <div class="col-4 text-right">
           <h5>Billed to</h5>
-          <p>Agora</p>
+          <p *ngIf="invoice.billTo.id!==null">
+            {{invoice.billTo.id}}
+          </p>
+          <p>{{invoice.billTo.name}}</p>
           <p>
-            12/14 Shimanto Square.<br>
-            Jigatola,Dhaka-1205
+            {{invoice.billTo.address.formattedAddress}}
           </p>
         </div>
       </div>
@@ -25,103 +34,69 @@
         <table class="table">
           <thead class="thead-dark">
           <tr>
-            <th scope="col">Product ID</th>
             <th scope="col">Product Name</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
-            <th scope="col">Discount</th>
             <th scope="col">Total Price</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row">A1658</th>
-            <td>Leavon lotion</td>
-            <td>2</td>
-            <td>15</td>
-            <td>2</td>
-            <td class="text-right">28</td>
+          <tr *ngFor="let detail of invoice.details">
+            <td>{{detail.productName}}</td>
+            <td>{{detail.quantity}}</td>
+            <td>{{detail.perQuantityPrice}}</td>
+            <td class="text-right">{{detail.totalPrice}}</td>
           </tr>
-          <tr>
-            <th scope="row">A1488</th>
-            <td>Gillette lotion</td>
-            <td>2</td>
-            <td>15</td>
-            <td>2</td>
-            <td class="text-right">28</td>
-          </tr>
-          <tr>
-            <th scope="row">A1658</th>
-            <td>fair and Lovely</td>
-            <td>2</td>
-            <td>15</td>
-            <td>2</td>
-            <td class="text-right">28</td>
-          </tr>
-
           </tbody>
           <tfoot>
-          <tr>
-            <td colspan="4"></td>
+
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td  colspan="2"></td>
+            <td>Cf :</td>
+            <td class="text-right">{{invoice.shipmentCost['CF']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Labor :</td>
+            <td class="text-right">{{invoice.shipmentCost['LABOR']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Carrying :</td>
+            <td class="text-right">{{invoice.shipmentCost['CARRYING']}}</td>
+          </tr>
+          <tr *ngIf="invoice.shipmentCost!=null" >
+            <td colspan="2"></td>
+            <td>Others :</td>
+            <td class="text-right">{{invoice.shipmentCost['OTHERS']}}</td>
+          </tr>
+          <tr style="border-top: 4px solid #dee2e6">
+            <td colspan="2"></td>
             <td>Sub total:</td>
-            <td class="text-right">800</td>
+            <td class="text-right">{{invoice.total}}</td>
           </tr>
           <tr>
-            <td colspan="4"></td>
+            <td colspan="2"></td>
             <td>Total Discount:</td>
-            <td class="text-right">200</td>
+            <td class="text-right">{{invoice.discount}}</td>
           </tr>
           <tr>
-            <td colspan="4"></td>
+            <td colspan="2"></td>
             <td>Total:</td>
-            <td class="text-right">7800</td>
+            <td class="text-right">{{invoice.total - invoice.discount}}</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td>{{receiptTag}}:</td>
+            <td class="text-right">{{invoice.paidOrReceive}}</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td>Due:</td>
+            <td class="text-right">{{invoice.due}}</td>
           </tr>
           </tfoot>
         </table>
-      </div>
-      <div class="row clearfix">
-        <div class="col">
-          <div class="form-group">
-            <label>Type</label>
-            <select class="form-control">
-              <option>Card</option>
-            </select><br>
-            <select class="form-control">
-              <option>Cash</option>
-            </select>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Total Balance</label>
-            <input type="text" class="form-control" value="4000" disabled><br>
-            <input type="text" class="form-control" value="500" disabled>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Expense</label>
-            <input type="text" class="form-control" value="4000" disabled><br>
-            <input type="text" class="form-control" value="500" disabled>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Total Expense</label>
-            <input type="text" class="form-control" value="4000" disabled><br>
-            <input type="text" class="form-control" value="500" disabled><br>
-            <p class="text-right">
-              <strong style="font-size: 18px;">Due- 7800</strong>
-            </p>
-          </div>
-        </div>
-
-        <hr>
-        <div class="col-md-12 text-center">
-          <button class="btn btn-success btn-lg">
-            Confirm
-          </button>
-        </div>
       </div>
     </div>
   </div>

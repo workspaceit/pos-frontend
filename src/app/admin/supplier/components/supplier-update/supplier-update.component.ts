@@ -14,11 +14,13 @@ import {GrowlUtil} from '../../../../util/growl-util';
 })
 export class SupplierUpdateComponent implements OnInit {
 
-  supplierForm: FormGroup;
-  supplierId: number;
-  supplier: Supplier = new Supplier();
+  protected supplierForm: FormGroup;
+  protected supplierId: number;
+  protected supplier: Supplier = new Supplier();
 
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private supplierService: SupplierService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private supplierService: SupplierService) { }
 
   ngOnInit() {
     this.createForm();
@@ -32,14 +34,15 @@ export class SupplierUpdateComponent implements OnInit {
   }
 
   createForm() {
-    this.supplierForm = this.formBuilder.group({
-      'supplierId': [this.supplier.supplierId],
-
+    const formData = {
       'company.title': [this.supplier.company.title, Validators.required],
       'company.address': [this.supplier.company.address.formattedAddress],
       'company.phone': [this.supplier.company.phone],
       'company.email': [this.supplier.company.email]
-    });
+    };
+    formData['supplierId']= (this.supplier.supplierId!=null)?[this.supplier.supplierId]:[''];
+    this.supplierForm = this.formBuilder.group(formData);
+    console.log(formData);
   }
 
   getSupplier() {

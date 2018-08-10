@@ -1,5 +1,7 @@
 import {InvoiceBillingAddress} from './invoice-billing-address';
 
 export class InvoiceBilling {
-  invoiceBillingAddress : InvoiceBillingAddress;
+  address: InvoiceBillingAddress = new InvoiceBillingAddress();
+  name: string;
+  id:string;
 }

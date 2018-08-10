@@ -1,0 +1,401 @@
+<div class="container-fluid container-wrapper">
+  <div class="row clearfix" style="margin: 0px;margin-top: 13px">
+    <div class="col-md-8" style="padding: 0px">
+      <div class="bg-white">
+
+        <div class="ui-widget" *ngIf="saleForm.type==_SALE_TYPE.WHOLESALE">
+          <div class="form-group">
+            <label>Wholesalers</label>
+            <select  class="form-control" [(ngModel)]="saleForm.wholesalerId" >
+              <option  [ngValue]="0"> Select wholesaler </option>
+              <option *ngFor="let wholesaler of wholesalers" [ngValue]="wholesaler.id" >
+                {{wholesaler.company.title}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="ui-widget" *ngIf="saleForm.type==_SALE_TYPE.CONSUMER_SALE">
+          <div class="form-group" *ngIf="saleForm.consumerInfo.consumerId===null || saleForm.consumerInfo.consumerId===''">
+            <label>Consumer
+              <a href="javascript:void(0)" (click)="showConsumerModal()">add new</a> |
+              <a href="javascript:void(0)" (click)="getNewConsumerForm()">generate new</a></label>
+            <select  class="form-control" [(ngModel)]="saleForm.consumerInfoId" >
+              <option value="0"> Select consumer </option>
+              <option *ngFor="let consumer of consumers" [value]="consumer.id" >
+                {{consumer.consumerId}} : {{consumer.personalInformation.fullName}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="saleForm.consumerInfo.consumerId!==null && saleForm.consumerInfo.consumerId!==''">
+            <label>{{saleForm.consumerInfo.consumerId}}:{{saleForm.consumerInfo.personalInfo.fullName}}
+              <a href="javascript:void(0)" (click)="removeConsumerForm()">Remove</a>
+            </label>
+          </div>
+        </div>
+        <div class="dam_filter">
+          <div class="form-group">
+            <label>Filters</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio"  [value]="'ALL'" checked [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >All</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio"  [value]="'GOOD'"  [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >Good</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio"   [value]="'DAMAGED'"  [(ngModel)]="inventorySearchForm.condition">
+            <label class="form-check-label" >Damaged</label>
+          </div>
+        </div>
+        <div class="ui-widget">
+          <app-product-auto-complete></app-product-auto-complete>
+        </div>
+
+
+        <div class="products-container-scroll">
+              <div class="row product-bg" *ngFor="let saleCartProduct of saleCart.saleCartProduct ; let productIndex = index" >
+                <div class="col"  >
+                  <p class="product-txt-title" data-toggle="modal" (click)="showProductModal(productIndex)">{{saleCartProduct.product.name}}</p>
+                  <p class="product-txt-price">price :
+                    <label *ngIf="saleCartProduct.product.minPrice===saleCartProduct.product.maxPrice">{{saleCartProduct.product.maxPrice}} TK</label>
+                    <label *ngIf="saleCartProduct.product.minPrice!==saleCartProduct.product.maxPrice">{{saleCartProduct.product.minPrice}} TK - {{saleCartProduct.product.maxPrice}} TK</label>
+                  </p>
+                  <p class="product-txt-price" >
+                    <label>
+                      Available quantity : {{saleCartProduct.product.totalAvailableQuantity}}<br>
+                      Good : {{saleCartProduct.product.goodQuantity}}<br>
+                      Damaged : {{saleCartProduct.product.damagedQuantity}} </label>
+                  </p>
+                  <div class="row clearfix purchase_txt" *ngFor="let saleCartInventory of saleCartProduct.saleCartInventory ; let inventoryIndex = index" >
+                    <div class="col col-lg-2">
+                      <label class="small-para text-white" >Avl quantity : {{saleCartInventory.inventory.availableQuantity}}</label><br>
+                      <label class="small-para text-white" >Status : {{saleCartInventory.inventory.condition}}</label>
+                    </div>
+                    <div class="col col-lg-4">
+                      <label class="small-para text-white" >Selling price</label>
+                      <input type="number" class="form-control price_tf"  [(ngModel)]="saleCartInventory.inventorySaleForm.sellingPrice" >
+                    </div>
+                    <div class="col col-lg-3 align-self-end">
+                      <form  method='POST' action='#'>
+                        <input type='button' value='-' class='qtyminus'  (click)="decreaseQuantity(productIndex,inventoryIndex)" />
+                        <input type='text' name='quantity' value='0' class='qty' [(ngModel)]="saleCartInventory.inventorySaleForm.quantity" />
+                        <input type='button' value='+' class='qtyplus' (click)="increaseQuantity(productIndex,inventoryIndex)" />
+                      </form>
+                    </div>
+                    <div class="col col-lg-1 align-self-end pr-0">
+                      <label class="small-para text-white" >BDT
+                        <label *ngIf="isNan(saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity)">
+                         0
+                        </label>
+                        <label *ngIf="!isNan(saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity)">
+                          {{saleCartInventory.inventorySaleForm.sellingPrice*saleCartInventory.inventorySaleForm.quantity}}
+                        </label>
+                      </label>
+
+                    </div>
+
+                    <div class="col col-lg-2 text-right">
+                      <a href="javascript:void(0)" (click)="removeInventoryFromCart(productIndex,inventoryIndex)">x</a>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="col col-lg-2 text-right">
+                  <a href="javascript:void(0)" (click)="removeProductFromCart(productIndex)" ><i class="fa fa-trash fa-lg" aria-hidden="true" style="color:#fff;padding-left: 3px"></i></a>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="row" style="min-height: 394px;">
+        <div class="col-lg-12">
+          <div class="row bg-white clearfix" style="margin: 0px;">
+
+            <div class="col-12" *ngFor="let account of saleForm.paymentAccount;let i = index;">
+              <div class="row clearfix">
+                <div class="col-5 pl-0">
+                  <div class="form-group">
+                    <label class="small-para" >Receive account</label>
+                    <select class="form-control" [(ngModel)]="account.ledgerId" >
+                      <option [ngValue]="0" >Select Account</option>
+                      <option *ngFor="let ledger of paymentLedgers" [ngValue]="ledger.id" >
+                        {{ledger.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-5 pl-0">
+                  <div class="form-group">
+                    <label class="small-para" >Amount</label>
+                    <input [disabled]="account.ledgerId>0?false:true" type="number" class="form-control" id="Amount" [(ngModel)]="account.amount"  >
+                  </div>
+                </div>
+                <div class="col-2 align-self-center">
+                  <button *ngIf="i==0" type="button" class="btn btn-primary mt-2" (click)="addPaymentAccount()" ><i class="fa fa-plus"></i></button>
+                  <button *ngIf="i>0" type="button" class="btn btn-primary mt-2"  (click)="removePaymentAccount(i)" ><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="row" style="padding-right: 15px !important">
+                <label class="small-para">Vat :</label>
+                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
+                <input class="form-control custom-input-sm" type="number" min="0" [(ngModel)]="saleForm.vat" >
+                <label class="small-para">Description :</label>
+                <!-- <p class="medium-para">9A/Nikunja,Dhaka</p> -->
+                <input class="form-control custom-input-sm" type="text" [(ngModel)]="saleForm.description" >
+
+
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <label class="small-para">Discount :</label>
+                <!-- <p class="medium-para">+88 01722 ******</p> -->
+                <input class="form-control custom-input-sm" type="number" min="0" [(ngModel)]="saleForm.discount" >
+              </div>
+              <label class="small-para">Date :</label>
+
+              <input id="saleDate" class="form-control custom-input-sm-date datepick"  >
+
+            </div>
+
+            <div class="col-md-12">
+              <div class="row">
+                <table class="table">
+
+                  <tr>
+                    <td class="small-para px-0">Total product price:</td>
+                    <td class="small-para text-right px-0">{{getTotalProductPrice()}} Tk</td>
+                  </tr>
+
+                  <tr>
+                    <td class="small-para px-0">Vat:</td>
+                    <td class="small-para text-right px-0">{{getVat()}} Tk</td>
+                  </tr>
+
+                  <tr>
+                    <td class="small-para px-0">Discount:</td>
+                    <td class="small-para text-right px-0">{{getDiscount()}} Tk</td>
+                  </tr>
+                  <tr>
+                    <td class="small-para px-0">Total Paid:</td>
+                    <td class="small-para text-right px-0">{{getTotalReceive()}} Tk</td>
+                  </tr>
+                  <tr>
+                    <td class="small-para px-0">Total:</td>
+                    <td class="small-para text-right px-0">{{getTotal()}} Tk</td>
+                  </tr>
+
+
+
+                  <tr>
+                    <td class="small-para px-0">Due :</td>
+                    <td class="small-para text-right px-0">{{getTotalDue()}} Tk</td>
+                  </tr>
+
+                </table>
+
+                <div class="row" *ngIf="errors.length>0">
+                  <p>Errors :</p>
+                  <ul>
+                    <li class="alert-danger" *ngFor="let error of errors">{{error.msg}}</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<button type="button" id="calcBtn" class="btn-default sale-button">Calculator</button>-->
+      <button type="button" class="btn-default sale-button" style="background: #1ba233;" (click)="submitSell()">Sell</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title bold-text" id="exampleModalLabel" style="letter-spacing: 0px">Product Details</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body clearfix">
+        <div class="col-md-4">
+          <img
+            onError="this.src='assets/img/image-not-available-90x60.png'"
+            src="{{imgUrl+modalProductDetails.image}}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+          <p class="small-para" style="font-size: 18px;font-weight: 500;margin-bottom: 0px">Product Name :</p>
+          <p style="font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.name}}</p>
+          <p class="small-para" style="font-size: 18px;font-weight: 500">Bar Code :</p>
+          <p style="    font-size: 30px;color: #d4318b;margin-top: 0px;">{{modalProductDetails.barcode}}</p>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <p class="medium-para-01">Price :</p>
+            </div>
+
+            <div *ngIf="modalProductDetails.minPrice!==modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.minPrice}} - {{modalProductDetails.maxPrice}}</p>
+            </div>
+            <div *ngIf="modalProductDetails.minPrice===modalProductDetails.maxPrice" class="col-md-6" style="text-align: right;">
+              <p class="medium-para-01">{{modalProductDetails.maxPrice}} TK</p>
+            </div>
+
+            <div class="col-md-12" style="text-align: center;margin-top: 20px">
+              <p class="small-para">In Stokes</p>
+              <p class="small-para" style="    font-weight: 200;font-size: 95px;margin-top: -30px;color: #d4318b">{{modalProductDetails.totalAvailableQuantity}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="consumerForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+            <span class="modal-title bold-text" style="letter-spacing: 0px">
+          Consumer Details
+        </span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body clearfix">
+        <div  class="form-group">
+
+          <label >Consumer Id
+            <a href="javascript:void(0)" (click)="getNewConsumerFormAndCloseModal()">generate new</a>
+          </label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.consumerId" />
+        </div>
+        <div  class="form-group">
+          <label >Full name</label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.fullName">
+        </div>
+        <div  class="form-group">
+          <label >Dob</label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.dob">
+        </div>
+        <div  class="form-group">
+          <label >Email</label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.email">
+        </div>
+        <div  class="form-group">
+          <label >Phone</label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.phone">
+        </div>
+        <div  class="form-group">
+          <label >Address</label>
+          <input  class="form-control"  placeholder="" type="text" [(ngModel)]="saleForm.consumerInfo.personalInfo.address">
+        </div>
+        <span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    Done
+                  </button>
+        </span>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="calculator-container">
+  <table class="calculator" id="calc">
+    <tr>
+      <td colspan="4" class="calc_td_result">
+        <input type="text" readonly="readonly" name="calc_result" id="calc_result" class="calc_result" onkeydown="javascript:key_detect_calc('calc',event);" />
+      </td>
+    </tr>
+    <tr>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="CE" onclick="javascript:f_calc('calc','ce');" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="&larr;" onclick="javascript:f_calc('calc','nbs');" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="%" onclick="javascript:f_calc('calc','%');" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="+" onclick="javascript:f_calc('calc','+');" />
+      </td>
+    </tr>
+    <tr>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="7" onclick="javascript:add_calc('calc',7);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="8" onclick="javascript:add_calc('calc',8);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="9" onclick="javascript:add_calc('calc',9);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="-" onclick="javascript:f_calc('calc','-');" />
+      </td>
+    </tr>
+    <tr>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="4" onclick="javascript:add_calc('calc',4);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="5" onclick="javascript:add_calc('calc',5);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="6" onclick="javascript:add_calc('calc',6);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="x" onclick="javascript:f_calc('calc','*');" />
+      </td>
+    </tr>
+    <tr>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="1" onclick="javascript:add_calc('calc',1);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="2" onclick="javascript:add_calc('calc',2);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="3" onclick="javascript:add_calc('calc',3);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="&divide;" onclick="javascript:f_calc('calc','');" />
+      </td>
+    </tr>
+    <tr>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="0" onclick="javascript:add_calc('calc',0);" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="&plusmn;" onclick="javascript:f_calc('calc','+-');" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="," onclick="javascript:add_calc('calc','.');" />
+      </td>
+      <td class="calc_td_btn">
+        <input type="button" class="calc_btn" value="=" onclick="javascript:f_calc('calc','=');" />
+      </td>
+    </tr>
+  </table>
+
+  <div class="text-center">
+    <button class="btn btn-calc-close btn-danger" id="calcClose"><i class="fa fa-times"></i></button>
+  </div>
+
+</div>

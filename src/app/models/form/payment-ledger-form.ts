@@ -1,6 +1,6 @@
-export class PurchasePaymentCreateForm{
+export class PaymentLedgerForm{
   ledgerId: number;
-  amount: number;
+  public amount: number;
   constructor(values: Object = {}) {
     Object.assign(this, values);
   }

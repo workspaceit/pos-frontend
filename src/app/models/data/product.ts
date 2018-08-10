@@ -1,4 +1,5 @@
 import {Category} from './category';
+import {Inventory} from './Inventory';
 
 export class Product {
 
@@ -9,9 +10,12 @@ export class Product {
   weightUnit: string;
   image: string;
   barcode: string;
+  damagedQuantity:number;
+  goodQuantity:number;
   totalAvailableQuantity: number;
   maxPrice: number;
   minPrice: number;
+  inventories:Inventory[];
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

@@ -30,17 +30,21 @@ export class ProductService extends BaseService{
   public getProductById(productId: number): Observable<Product>{
     return this.httpClient.get<Product>(this.authApiUrl + '/api/product/get/' + productId);
   }
+  public getProductByBarCode(barCode: number): Observable<Product>{
+    return this.httpClient.get<Product>(this.authApiUrl + '/api/product/get-by-barcode?barcode=' + barCode);
+  }
   public updateProduct(productValues, productId): Observable<Product> {
     let params = new HttpParams()
       .set('name', productValues['name'])
-
-      .set('categoryId', productValues['categoryId'])
       .set('imageToken', productValues['imageToken'])
       .set('weight', productValues['weight'])
-
       .set('weightUnit', productValues['weightUnit'])
       .set('barcode', productValues['barcode']);
 
+
+    if(productValues['categoryId']!=null && productValues['categoryId']>0){
+      params =  params.set('categoryId', productValues['categoryId']);
+    }
     return this.httpClient.post<Product>(this.authApiUrl + '/api/product/update/' + productId, params);
   }
 

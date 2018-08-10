@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/inventory/products">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/product.png" width="30">
             Products
           </a>
           <ul class="sub-list">
             <li><a routerLink="/admin/inventory/products">All products</a></li>
             <li><a routerLink="/admin/inventory/products/add">New Product</a></li>
-            <li><a routerLink="/admin/inventory/products/add">Add Damaged Product</a></li>
             <li><a routerLink="/admin/inventory/products/purchase">Purchase New Product</a></li>
+            <li><a routerLink="/admin/purchase/shipments/list">All Shipments</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/employee/list">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/employee.png" width="30">
             Employee
           </a>
@@ -30,7 +30,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/supplier/details/1">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/supplier.png" width="30">
             Supplier
           </a>
@@ -40,17 +40,18 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/sale/sell-to-wholesaler">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/sale.png" width="30">
             Sell
           </a>
           <ul class="sub-list">
-            <li><a routerLink="/admin/sale/sell-to-wholesaler">Sell to wholesaler</a></li>
-            <li><a routerLink="/admin/sale/sell-to-consumer">Sell to Consumer</a></li>
+            <li><a routerLink="/admin/sale/wholesale">Wholesale</a></li>
+            <li><a routerLink="/admin/sale/consumer">Consumer Sale</a></li>
+            <li><a routerLink="/admin/sale/get-all/list">Sale List</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/report/daily-report">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/reports.png" width="30">
             Reports
           </a>
@@ -61,20 +62,22 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/accounts/list">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/accounts.png" width="30">
             Accounts
           </a>
           <ul class="sub-list">
-            <li><a routerLink="/admin/accounts/list">Accounts</a></li>
-            <li><a routerLink="/admin/accounts/invoice">Invoice</a></li>
-            <li><a routerLink="/admin/accounts/add-ledger">New Ledger</a></li>
+            <!--<li><a routerLink="/admin/accounts/list">Accounts</a></li>-->
+            <li><a routerLink="/admin/accounts/ledger-list">Accounts</a></li>
             <li><a routerLink="/admin/accounts/add-payment">New Payment</a></li>
-            <li><a routerLink="/admin/accounts/payment">Payment</a></li>
+            <li><a routerLink="/admin/accounts/add-receipt">New Receipt</a></li>
+            <li><a routerLink="/admin/accounts/make-investment">Make Investment</a></li>
+            <li><a routerLink="/admin/accounts/profit-and-loss">Profit and loss</a></li>
+            <li><a routerLink="/admin/accounts/balance-sheet">Balance sheet</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/wholesaler/details/1">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/wholesale.png" width="30">
             Wholesale
           </a>
@@ -84,7 +87,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/shop">
+          <a class="nav-link" href="javascript:void(0)">
             <img src="assets/img/icon/user.png" width="30">
             Admin
           </a>
